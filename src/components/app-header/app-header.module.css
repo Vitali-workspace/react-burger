@@ -1,0 +1,42 @@
+.header {
+  display: flex;
+  justify-content: center;
+  background-color: #1C1C21;
+}
+
+.block {
+  display: flex;
+  justify-content: space-between;
+  width: 1280px;
+}
+
+.navigation {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.list {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1280px;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.logo {
+  transform: translate(-34%, 0);
+  cursor: pointer;
+}
+
+.link {
+  all: unset;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.link:hover {
+  opacity: 0.7;
+}
