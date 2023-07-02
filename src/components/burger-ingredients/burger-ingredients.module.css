@@ -1,0 +1,35 @@
+.container {
+  display: flex;
+  justify-content: center;
+  height: 86vh;
+  width: 600px;
+}
+
+.block {
+  border: 3px solid blueviolet;
+}
+
+.content {
+  overflow-y: auto;
+  height: 64vh;
+  scrollbar-color: #8585AD #2F2F37;
+  scrollbar-width: 8px;
+}
+
+.content::-webkit-scrollbar {
+  background-color: #2F2F37;
+  width: 8px;
+}
+
+.content::-webkit-scrollbar-thumb {
+  background-color: #8585AD;
+}
+
+.list {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
