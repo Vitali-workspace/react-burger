@@ -1,0 +1,55 @@
+.container {
+  display: flex;
+  justify-content: center;
+  height: 94vh;
+  width: 600px;
+}
+
+.block {
+  border: 3px solid blueviolet;
+}
+
+.list {
+  display: flex;
+  height: 440px;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  scrollbar-color: #8585AD #2F2F37;
+  scrollbar-width: 8px;
+}
+
+.list::-webkit-scrollbar {
+  background-color: #2F2F37;
+  width: 8px;
+}
+
+.list::-webkit-scrollbar-thumb {
+  background-color: #8585AD;
+}
+
+.card {
+  display: flex;
+  align-items: center;
+}
+
+.buttonDrag {
+  cursor: pointer;
+}
+
+.order {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
