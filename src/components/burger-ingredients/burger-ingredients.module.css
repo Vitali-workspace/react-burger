@@ -1,7 +1,7 @@
 .container {
   display: flex;
   justify-content: center;
-  height: 86vh;
+  height: 94vh;
   width: 600px;
 }
 
@@ -11,7 +11,7 @@
 
 .content {
   overflow-y: auto;
-  height: 64vh;
+  height: 72vh;
   scrollbar-color: #8585AD #2F2F37;
   scrollbar-width: 8px;
 }
@@ -32,4 +32,8 @@
   list-style-type: none;
   margin: 0;
   padding: 0;
+}
+
+.tab {
+  display: flex;
 }
