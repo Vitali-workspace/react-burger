@@ -10,7 +10,9 @@ function Ingredient(props) {
 
   return (
     <li className={styleIngredient.card} key={props.data._id} onClick={mod}>
-      <span><Counter count={1} size="default" extraClass="m-1" /></span>
+      <span className={styleIngredient.count}>
+        <Counter count={1} size="default" extraClass="m-1" />
+      </span>
       <img src={props.data.image} alt={props.data.name} />
       <span className={styleIngredient.price + " text text_type_digits-default mt-1"}>
         {props.data.price}
