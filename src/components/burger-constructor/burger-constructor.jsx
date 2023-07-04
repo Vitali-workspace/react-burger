@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Button, ConstructorElement, CurrencyIcon, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import PropTypes from 'prop-types';
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
-import ModalOverlay from "../modal-overlay/modal-overlay";
 import styleConstructor from "./burger-constructor.module.css";
 
 
@@ -110,10 +110,14 @@ function BurgerConstructor({ data, itemDom }) {
           <Modal handleCloseClick={handleOrderClick} pointModal={itemDom}>
             <OrderDetails />
           </Modal>
-          <ModalOverlay />
         </>}
     </section>
   );
+}
+
+BurgerConstructor.propTypes = {
+  data: PropTypes.array,
+  itemDom: PropTypes.object,
 }
 
 export default BurgerConstructor;

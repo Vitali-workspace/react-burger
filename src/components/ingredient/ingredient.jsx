@@ -45,6 +45,9 @@ Ingredient.propTypes = {
   "image_mobile": PropTypes.string,
   "image_large": PropTypes.string,
   "__v": PropTypes.number,
+  handlePopupClick: PropTypes.func,
+  list: PropTypes.array,
+  stateIngredient: PropTypes.func,
 };
 
 export default Ingredient;

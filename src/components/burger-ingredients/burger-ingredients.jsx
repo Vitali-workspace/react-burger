@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
+import PropTypes from 'prop-types';
 import Ingredient from "../ingredient/ingredient";
 import Modal from '../modal/modal';
-import ModalOverlay from '../modal-overlay/modal-overlay';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import styleIngredients from "./burger-ingredients.module.css";
 
@@ -86,10 +86,14 @@ function BurgerIngredients({ data, itemDom }) {
           <Modal handleCloseClick={handlePopupClick} pointModal={itemDom}>
             <IngredientDetails ingredientInfo={selectedIngredient} />
           </Modal>
-          <ModalOverlay />
         </>}
     </section>
   );
+}
+
+BurgerIngredients.propTypes = {
+  data: PropTypes.array,
+  itemDom: PropTypes.object,
 }
 
 export default BurgerIngredients;
