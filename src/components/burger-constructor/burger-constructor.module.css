@@ -11,12 +11,12 @@
 
 .list {
   display: flex;
-  height: 440px;
-  gap: 10px;
+  height: 464px;
+  gap: 16px;
   justify-content: center;
   flex-wrap: wrap;
   list-style-type: none;
-  margin: 0;
+  margin: 0 12px 0 0;
   padding: 0;
   overflow-y: auto;
   scrollbar-color: #8585AD #2F2F37;
@@ -39,6 +39,8 @@
 
 .buttonDrag {
   cursor: pointer;
+  position: relative;
+  right: 7px;
 }
 
 .order {

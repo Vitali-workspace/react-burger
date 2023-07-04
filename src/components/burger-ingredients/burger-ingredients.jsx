@@ -1,19 +1,28 @@
 import { useState } from 'react';
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import Ingredient from "../ingredient/ingredient";
+import Modal from '../modal/modal';
+import ModalOverlay from '../modal-overlay/modal-overlay';
+import IngredientDetails from '../ingredient-details/ingredient-details';
 import styleIngredients from "./burger-ingredients.module.css";
 
 
-function BurgerIngredients({ data }) {
+function BurgerIngredients({ data, itemDom }) {
 
   const listBuns = data.filter((item) => item.type === "bun");
   const listSauces = data.filter((item) => item.type === "sauce");
   const listMains = data.filter((item) => item.type === "main");
   const [current, setCurrent] = useState('Булки');
+  const [openPopup, setOpenPopup] = useState(false);
+  const [selectedIngredient, setSelectedIngredient] = useState(null);
+
+  function handlePopupClick() {
+    setOpenPopup(!openPopup);
+  }
 
   return (
-    <section className={styleIngredients.container + " mr-10"}>
-      <div className={styleIngredients.block}>
+    <section className={styleIngredients.container + " mr-8 pr-4"}>
+      <div>
         <h1 className="text text_type_main-large mt-10 mb-5">Соберите бургер</h1>
 
         <div className={styleIngredients.tab}>
@@ -32,26 +41,53 @@ function BurgerIngredients({ data }) {
           <div>
             <h2 className="text text_type_main-medium pb-6">Булки</h2>
             <ul className={styleIngredients.list}>
-              {listBuns.map((item) => <Ingredient key={item._id} data={item} />)}
+              {listBuns.map((item) => <Ingredient
+                key={item._id}
+                data={item}
+                handlePopupClick={handlePopupClick}
+                list={listBuns}
+                stateIngredient={setSelectedIngredient}
+              />)}
+
             </ul>
           </div>
 
           <div>
             <h2 className="text text_type_main-medium pt-10 pb-6">Соусы</h2>
             <ul className={styleIngredients.list}>
-              {listSauces.map((item) => <Ingredient key={item._id} data={item} />)}
+              {listSauces.map((item) => <Ingredient
+                key={item._id}
+                data={item}
+                handlePopupClick={handlePopupClick}
+                list={listSauces}
+                stateIngredient={setSelectedIngredient}
+              />)}
             </ul>
           </div>
 
           <div>
             <h2 className="text text_type_main-medium mt-10 mb-6">Начинки</h2>
             <ul className={styleIngredients.list}>
-              {listMains.map((item) => <Ingredient key={item._id} data={item} />)}
+              {listMains.map((item) => <Ingredient
+                key={item._id}
+                data={item}
+                handlePopupClick={handlePopupClick}
+                list={listMains}
+                stateIngredient={setSelectedIngredient}
+              />)}
             </ul>
           </div>
 
         </div>
       </div>
+
+      {openPopup &&
+        <>
+          <Modal handleCloseClick={handlePopupClick} pointModal={itemDom}>
+            <IngredientDetails ingredientInfo={selectedIngredient} />
+          </Modal>
+          <ModalOverlay />
+        </>}
     </section>
   );
 }

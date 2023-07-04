@@ -4,7 +4,10 @@ import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 import styleApp from "./app.module.css"
-const API_URL = "https://norma.nomoreparties.space/api/ingredients";
+import API_URL from '../../utils/constants';
+
+const modalRoot = document.getElementById('root');
+
 
 function App() {
 
@@ -27,12 +30,14 @@ function App() {
     <div>
       <AppHeader />
       <main className={styleApp.content}>
-        <BurgerIngredients data={listIngredients} />
-        <BurgerConstructor />
+        <BurgerIngredients data={listIngredients} itemDom={modalRoot} />
+        {
+          listIngredients.length > 0 &&
+          <BurgerConstructor data={listIngredients} itemDom={modalRoot} />
+        }
       </main>
     </div>
   );
 }
 
 export default App;
-

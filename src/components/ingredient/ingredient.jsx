@@ -4,16 +4,25 @@ import PropTypes from 'prop-types';
 
 function Ingredient(props) {
 
-  function mod() {
-    console.log('Запуск модадьного окна');
+  function findIngredient(event) {
+    const urlCard = event.target;
+    const listIngredient = props.list;
+    const foundOIngredient = listIngredient.find(obj => obj.image === urlCard.src);
+    props.stateIngredient(foundOIngredient);
+    props.handlePopupClick();
   }
 
   return (
-    <li className={styleIngredient.card} key={props.data._id} onClick={mod}>
+    <li className={styleIngredient.card + " ml-2"} key={props.data._id}>
       <span className={styleIngredient.count}>
         <Counter count={1} size="default" extraClass="m-1" />
       </span>
-      <img src={props.data.image} alt={props.data.name} />
+      <img
+        className={styleIngredient.picture}
+        src={props.data.image}
+        alt={props.data.name}
+        onClick={findIngredient}
+      />
       <span className={styleIngredient.price + " text text_type_digits-default mt-1"}>
         {props.data.price}
         <span className="ml-2"><CurrencyIcon type="primary" /></span>

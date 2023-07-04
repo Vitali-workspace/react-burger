@@ -1,18 +1,24 @@
+import { useState } from "react";
 import { Button, ConstructorElement, CurrencyIcon, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import Modal from "../modal/modal";
+import OrderDetails from "../order-details/order-details";
+import ModalOverlay from "../modal-overlay/modal-overlay";
 import styleConstructor from "./burger-constructor.module.css";
 
 
-function BurgerConstructor({ data }) {
+function BurgerConstructor({ data, itemDom }) {
 
-  function mods() {
-    console.log('модальное окно');
+  const [openPopup, setOpenPopup] = useState(false);
+
+  function handleOrderClick() {
+    setOpenPopup(!openPopup);
   }
 
   return (
     <section className={styleConstructor.container}>
-      <div className={styleConstructor.block + " pt-20 mt-5"}>
+      <div className="pt-20 mt-5">
 
-        <div className={styleConstructor.menu}>
+        <div className={styleConstructor.menu + " ml-2"}>
           <ConstructorElement
             type="top"
             isLocked={true}
@@ -92,12 +98,20 @@ function BurgerConstructor({ data }) {
             {'1200'}
             <span className="ml-2"><CurrencyIcon type="primary" /></span>
           </span>
-          <Button htmlType="button" type="primary" size="large" onClick={mods}>
+          <Button htmlType="button" type="primary" size="large" onClick={handleOrderClick}>
             Оформить заказ
           </Button>
         </div>
 
       </div>
+
+      {openPopup &&
+        <>
+          <Modal handleCloseClick={handleOrderClick} pointModal={itemDom}>
+            <OrderDetails />
+          </Modal>
+          <ModalOverlay />
+        </>}
     </section>
   );
 }
