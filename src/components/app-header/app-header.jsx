@@ -4,7 +4,7 @@ import styleAppHeader from "./app-header.module.css";
 function AppHeader() {
 
   return (
-    <section className={styleAppHeader.header + " p-4"}>
+    <header className={styleAppHeader.header + " p-4"}>
       <div className={styleAppHeader.block}>
 
         <nav className={styleAppHeader.navigation}>
@@ -33,7 +33,7 @@ function AppHeader() {
           <p className="text text_type_main-default text_color_inactive pl-2 pr-5">Личный кабинет</p>
         </a>
       </div>
-    </section>
+    </header>
   );
 }
 

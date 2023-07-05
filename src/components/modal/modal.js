@@ -6,13 +6,12 @@ import ModalOverlay from '../modal-overlay/modal-overlay';
 import styleModal from "./modal.module.css";
 
 
-
 function Modal(props) {
 
   useEffect(() => {
     const handleKeyDown = function (e) {
       if (e.key === 'Escape') {
-        props.handleCloseClick();
+        props.closePopup();
       }
     };
     document.addEventListener('keydown', handleKeyDown);
@@ -24,10 +23,10 @@ function Modal(props) {
 
   return createPortal(
     <>
-      <ModalOverlay overlayCloseClick={props.handleCloseClick} />
+      <ModalOverlay overlayCloseClick={props.closePopup} />
       <section className={styleModal.container}>
         <div className={styleModal.popup}>
-          <button className={styleModal.buttonClose} onClick={props.handleCloseClick}>
+          <button className={styleModal.buttonClose} onClick={props.closePopup}>
             <CloseIcon type="primary" />
           </button>
           {props.children}
@@ -40,8 +39,8 @@ function Modal(props) {
 }
 
 Modal.propTypes = {
-  handleCloseClick: PropTypes.func,
-  pointModal: PropTypes.node,
+  closePopup: PropTypes.func,
+  pointModal: PropTypes.object,
 }
 
 export default Modal;
