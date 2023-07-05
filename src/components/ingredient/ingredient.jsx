@@ -13,7 +13,7 @@ function Ingredient(props) {
   }
 
   return (
-    <li className={styleIngredient.card + " ml-2"} key={props.data._id}>
+    <li className={styleIngredient.card + " ml-2"}>
       <span className={styleIngredient.count}>
         <Counter count={1} size="default" extraClass="m-1" />
       </span>
@@ -33,18 +33,7 @@ function Ingredient(props) {
 }
 
 Ingredient.propTypes = {
-  "_id": PropTypes.string,
-  "name": PropTypes.string,
-  "type": PropTypes.string,
-  "proteins": PropTypes.number,
-  "fat": PropTypes.number,
-  "carbohydrates": PropTypes.number,
-  "calories": PropTypes.number,
-  "price": PropTypes.number,
-  "image": PropTypes.string,
-  "image_mobile": PropTypes.string,
-  "image_large": PropTypes.string,
-  "__v": PropTypes.number,
+  data: PropTypes.object,
   handlePopupClick: PropTypes.func,
   list: PropTypes.array,
   stateIngredient: PropTypes.func,
