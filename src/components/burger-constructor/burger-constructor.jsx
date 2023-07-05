@@ -9,6 +9,7 @@ import styleConstructor from "./burger-constructor.module.css";
 function BurgerConstructor({ data, itemDom }) {
 
   const [openPopup, setOpenPopup] = useState(false);
+  const saucesAndMains = data.filter((item) => item.type !== "bun");
 
   function handleOrderClick() {
     setOpenPopup(!openPopup);
@@ -28,59 +29,17 @@ function BurgerConstructor({ data, itemDom }) {
           />
 
           <ul className={styleConstructor.list}>
-            <li className={styleConstructor.card}>
-              <span className={styleConstructor.buttonDrag}><DragIcon type="primary" /></span>
-              <ConstructorElement
-                text="Соус традиционный галактический"
-                price={300}
-                thumbnail={data[8].image}
-              />
-            </li>
-
-            <li className={styleConstructor.card}>
-              <span className={styleConstructor.buttonDrag}><DragIcon type="primary" /></span>
-              <ConstructorElement
-                text="Мясо бессмертных моллюсков Protostomia"
-                price={30}
-                thumbnail={data[5].image}
-              />
-            </li>
-
-            <li className={styleConstructor.card}>
-              <span className={styleConstructor.buttonDrag}><DragIcon type="primary" /></span>
-              <ConstructorElement
-                text="Плоды Фалленианского дерева"
-                price={80}
-                thumbnail={data[11].image}
-              />
-            </li>
-
-            <li className={styleConstructor.card}>
-              <span className={styleConstructor.buttonDrag}><DragIcon type="primary" /></span>
-              <ConstructorElement
-                text="Хрустящие минеральные кольца"
-                price={80}
-                thumbnail={data[10].image}
-              />
-            </li>
-
-            <li className={styleConstructor.card}>
-              <span className={styleConstructor.buttonDrag}><DragIcon type="primary" /></span>
-              <ConstructorElement
-                text="Хрустящие минеральные кольца"
-                price={80}
-                thumbnail={data[10].image}
-              />
-            </li>
-
-            <li className={styleConstructor.card}>
-              <span className={styleConstructor.buttonDrag}><DragIcon type="primary" /></span>
-              <ConstructorElement
-                text="Хрустящие минеральные кольца"
-                price={80}
-                thumbnail={data[10].image}
-              />
-            </li>
+            {
+              saucesAndMains.map((item) => (
+                <li className={styleConstructor.card} key={item._id}>
+                  <span className={styleConstructor.buttonDrag}><DragIcon type="primary" /></span>
+                  <ConstructorElement
+                    text={item.name}
+                    price={item.price}
+                    thumbnail={item.image}
+                  />
+                </li>
+              ))}
           </ul>
 
           <ConstructorElement
@@ -105,12 +64,12 @@ function BurgerConstructor({ data, itemDom }) {
 
       </div>
 
-      {openPopup &&
-        <>
-          <Modal handleCloseClick={handleOrderClick} pointModal={itemDom}>
-            <OrderDetails />
-          </Modal>
-        </>}
+      {
+        openPopup &&
+        <Modal closePopup={handleOrderClick} pointModal={itemDom}>
+          <OrderDetails />
+        </Modal>
+      }
     </section>
   );
 }

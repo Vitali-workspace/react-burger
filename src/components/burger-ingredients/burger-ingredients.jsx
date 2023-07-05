@@ -41,52 +41,57 @@ function BurgerIngredients({ data, itemDom }) {
           <div>
             <h2 className="text text_type_main-medium pb-6">Булки</h2>
             <ul className={styleIngredients.list}>
-              {listBuns.map((item) => <Ingredient
-                key={item._id}
-                data={item}
-                handlePopupClick={handlePopupClick}
-                list={listBuns}
-                stateIngredient={setSelectedIngredient}
-              />)}
-
+              {listBuns.map((item) => (
+                <Ingredient
+                  key={item._id}
+                  data={item}
+                  handlePopupClick={handlePopupClick}
+                  list={listBuns}
+                  stateIngredient={setSelectedIngredient}
+                />
+              ))}
             </ul>
           </div>
 
           <div>
             <h2 className="text text_type_main-medium pt-10 pb-6">Соусы</h2>
             <ul className={styleIngredients.list}>
-              {listSauces.map((item) => <Ingredient
-                key={item._id}
-                data={item}
-                handlePopupClick={handlePopupClick}
-                list={listSauces}
-                stateIngredient={setSelectedIngredient}
-              />)}
+              {listSauces.map((item) => (
+                <Ingredient
+                  key={item._id}
+                  data={item}
+                  handlePopupClick={handlePopupClick}
+                  list={listSauces}
+                  stateIngredient={setSelectedIngredient}
+                />
+              ))}
             </ul>
           </div>
 
           <div>
             <h2 className="text text_type_main-medium mt-10 mb-6">Начинки</h2>
             <ul className={styleIngredients.list}>
-              {listMains.map((item) => <Ingredient
-                key={item._id}
-                data={item}
-                handlePopupClick={handlePopupClick}
-                list={listMains}
-                stateIngredient={setSelectedIngredient}
-              />)}
+              {listMains.map((item) => (
+                <Ingredient
+                  key={item._id}
+                  data={item}
+                  handlePopupClick={handlePopupClick}
+                  list={listMains}
+                  stateIngredient={setSelectedIngredient}
+                />
+              ))}
             </ul>
           </div>
 
         </div>
       </div>
 
-      {openPopup &&
-        <>
-          <Modal handleCloseClick={handlePopupClick} pointModal={itemDom}>
-            <IngredientDetails ingredientInfo={selectedIngredient} />
-          </Modal>
-        </>}
+      {
+        openPopup &&
+        <Modal closePopup={handlePopupClick} pointModal={itemDom}>
+          <IngredientDetails ingredientInfo={selectedIngredient} />
+        </Modal>
+      }
     </section>
   );
 }
