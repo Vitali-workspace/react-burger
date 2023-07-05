@@ -15,14 +15,15 @@ function App() {
 
   useEffect(() => {
     fetch(API_URL)
-      .then(response => response.json())
-      .then(data => setListIngredients(data.data))
-      .catch((res) => {
-        if (!res.ok) {
-          return Promise.reject(`произошла ошибка: ${res.status}`);
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
         }
-        return res.json();
-      });
+        return Promise.reject(`произошла ошибка: ${response.status}`);
+      })
+      .then(data => setListIngredients(data.data))
+      .catch(console.error);
+
   }, []);
 
 
