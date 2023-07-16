@@ -1,0 +1,27 @@
+.list {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  list-style-type: none;
+  width: 516px;
+  margin: 0;
+  padding: 0;
+  gap: 28px;
+}
+
+.title {
+  display: flex;
+  align-self: flex-start;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 56px;
+}
+
+.block {
+  display: inline-block;
+  width: 106px;
+}
