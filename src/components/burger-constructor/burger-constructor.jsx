@@ -15,6 +15,13 @@ function BurgerConstructor({ itemDom }) {
   const list = constructorContext.listIngredients;
   const saucesAndMains = list.filter((item) => item.type !== "bun");
 
+  //! функция для наглядного изменения цен
+  function randomObject(saucesAndMains) {
+    const randomIndex = Math.floor(Math.random() * saucesAndMains.length);
+    saucesAndMains.splice(randomIndex, 1);
+    return saucesAndMains;
+  }
+  randomObject(saucesAndMains);
 
 
   const totalPrice = saucesAndMains.reduce((acc, curr) => acc + curr.price, 0);
