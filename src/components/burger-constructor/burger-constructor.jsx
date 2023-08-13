@@ -13,25 +13,32 @@ function BurgerConstructor({ itemDom }) {
   const constructorContext = useContext(BurgerConstructorContext);
 
   const list = constructorContext.listIngredients;
-  const saucesAndMains = list.filter((item) => item.type !== "bun");
+  const saucesAndMains = list?.filter((item) => item.type !== "bun");
+  const buns = list?.filter((item) => item.type !== "sauce" && item.type !== "main");
 
   //! функция для наглядного изменения цен
-  function randomObject(saucesAndMains) {
+  const randomBun = buns[Math.floor(Math.random() * buns.length)];
+
+  function randomIngredients(saucesAndMains) {
     const randomIndex = Math.floor(Math.random() * saucesAndMains.length);
     saucesAndMains.splice(randomIndex, 1);
     return saucesAndMains;
   }
-  randomObject(saucesAndMains);
+  randomIngredients(saucesAndMains);
 
 
-  const totalPrice = saucesAndMains.reduce((acc, curr) => acc + curr.price, 0);
+  const totalPrice = (saucesAndMains.reduce((acc, curr) => acc + curr.price, 0)) + randomBun.price * 2;
+  console.log(totalPrice + " общая цена"); //!
 
   function handleOrderClick() {
     setOpenPopup(!openPopup);
   }
 
   function handleOrderNumber() {
-    constructorContext.getOrderNumber(list);
+    const listId = [...saucesAndMains, randomBun];
+    constructorContext.handleOrder(listId)
+
+    // console.log(constructorContext.getOrderNumber(listId)); //!
   }
 
 
@@ -43,9 +50,9 @@ function BurgerConstructor({ itemDom }) {
           <ConstructorElement
             type="top"
             isLocked={true}
-            text="Краторная булка N-200i (верх)"
-            price={20}
-            thumbnail={list[0].image}
+            text={randomBun.name + " (верх)"}
+            price={randomBun.price}
+            thumbnail={randomBun.image}
           />
 
           <ul className={styleConstructor.list}>
@@ -69,9 +76,9 @@ function BurgerConstructor({ itemDom }) {
           <ConstructorElement
             type="bottom"
             isLocked={true}
-            text="Краторная булка N-200i (низ)"
-            price={20}
-            thumbnail={list[0].image}
+            text={randomBun.name + " (низ)"}
+            price={randomBun.price}
+            thumbnail={randomBun.image}
           />
         </div>
 
