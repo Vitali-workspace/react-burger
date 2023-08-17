@@ -18,15 +18,17 @@ class requestApi {
       .catch(console.error);
   }
 
-  getIngredients(setListIngredients) {
-    return fetch(API_URL)
+  getIngredients() {
+    return fetch(API_URL, {
+      method: 'GET'
+    })
       .then((response) => {
         if (response.ok) {
           return response.json();
         }
         return Promise.reject(`произошла ошибка: ${response.status}`);
       })
-      .then(res => setListIngredients(res.data))
+      .then(res => res.data)
       .catch(console.error);
   }
 
