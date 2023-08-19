@@ -1,63 +1,63 @@
-
-import { useState, useEffect } from 'react';
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
-import styleApp from "./app.module.css"
-import API_URL from '../../utils/constants';
-import { BurgerConstructorContext } from '../../services/context/burger-constructor-context';
-
-const modalRoot = document.getElementById('root');
-const API_URL_ORDER = "https://norma.nomoreparties.space/api/orders"; //! test
+import Modal from "../modal/modal";
+import OrderDetails from "../order-details/order-details";
+import IngredientDetails from "../ingredient-details/ingredient-details";
+import { getIngredients } from "../../services/actions/action-burger-ingredients";
+import { CLOSE_MODAL_INGREDIENT_DETAILS, REJECT_INGREDIENT } from "../../services/actions/action-ingredient-details";
+import { CLOSE_MODAL_ORDER_DETAILS } from "../../services/actions/action-order-details";
+import styleApp from "./app.module.css";
 
 
 function App() {
 
-  const [listIngredients, setListIngredients] = useState([]);
-  const [statusOrder, setStatusOrder] = useState({});
+  const dispatch = useDispatch();
+  const modalOrderDetails = useSelector(state => state.orderDetails.openModal);
+  const modalIngredientDetails = useSelector(state => state.ingredientDetails.openModal);
 
-  useEffect(() => {
-    fetch(API_URL)
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-        return Promise.reject(`произошла ошибка: ${response.status}`);
-      })
-      .then(data => setListIngredients(data.data))
-      .catch(console.error);
-  }, []);
-
-
-  function getOrderNumber(listId) {
-    console.log(listId)
-    return fetch(API_URL_ORDER, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ "ingredients": listId }),
-    })
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-        return Promise.reject(`произошла ошибка: ${response.status}`);
-      })
-      .then(data => setStatusOrder(data))
-      .catch(console.error);
+  function closeModalOrderDetails() {
+    dispatch({ type: CLOSE_MODAL_ORDER_DETAILS });
   }
+
+  function closeModalIngredientDetails() {
+    dispatch({ type: CLOSE_MODAL_INGREDIENT_DETAILS });
+    dispatch({ type: REJECT_INGREDIENT });
+  }
+
+  useEffect(() => { dispatch(getIngredients()) }, [dispatch]);
+
 
   return (
     <div>
       <AppHeader />
       <main className={styleApp.content}>
-        <BurgerConstructorContext.Provider value={{ listIngredients, getOrderNumber, statusOrder }}>
-          {/* <BurgerIngredients data={listIngredients} itemDom={modalRoot} /> */}
-          {
-            listIngredients.length > 0 &&
-            <BurgerConstructor itemDom={modalRoot} />
-          }
-        </BurgerConstructorContext.Provider>
+        <DndProvider backend={HTML5Backend}>
+          <BurgerIngredients />
+          <BurgerConstructor />
+        </DndProvider>
       </main>
+
+      {
+        modalOrderDetails && (
+          <Modal closePopup={closeModalOrderDetails}>
+            <OrderDetails />
+          </Modal>
+        )
+      }
+
+      {
+        modalIngredientDetails && (
+          <Modal closePopup={closeModalIngredientDetails}>
+            <IngredientDetails />
+          </Modal>
+        )
+      }
+
     </div>
   );
 }
