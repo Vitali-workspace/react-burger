@@ -14,7 +14,6 @@ class requestApi {
         }
         return Promise.reject(`произошла ошибка: ${response.status}`);
       })
-      .then(data => data)
       .catch(console.error);
   }
 
@@ -28,7 +27,6 @@ class requestApi {
         }
         return Promise.reject(`произошла ошибка: ${response.status}`);
       })
-      .then(res => res.data)
       .catch(console.error);
   }
 
