@@ -1,115 +1,87 @@
-import { useState, useContext } from "react";
-import { Button, ConstructorElement, CurrencyIcon, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import PropTypes from 'prop-types';
-import Modal from "../modal/modal";
-import OrderDetails from "../order-details/order-details";
+import { useMemo } from "react";
+import { Button, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import ConstructorMenu from "../constructor-menu/constructor-menu";
+import ConstructorBun from "../constructor-bun/constructor-bun";
+import { useDrop } from "react-dnd";
+import { useDispatch, useSelector } from "react-redux";
+import { REPLACE_BUN, INCREASE_INGREDIENT, DECREASE_INGREDIENT } from "../../services/actions/action-burger-ingredients";
+import { REMOVE_INGREDIENT, ADD_INGREDIENT, SELECT_BUNS } from "../../services/actions/action-burger-constructor";
+import { actionOrderDetails } from "../../services/actions/action-order-details";
+import { v4 as uuid } from "uuid";
+import { TYPE_BUN, TYPE_DND, TYPE_INGREDIENT } from "../../utils/constants";
 import styleConstructor from "./burger-constructor.module.css";
-import { BurgerConstructorContext } from "../../services/context/burger-constructor-context";
 
 
-function BurgerConstructor({ itemDom }) {
+function BurgerConstructor() {
 
-  const [openPopup, setOpenPopup] = useState(false);
-  const constructorContext = useContext(BurgerConstructorContext);
+  const dispatch = useDispatch();
+  const { bun } = useSelector(state => state.burgerConstructor);
+  const constructorIngredients = useSelector(state => state.burgerConstructor.ingredients);
 
-  const list = constructorContext.listIngredients;
-  const saucesAndMains = list?.filter((item) => item.type !== "bun");
-  const buns = list?.filter((item) => item.type !== "sauce" && item.type !== "main");
+  const [, dropTargetRef] = useDrop({
+    accept: TYPE_DND.ITEM_FROM_INGREDIENTS,
+    drop(ingredient) {
+      handleOnDrop(ingredient);
+    }
+  });
 
-  //! функция для наглядного изменения цен
-  const randomBun = buns[Math.floor(Math.random() * buns.length)];
+  const totalPrice = useMemo(() => {
+    return constructorIngredients.reduce((sumPrice, current) => {
+      if (current.price) {
+        return sumPrice + current.price;
+      }
+      return sumPrice;
+    }, 0) + (bun ? 2 * bun.price : 0);
+  }, [bun, constructorIngredients]);
 
-  function randomIngredients(saucesAndMains) {
-    const randomIndex = Math.floor(Math.random() * saucesAndMains.length);
-    saucesAndMains.splice(randomIndex, 1);
-    return saucesAndMains;
+
+  function handleDeleteClick(uuid, _id) {
+    dispatch({ type: REMOVE_INGREDIENT, uuid: uuid });
+    dispatch({ type: DECREASE_INGREDIENT, _id: _id });
   }
-  randomIngredients(saucesAndMains);
 
-
-  const totalPrice = (saucesAndMains.reduce((acc, curr) => acc + curr.price, 0)) + randomBun.price * 2;
-  console.log(totalPrice + " общая цена"); //!
-
-  function handleOrderClick() {
-    setOpenPopup(!openPopup);
+  function buttonOrderClick() {
+    const listOrderId = [bun._id, ...constructorIngredients.map((ingredient) => ingredient._id), bun._id];
+    dispatch(actionOrderDetails(listOrderId));
   }
 
-  function handleOrderNumber() {
-    const listId = [...saucesAndMains, randomBun];
-    constructorContext.handleOrder(listId)
+  function handleOnDrop(ingredient) {
+    const { type, _id } = ingredient;
 
-    // console.log(constructorContext.getOrderNumber(listId)); //!
+    switch (type) {
+      case TYPE_INGREDIENT.BUN: {
+        dispatch({ type: REPLACE_BUN, _id: _id });
+        dispatch({ type: SELECT_BUNS, bun: ingredient });
+        break;
+      }
+      default: {
+        dispatch({ type: INCREASE_INGREDIENT, _id: _id });
+        dispatch({ type: ADD_INGREDIENT, ingredient: { ...ingredient, uuid: uuid() } });
+        break;
+      }
+    }
   }
 
 
   return (
-    <section className={styleConstructor.container}>
-      <div className="pt-20 mt-5">
+    <section className={`${styleConstructor.container} mt-25`} ref={dropTargetRef}>
 
-        <div className={styleConstructor.menu + " ml-2"}>
-          <ConstructorElement
-            type="top"
-            isLocked={true}
-            text={randomBun.name + " (верх)"}
-            price={randomBun.price}
-            thumbnail={randomBun.image}
-          />
+      <ul className={`${styleConstructor.list}`}>
+        {<ConstructorBun type={TYPE_BUN.TOP} />}
+        <ConstructorMenu deleteIngredients={handleDeleteClick} />
+        {<ConstructorBun type={TYPE_BUN.BOTTOM} />}
+      </ul>
 
-          <ul className={styleConstructor.list}>
-            {
-              saucesAndMains.map((item) => {
+      <div className={`${styleConstructor.block} mt-10 mr-4`}>
+        <span className="text text_type_digits-medium mr-10">{totalPrice} <CurrencyIcon type="primary" /></span>
 
-                return (
-                  <li className={styleConstructor.card} key={item._id}>
-                    <span className={styleConstructor.buttonDrag}><DragIcon type="primary" /></span>
-                    <ConstructorElement
-                      text={item.name}
-                      price={item.price}
-                      thumbnail={item.image}
-                    />
-                  </li>
-                )
-              })
-            }
-          </ul>
-
-          <ConstructorElement
-            type="bottom"
-            isLocked={true}
-            text={randomBun.name + " (низ)"}
-            price={randomBun.price}
-            thumbnail={randomBun.image}
-          />
-        </div>
-
-
-        <div className={styleConstructor.order + " mt-10 mr-4 pb-15"}>
-          <span className={"text text_type_digits-medium mr-10"}>
-            {totalPrice}
-            <span className="ml-2"><CurrencyIcon type="primary" /></span>
-          </span>
-          <Button htmlType="button" type="primary" size="large" onClick={() => {
-            handleOrderNumber();
-            handleOrderClick();
-          }}>
-            Оформить заказ
-          </Button>
-        </div>
-
+        <Button htmlType="button" onClick={buttonOrderClick} type="primary" disabled={!bun} size="large">
+          Оформить заказ
+        </Button>
       </div>
-
-      {
-        openPopup &&
-        <Modal closePopup={handleOrderClick} pointModal={itemDom}>
-          <OrderDetails />
-        </Modal>
-      }
     </section>
   );
 }
 
-BurgerConstructor.propTypes = {
-  itemDom: PropTypes.object,
-}
 
 export default BurgerConstructor;
