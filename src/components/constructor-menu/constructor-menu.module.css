@@ -1,7 +1,8 @@
 .menu {
   display: grid;
   grid-template-columns: max-content;
-  max-height: calc(80px * 4 + 3 * 16px);
+  max-height: 465px;
+  min-height: fit-content;
   overflow-y: scroll;
   gap: calc(4px * 4);
 }

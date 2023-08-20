@@ -2,20 +2,31 @@
   width: 600px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: flex-end;
 }
 
+.image {
+  height: 36px;
+  width: 36px;
+  margin-left: 9px;
+}
+
+.price {
+  display: flex;
+}
 
 .block {
   display: flex;
   flex-direction: row;
+  justify-content: flex-end;
   align-items: center;
+  padding-right: 16px;
+  margin-bottom: 53px;
 }
 
 .list {
   display: grid;
   grid-template-columns: max-content;
+  max-height: fit-content;
   list-style: none;
   gap: calc(4px * 4);
   margin: 0;

@@ -9,6 +9,7 @@ import { REMOVE_INGREDIENT, ADD_INGREDIENT, SELECT_BUNS } from "../../services/a
 import { actionOrderDetails } from "../../services/actions/action-order-details";
 import { v4 as uuid } from "uuid";
 import { TYPE_BUN, TYPE_DND, TYPE_INGREDIENT } from "../../utils/constants";
+import icon from "../../images/gem.svg"
 import styleConstructor from "./burger-constructor.module.css";
 
 
@@ -73,7 +74,10 @@ function BurgerConstructor() {
       </ul>
 
       <div className={`${styleConstructor.block} mt-10 mr-4`}>
-        <span className="text text_type_digits-medium mr-10">{totalPrice} <CurrencyIcon type="primary" /></span>
+        <span className={`text text_type_digits-medium mr-10 ${styleConstructor.price}`}>
+          {totalPrice}
+          <img className={styleConstructor.image} src={icon} alt="валюта" />
+        </span>
 
         <Button htmlType="button" onClick={buttonOrderClick} type="primary" disabled={!bun} size="large">
           Оформить заказ

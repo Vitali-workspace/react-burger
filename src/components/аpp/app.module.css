@@ -2,6 +2,6 @@
   display: grid;
   margin: 0 auto;
   grid-template-columns: max-content max-content;
-  gap: calc(4px * 10);
+  column-gap: 52px;
   max-width: max-content;
 }

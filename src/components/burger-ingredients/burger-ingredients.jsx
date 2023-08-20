@@ -61,7 +61,7 @@ function BurgerIngredients() {
 
 
   return (
-    <section className="mt-10">
+    <section className={`mt-10 ${styleIngredients.content}`}>
       <h1 className="text text_type_main-large mb-5">Соберите бургер</h1>
       <IngredientsTabs tabClick={handleClickTab} />
       <div className={`${styleIngredients.container} custom-scroll mt-10 pr-2`} onScroll={scrolling}>

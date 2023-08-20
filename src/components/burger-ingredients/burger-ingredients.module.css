@@ -3,9 +3,14 @@
   flex-direction: column;
 }
 
+.content {
+  width: 603px;
+  margin-left: 10px;
+}
+
 
 .container {
-  max-height: calc(100vh - 400px);
+  max-height: 60vh;
   max-width: max-content;
   overflow-x: hidden;
   overflow-y: scroll;
