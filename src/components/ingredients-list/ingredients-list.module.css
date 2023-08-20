@@ -1,0 +1,7 @@
+.list {
+  display: grid;
+  grid-template-columns: min-content min-content;
+  list-style: none;
+  padding: 0;
+  gap: calc(4px * 8) calc(4px * 6);
+}

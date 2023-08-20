@@ -1,0 +1,12 @@
+.tabs {
+  padding: 0;
+  margin: 0;
+}
+
+.list {
+  display: flex;
+  flex-direction: row;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
