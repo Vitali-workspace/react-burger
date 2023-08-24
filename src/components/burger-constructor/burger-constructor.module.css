@@ -1,58 +1,34 @@
 .container {
-  display: flex;
-  justify-content: center;
-  height: 94vh;
   width: 600px;
+  display: flex;
+  flex-direction: column;
+}
+
+.image {
+  height: 36px;
+  width: 36px;
+  margin-left: 9px;
+}
+
+.price {
+  display: flex;
 }
 
 .block {
-  border: 3px solid blueviolet;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  padding-right: 16px;
+  margin-bottom: 53px;
 }
 
 .list {
-  display: flex;
-  height: 464px;
-  gap: 16px;
-  justify-content: center;
-  flex-wrap: wrap;
-  list-style-type: none;
-  margin: 0 12px 0 0;
+  display: grid;
+  grid-template-columns: max-content;
+  max-height: fit-content;
+  list-style: none;
+  gap: calc(4px * 4);
+  margin: 0;
   padding: 0;
-  overflow-y: auto;
-  scrollbar-color: #8585AD #2F2F37;
-  scrollbar-width: 8px;
-}
-
-.list::-webkit-scrollbar {
-  background-color: #2F2F37;
-  width: 8px;
-}
-
-.list::-webkit-scrollbar-thumb {
-  background-color: #8585AD;
-}
-
-.card {
-  display: flex;
-  align-items: center;
-  width: 100%;
-}
-
-.buttonDrag {
-  cursor: pointer;
-  position: relative;
-  right: 7px;
-}
-
-.order {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-}
-
-.menu {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 16px;
 }

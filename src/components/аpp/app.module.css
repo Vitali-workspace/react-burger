@@ -1,4 +1,7 @@
 .content {
-  display: flex;
-  justify-content: center;
+  display: grid;
+  margin: 0 auto;
+  grid-template-columns: max-content max-content;
+  column-gap: 52px;
+  max-width: max-content;
 }

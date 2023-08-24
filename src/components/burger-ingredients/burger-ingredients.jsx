@@ -1,104 +1,80 @@
-import { useState } from 'react';
-import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
-import PropTypes from 'prop-types';
-import Ingredient from "../ingredient/ingredient";
-import Modal from '../modal/modal';
-import IngredientDetails from '../ingredient-details/ingredient-details';
-import styleIngredients from "./burger-ingredients.module.css";
+import { useMemo, useRef } from "react";
+import IngredientsTabs from "../ingredients-tabs/ingredients-tabs";
+import IngredientsList from "../ingredients-list/ingredients-list";
+import { useDispatch, useSelector } from "react-redux";
+import { SELECT_TAB } from "../../services/actions/action-burger-ingredients";
+import { OPEN_MODAL_INGREDIENT_DETAILS, selectIngredient } from "../../services/actions/action-ingredient-details";
+import { TYPE_INGREDIENT, CONFIG_SCROLL, NAMES_INGREDIENTS } from "../../utils/constants";
+import styleIngredients from "./burger-ingredients.module.css"
 
 
-function BurgerIngredients({ data, itemDom }) {
+function BurgerIngredients() {
 
-  const listBuns = data.filter((item) => item.type === "bun");
-  const listSauces = data.filter((item) => item.type === "sauce");
-  const listMains = data.filter((item) => item.type === "main");
-  const [current, setCurrent] = useState('Булки');
-  const [openPopup, setOpenPopup] = useState(false);
-  const [selectedIngredient, setSelectedIngredient] = useState(null);
+  const dispatch = useDispatch();
+  const { ingredients } = useSelector(state => state.burgerIngredients);
 
-  function handlePopupClick() {
-    setOpenPopup(!openPopup);
+  const listBuns = useMemo(() => ingredients.filter((ingredient) => ingredient.type === TYPE_INGREDIENT.BUN), [ingredients]);
+  const listMains = useMemo(() => ingredients.filter((ingredient) => ingredient.type === TYPE_INGREDIENT.MAIN), [ingredients]);
+  const listSauces = useMemo(() => ingredients.filter((ingredient) => ingredient.type === TYPE_INGREDIENT.SAUCE), [ingredients]);
+
+  const refBun = useRef(null);
+  const refMain = useRef(null);
+  const refSauce = useRef(null);
+
+  function handleClickIngredient(ingredient) {
+    dispatch(selectIngredient(ingredient));
+    dispatch({ type: OPEN_MODAL_INGREDIENT_DETAILS });
   }
 
+  function handleClickTab(tab) {
+    dispatch({ type: SELECT_TAB, tab });
+
+    switch (tab) {
+      case NAMES_INGREDIENTS.SAUCE:
+        refSauce.current.scrollIntoView(CONFIG_SCROLL);
+        break;
+      case NAMES_INGREDIENTS.BUN:
+        refBun.current.scrollIntoView(CONFIG_SCROLL);
+        break;
+      case NAMES_INGREDIENTS.MAIN:
+        refMain.current.scrollIntoView(CONFIG_SCROLL);
+        break;
+      default:
+        break;
+    }
+  }
+
+  function scrolling(evt) {
+
+    const scroll = evt.target.scrollTop;
+    const scrollMain = refMain.current.getBoundingClientRect().top - refBun.current.getBoundingClientRect().top;
+    const scrollSauce = refSauce.current.getBoundingClientRect().top - refBun.current.getBoundingClientRect().top;
+
+    if (scroll >= scrollMain) {
+      dispatch({ type: SELECT_TAB, tab: NAMES_INGREDIENTS.MAIN });
+    } else if (scroll < scrollSauce) {
+      dispatch({ type: SELECT_TAB, tab: NAMES_INGREDIENTS.BUN });
+    } else {
+      dispatch({ type: SELECT_TAB, tab: NAMES_INGREDIENTS.SAUCE });
+    }
+  }
+
+
   return (
-    <section className={styleIngredients.container + " mr-8 pr-4"}>
-      <div>
-        <h1 className="text text_type_main-large mt-10 mb-5">Соберите бургер</h1>
-
-        <div className={styleIngredients.tab}>
-          <Tab value="Булки" active={current === 'Булки'} onClick={setCurrent}>
-            Булки
-          </Tab>
-          <Tab value="Соусы" active={current === 'Соусы'} onClick={setCurrent}>
-            Соусы
-          </Tab>
-          <Tab value="Начинки" active={current === 'Начинки'} onClick={setCurrent}>
-            Начинки
-          </Tab>
-        </div>
-
-        <div className={styleIngredients.content + " mt-10"}>
-          <div>
-            <h2 className="text text_type_main-medium pb-6">Булки</h2>
-            <ul className={styleIngredients.list}>
-              {listBuns.map((item) => (
-                <Ingredient
-                  key={item._id}
-                  data={item}
-                  handlePopupClick={handlePopupClick}
-                  list={listBuns}
-                  stateIngredient={setSelectedIngredient}
-                />
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h2 className="text text_type_main-medium pt-10 pb-6">Соусы</h2>
-            <ul className={styleIngredients.list}>
-              {listSauces.map((item) => (
-                <Ingredient
-                  key={item._id}
-                  data={item}
-                  handlePopupClick={handlePopupClick}
-                  list={listSauces}
-                  stateIngredient={setSelectedIngredient}
-                />
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h2 className="text text_type_main-medium mt-10 mb-6">Начинки</h2>
-            <ul className={styleIngredients.list}>
-              {listMains.map((item) => (
-                <Ingredient
-                  key={item._id}
-                  data={item}
-                  handlePopupClick={handlePopupClick}
-                  list={listMains}
-                  stateIngredient={setSelectedIngredient}
-                />
-              ))}
-            </ul>
-          </div>
-
-        </div>
+    <section className={`mt-10 ${styleIngredients.content}`}>
+      <h1 className="text text_type_main-large mb-5">Соберите бургер</h1>
+      <IngredientsTabs tabClick={handleClickTab} />
+      <div className={`${styleIngredients.container} custom-scroll mt-10 pr-2`} onScroll={scrolling}>
+        <p className="text text_type_main-medium" ref={refBun}>{NAMES_INGREDIENTS.BUN}</p>
+        <IngredientsList ingredients={listBuns} selectItem={handleClickIngredient} />
+        <p className="text text_type_main-medium" ref={refSauce}>{NAMES_INGREDIENTS.SAUCE}</p>
+        <IngredientsList ingredients={listSauces} selectItem={handleClickIngredient} />
+        <p className="text text_type_main-medium" ref={refMain}>{NAMES_INGREDIENTS.MAIN}</p>
+        <IngredientsList ingredients={listMains} selectItem={handleClickIngredient} />
       </div>
-
-      {
-        openPopup &&
-        <Modal closePopup={handlePopupClick} pointModal={itemDom}>
-          <IngredientDetails ingredientInfo={selectedIngredient} />
-        </Modal>
-      }
     </section>
   );
 }
 
-BurgerIngredients.propTypes = {
-  data: PropTypes.array,
-  itemDom: PropTypes.object,
-}
 
 export default BurgerIngredients;

@@ -1,0 +1,17 @@
+.ingredient {
+  display: flex;
+  min-width: 568px;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  opacity: 1;
+  cursor: grab;
+}
+
+.ingredient:active {
+  cursor: grabbing;
+}
+
+.drag {
+  opacity: 0;
+}
