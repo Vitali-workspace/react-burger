@@ -1,0 +1,25 @@
+.container {
+  display: flex;
+  width: 480px;
+  text-align: center;
+}
+
+.navigation {
+  display: flex;
+  flex-direction: column;
+}
+
+.list {
+  list-style-type: none;
+}
+
+.inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 24px 0;
+}
+
+.link {
+  text-decoration: none;
+  color: #4C4CFF;
+}
