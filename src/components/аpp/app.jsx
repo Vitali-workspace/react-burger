@@ -2,12 +2,21 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
+import { Route, Routes } from "react-router-dom";
 import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
 import IngredientDetails from "../ingredient-details/ingredient-details";
+import ProtectedRouteElement from "../protected-route-element/protected-route-element";
+import Login from "../../pages/login/login";
+import Register from "../../pages/register/register";
+import ForgotPassword from "../../pages/forgot-password/forgot-password";
+import ResetPassword from "../../pages/reset-password/reset-password";
+import Profile from "../../pages/profile/profile";
+
+import PageNotFound from "../../pages/page-not-found/page-not-found";
 import { getIngredients } from "../../services/actions/action-burger-ingredients";
 import { CLOSE_MODAL_INGREDIENT_DETAILS, REJECT_INGREDIENT } from "../../services/actions/action-ingredient-details";
 import { CLOSE_MODAL_ORDER_DETAILS } from "../../services/actions/action-order-details";
@@ -36,10 +45,31 @@ function App() {
     <div>
       <AppHeader />
       <main className={styleApp.content}>
-        <DndProvider backend={HTML5Backend}>
-          <BurgerIngredients />
-          <BurgerConstructor />
-        </DndProvider>
+        <Routes>
+          <Route
+            path="/"
+            exact
+            element={
+              <DndProvider backend={HTML5Backend}>
+                <BurgerIngredients />
+                <BurgerConstructor />
+              </DndProvider>
+            }
+          />
+
+          <Route path="/login" exact element={<Login />} />
+          <Route path="/register" exact element={<Register />} />
+          <Route path="/forgot-password" exact element={<ForgotPassword />} />
+          <Route path="/reset-password" exact element={<ResetPassword />} />
+
+          {/* <ProtectedRouteElement loggedIn={true}> */}
+          <Route path="/profile" exact element={<Profile />} />
+          {/* </ProtectedRouteElement> */}
+
+          <Route path="/ingredients/:id" exact element={''} />
+          <Route path="*" element={<PageNotFound />} />
+
+        </Routes>
       </main>
 
       {
