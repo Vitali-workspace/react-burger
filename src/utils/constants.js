@@ -1,7 +1,8 @@
 import PropTypes from "prop-types";
 
-export const API_URL = "https://norma.nomoreparties.space/api/ingredients";
-export const API_URL_ORDER = "https://norma.nomoreparties.space/api/orders";
+export const API_URL = "https://norma.nomoreparties.space/api";
+export const API_AUTH = "https://norma.nomoreparties.space/api/auth";
+
 
 export const ingredientPropTypes = PropTypes.shape({
   _id: PropTypes.string,
