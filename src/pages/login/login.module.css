@@ -1,1 +1,29 @@
-content {}
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 480px;
+  text-align: center;
+}
+
+.title {
+  color: #F2F2F3;
+  margin-top: 181px;
+  margin-bottom: 22px;
+  text-align: center;
+}
+
+.inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 24px 0;
+}
+
+.button {
+  width: 128px;
+  margin: auto;
+}
+
+.link {
+  text-decoration: none;
+  color: #4C4CFF;
+}
