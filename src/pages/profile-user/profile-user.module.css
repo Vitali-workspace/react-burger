@@ -1,0 +1,9 @@
+.inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 24px 0;
+}
+
+.button {
+  margin-top: 20px;
+}

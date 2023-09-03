@@ -40,3 +40,7 @@
 .link:hover {
   opacity: 0.7;
 }
+
+.active {
+  color: #F2F2F3;
+}
