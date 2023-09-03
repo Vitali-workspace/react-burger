@@ -1,16 +1,33 @@
 import { Button, Input, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link, useNavigate } from 'react-router-dom';
+import { useState } from "react";
+import { Link, Navigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { resetPassword } from "../../services/actions/action-reset-password";
 import styleReset from "./reset-password.module.css";
 
 
 function ResetPassword() {
 
-  const navigation = useNavigate();
+  const dispatch = useDispatch();
+
+  const { isAuthorized, resetPasswordError, resetPasswordSuccess } = useSelector(state => state.pages);
+  const [inputsValue, setInputsValue] = useState({ password: "", code: "" });
+
+  function handleChangeInput(evt) {
+    setInputsValue({ ...inputsValue, [evt.target.name]: evt.target.value });
+  }
 
   function submitForm(evt) {
     evt.preventDefault();
-    navigation("/login");
+    dispatch(resetPassword(inputsValue));
   }
+
+  if (isAuthorized) {
+    return <Navigate to="/" />
+  } else if (resetPasswordSuccess) {
+    return <Navigate to="/" />
+  }
+
 
   return (
     <section className={styleReset.container}>
@@ -21,22 +38,23 @@ function ResetPassword() {
           type="password"
           name="password"
           placeholder="Введите новый пароль"
-          // value={"password" || ''}
-          // onChange={"handleChangeInput"}
-          minLength={3}
+          value={inputsValue.password || ''}
+          onChange={handleChangeInput}
+          error={resetPasswordError}
           required
         />
         <Input
           type="text"
-          name="код"
+          name="code"
           placeholder="Введите код из письма"
-          // value={"email" || ""}
-          // onChange={"handleChangeInput"}
+          value={inputsValue.code || ""}
+          onChange={handleChangeInput}
+          error={resetPasswordError}
           required
         />
 
         <div className={styleReset.button}>
-          <Button htmlType="button" type="primary" size="medium">
+          <Button htmlType="submit" type="primary" size="medium">
             Сохранить
           </Button>
         </div>

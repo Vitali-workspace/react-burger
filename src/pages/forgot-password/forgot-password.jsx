@@ -1,16 +1,32 @@
 import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link, useNavigate } from 'react-router-dom';
+import { useState } from "react";
+import { Link, Navigate } from 'react-router-dom';
+import { useDispatch, useSelector } from "react-redux";
+import { forgotPassword } from "../../services/actions/action-forgot-password";
 import styleForgot from "./forgot-password.module.css";
 
 
 function ForgotPassword() {
 
-  const navigation = useNavigate();
+  const dispatch = useDispatch();
+  const { isAuthorized, forgotPasswordError, forgotPasswordSuccess } = useSelector(state => state.pages);
+  const [inputsValue, setInputsValue] = useState({ email: "" });
+
+  function handleChangeInput(evt) {
+    setInputsValue({ ...inputsValue, [evt.target.name]: evt.target.value });
+  }
 
   function submitForm(evt) {
     evt.preventDefault();
-    navigation("/reset-password");
+    dispatch(forgotPassword(inputsValue));
   }
+
+  if (isAuthorized) {
+    return <Navigate to="/" />
+  } else if (forgotPasswordSuccess) {
+    return <Navigate to="/reset-password" />
+  }
+
 
   return (
     <section className={styleForgot.container}>
@@ -21,13 +37,14 @@ function ForgotPassword() {
           type="email"
           name="email"
           placeholder="Укажите e-mail"
-          // value={"email" || ""}
-          // onChange={"handleChangeInput"}
+          value={inputsValue.email || ""}
+          onChange={handleChangeInput}
+          error={forgotPasswordError}
           required
         />
 
         <div className={styleForgot.button}>
-          <Button htmlType="button" type="primary" size="medium">
+          <Button htmlType="submit" type="primary" size="medium">
             Восстановить
           </Button>
         </div>
