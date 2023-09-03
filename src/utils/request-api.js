@@ -96,7 +96,7 @@ class requestApi {
 
 
   getUserInfo() {
-    return fetch(`${API_AUTH}/profile`, {
+    return fetch(`${API_AUTH}/user`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -114,7 +114,7 @@ class requestApi {
 
 
   updateUserInfo({ name, email, password }) {
-    return fetch(`${API_AUTH}/profile`, {
+    return fetch(`${API_AUTH}/user`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",

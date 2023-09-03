@@ -15,8 +15,7 @@ function Profile() {
 
   function exit() {
     dispatch(logout());
-    navigation("/");
-    console.log('ВЫход')
+    navigation("/login");
   }
 
 
