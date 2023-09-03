@@ -13,7 +13,7 @@ export function register(info) {
   return function (dispatch) {
     dispatch({ type: REGISTER_SUBMIT_REQUEST });
 
-    requestApi.register(info)
+    requestApi.registration(info)
       .then((data) => {
         dispatch({ type: REGISTER_SUBMIT_SUCCESS, user: data.user });
 

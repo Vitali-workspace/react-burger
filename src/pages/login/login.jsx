@@ -1,14 +1,28 @@
 import { Button, Input, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
+import { useState } from "react";
+import { login } from "../../services/actions/action-login";
+import { useDispatch, useSelector } from "react-redux";
 import styleLogin from "./login.module.css";
+
 
 function Login() {
 
-  const navigation = useNavigate();
+  const dispatch = useDispatch();
+  const { isAuthorized, loginError } = useSelector(state => state.pages);
+  const [inputsValue, setInputsValue] = useState({ email: "", password: "" });
+
+  function handleChangeInput(evt) {
+    setInputsValue({ ...inputsValue, [evt.target.name]: evt.target.value });
+  }
 
   function submitForm(evt) {
     evt.preventDefault();
-    navigation("/");
+    dispatch(login(inputsValue));
+  }
+
+  if (isAuthorized) {
+    return <Navigate to="/" />
   }
 
   return (
@@ -20,8 +34,9 @@ function Login() {
           type="email"
           name="email"
           placeholder="E-mail"
-          // value={"email" || ""}
-          // onChange={"handleChangeInput"}
+          value={inputsValue.email || ""}
+          onChange={handleChangeInput}
+          error={loginError}
           required
         />
 
@@ -29,14 +44,13 @@ function Login() {
           type="password"
           name="password"
           placeholder="Пароль"
-          // value={"password" || ''}
-          // onChange={"handleChangeInput"}
-          minLength={3}
+          value={inputsValue.password || ""}
+          onChange={handleChangeInput}
           required
         />
 
         <div className={styleLogin.button}>
-          <Button htmlType="button" type="primary" size="medium">
+          <Button htmlType="submit" type="primary" size="medium">
             Войти
           </Button>
         </div>
@@ -50,7 +64,7 @@ function Login() {
       </p>
       <p className="text text_type_main-default text_color_inactive mt-4">
         Забыли пароль?
-        <Link className={styleLogin.link} to="/forgot-password"> Восстановить пароль</Link>
+        <Link className={styleLogin.link} to={isAuthorized ? "/" : "/forgot-password"}> Восстановить пароль</Link>
       </p>
     </section>
   );
