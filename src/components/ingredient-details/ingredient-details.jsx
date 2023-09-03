@@ -1,18 +1,34 @@
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useParams } from 'react-router-dom'
+import { SELECT_INGREDIENT } from "../../services/actions/action-ingredient-details";
 import styleDetails from "./ingredient-details.module.css";
-import { useSelector } from "react-redux";
 
 
 function IngredientDetails() {
 
+  const dispatch = useDispatch();
   const { selectedIngredient } = useSelector(state => state.ingredientDetails);
 
-  const { name, calories, carbohydrates, fat, proteins, image_large } = selectedIngredient;
+  const { ingredients } = useSelector(state => state.burgerIngredients);
+  const { id } = useParams();
 
-  return (
-    <section className={styleDetails.container}>
+  useEffect(() => {
+    if (!selectedIngredient && id && ingredients) {
+
+      const ingredient = ingredients.find((ingredient) => ingredient._id === id);
+      dispatch({ type: SELECT_INGREDIENT, selectedIngredient: ingredient });
+    }
+  }, [selectedIngredient, ingredients, id, dispatch]);
+
+  const { name, calories, carbohydrates, fat, proteins, image_large } = selectedIngredient || {};
+
+
+  return (selectedIngredient ?
+    (<section className={styleDetails.container}>
       <h2 className={styleDetails.title + " text text_type_main-large mt-6 ml-10"}>Детали ингредиента</h2>
       <img src={image_large} alt={name} />
-      <p className="text text_type_main-medium mt-8 mb-8">{name}</p>
+      <p className="text text_type_main-medium mt-5 mb-8">{name}</p>
 
       <ul className={styleDetails.list + " mb-10"}>
         <li className="text text_type_main-default text_color_inactive">
@@ -32,8 +48,8 @@ function IngredientDetails() {
           <p className="text text_type_digits-default pt-2">{carbohydrates}</p>
         </li>
       </ul>
-    </section>
-  )
+    </section>) : (<></>)
+  );
 }
 
 

@@ -1,5 +1,6 @@
 import { useMemo } from "react";
-import { Button, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import { useNavigate } from 'react-router-dom';
+import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import ConstructorMenu from "../constructor-menu/constructor-menu";
 import ConstructorBun from "../constructor-bun/constructor-bun";
 import { useDrop } from "react-dnd";
@@ -16,7 +17,10 @@ import styleConstructor from "./burger-constructor.module.css";
 function BurgerConstructor() {
 
   const dispatch = useDispatch();
+  const navigation = useNavigate();
+
   const { bun } = useSelector(state => state.burgerConstructor);
+  const { isAuthorized } = useSelector(state => state.pages);
   const constructorIngredients = useSelector(state => state.burgerConstructor.ingredients);
 
   const [, dropTargetRef] = useDrop({
@@ -42,8 +46,12 @@ function BurgerConstructor() {
   }
 
   function buttonOrderClick() {
-    const listOrderId = [bun._id, ...constructorIngredients.map((ingredient) => ingredient._id), bun._id];
-    dispatch(actionOrderDetails(listOrderId));
+    if (isAuthorized) {
+      const listOrderId = [bun._id, ...constructorIngredients.map((ingredient) => ingredient._id), bun._id];
+      dispatch(actionOrderDetails(listOrderId));
+    } else {
+      navigation("/login");
+    }
   }
 
   function handleOnDrop(ingredient) {
