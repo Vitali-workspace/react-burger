@@ -132,11 +132,11 @@ class requestApi {
   }
 
 
-  resetPassword({ code, password }) {
+  resetPassword({ token, password }) {
     return fetch(`${API_URL}/password-reset/reset`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ code, password }),
+      body: JSON.stringify({ token, password }),
     })
       .then((response) => {
         if (response.ok) {

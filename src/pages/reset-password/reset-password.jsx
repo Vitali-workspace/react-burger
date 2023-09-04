@@ -11,7 +11,7 @@ function ResetPassword() {
   const dispatch = useDispatch();
 
   const { isAuthorized, resetPasswordError, resetPasswordSuccess } = useSelector(state => state.pages);
-  const [inputsValue, setInputsValue] = useState({ password: "", code: "" });
+  const [inputsValue, setInputsValue] = useState({ password: "", token: "" });
   const [isStatusPassword, setStatusPassword] = useState(true);
 
   function showPassword() {
@@ -31,6 +31,8 @@ function ResetPassword() {
     return <Navigate to="/" />
   } else if (resetPasswordSuccess) {
     return <Navigate to="/" />
+  } else if (resetPasswordError) {
+    return <Navigate to="/reset-password" />
   }
 
 
@@ -52,9 +54,9 @@ function ResetPassword() {
         />
         <Input
           type="text"
-          name="code"
+          name="token"
           placeholder="Введите код из письма"
-          value={inputsValue.code || ""}
+          value={inputsValue.token || ""}
           onChange={handleChangeInput}
           error={resetPasswordError}
           required
