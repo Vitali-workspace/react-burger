@@ -60,6 +60,7 @@ function Register() {
           onChange={handleChangeInput}
           icon={isStatusPassword ? "ShowIcon" : "HideIcon"}
           onIconClick={showPassword}
+          minLength={6}
           required
         />
 

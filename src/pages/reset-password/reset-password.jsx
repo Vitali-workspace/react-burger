@@ -27,6 +27,7 @@ function ResetPassword() {
     dispatch(resetPassword(inputsValue));
   }
 
+
   if (isAuthorized) {
     return <Navigate to="/" />
   } else if (resetPasswordSuccess) {
@@ -50,6 +51,7 @@ function ResetPassword() {
           icon={isStatusPassword ? "ShowIcon" : "HideIcon"}
           onIconClick={showPassword}
           error={resetPasswordError}
+          minLength={6}
           required
         />
         <Input

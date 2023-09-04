@@ -1,6 +1,6 @@
 import { Button, Input, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link, Navigate, useNavigate } from 'react-router-dom';
-import { useState } from "react";
+import { Link, Navigate, useNavigate, } from 'react-router-dom';
+import { useState, useEffect } from "react";
 import { login } from "../../services/actions/action-login";
 import { useDispatch, useSelector } from "react-redux";
 import styleLogin from "./login.module.css";
@@ -25,12 +25,15 @@ function Login() {
   function submitForm(evt) {
     evt.preventDefault();
     dispatch(login(inputsValue));
-    navigation("/");
+    navigation(-2);
   }
 
-  if (isAuthorized) {
-    return <Navigate to="/" />
-  }
+  useEffect(() => {
+    if (isAuthorized) {
+      return <Navigate to="/" />
+    }
+  }, []);
+
 
   return (
     <section className={styleLogin.container}>
@@ -55,6 +58,7 @@ function Login() {
           onChange={handleChangeInput}
           icon={isStatusPassword ? "ShowIcon" : "HideIcon"}
           onIconClick={showPassword}
+          minLength={6}
           required
         />
 
