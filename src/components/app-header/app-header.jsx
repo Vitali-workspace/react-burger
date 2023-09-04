@@ -1,11 +1,14 @@
 import { Logo, BurgerIcon, ListIcon, ProfileIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { useSelector } from "react-redux";
 import styleAppHeader from "./app-header.module.css";
 
 function AppHeader() {
 
   const { isAuthorized } = useSelector(state => state.pages);
+  const activeStyle = { color: "#F2F2F3" };
+  const inactiveStyle = { color: "#8585AD" };
+  const activeLink = ({ isActive }) => isActive ? activeStyle : inactiveStyle;
 
   return (
     <header className={styleAppHeader.header + " p-4"}>
@@ -13,18 +16,33 @@ function AppHeader() {
 
         <nav className={styleAppHeader.navigation}>
           <ul className={styleAppHeader.list}>
+
             <li className="pl-5 pr-5">
-              <Link className={styleAppHeader.link} to="/">
-                {<BurgerIcon type="primary" />}
-                <p className="text text_type_main-default pl-2 pr-2">Конструктор</p>
-              </Link>
+              <NavLink
+                className={styleAppHeader.link}
+                style={activeLink}
+                to="/">
+                {({ isActive }) => (
+                  <>
+                    <BurgerIcon type={isActive ? "primary" : "secondary"} />
+                    <p className="text text_type_main-default pl-2 pr-2">Конструктор</p>
+                  </>
+                )}
+              </NavLink>
             </li>
 
             <li className="pl-5 pr-5">
-              <Link className={styleAppHeader.link} to="/404">
-                {<ListIcon type="secondary" />}
-                <p className="text text_type_main-default text_color_inactive pl-2">Лента заказов</p>
-              </Link>
+              <NavLink
+                className={styleAppHeader.link}
+                to="/404"
+                style={activeLink}>
+                {({ isActive }) => (
+                  <>
+                    {<ListIcon type={isActive ? "primary" : "secondary"} />}
+                    <p className="text text_type_main-default text_color_inactive pl-2">Лента заказов</p>
+                  </>
+                )}
+              </NavLink>
             </li>
           </ul>
         </nav>
@@ -33,10 +51,19 @@ function AppHeader() {
           <Logo />
         </Link>
 
-        <Link className={styleAppHeader.link} to={isAuthorized ? "/profile" : "/login"}>
-          <ProfileIcon type="secondary" />
-          <p className="text text_type_main-default text_color_inactive pl-2 pr-5">Личный кабинет</p>
-        </Link>
+        <div className={styleAppHeader.list}>
+          <NavLink
+            className={styleAppHeader.link}
+            to={isAuthorized ? "/profile" : "/login"}
+            style={activeLink}>
+            {({ isActive }) => (
+              <>
+                <ProfileIcon type={isActive ? "primary" : "secondary"} />
+                <p className="text text_type_main-default text_color_inactive pl-2 pr-5">Личный кабинет</p>
+              </>
+            )}
+          </NavLink>
+        </div>
 
       </div>
     </header>

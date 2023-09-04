@@ -31,10 +31,8 @@
 }
 
 .link {
-  all: unset;
   display: flex;
-  align-items: center;
-  cursor: pointer;
+  text-decoration: none;
 }
 
 .link:hover {
@@ -43,4 +41,8 @@
 
 .active {
   color: #F2F2F3;
+}
+
+.inactive {
+  color: #8585AD;
 }
