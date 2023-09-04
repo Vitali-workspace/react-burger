@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useParams } from 'react-router-dom'
+import { useParams, Navigate } from 'react-router-dom'
 import { SELECT_INGREDIENT } from "../../services/actions/action-ingredient-details";
 import styleDetails from "./ingredient-details.module.css";
 
@@ -19,7 +19,7 @@ function IngredientDetails() {
       const ingredient = ingredients.find((ingredient) => ingredient._id === id);
       dispatch({ type: SELECT_INGREDIENT, selectedIngredient: ingredient });
     }
-  }, [selectedIngredient, ingredients, id, dispatch]);
+  }, [selectedIngredient, id, ingredients, dispatch]);
 
   const { name, calories, carbohydrates, fat, proteins, image_large } = selectedIngredient || {};
 
@@ -48,7 +48,7 @@ function IngredientDetails() {
           <p className="text text_type_digits-default pt-2">{carbohydrates}</p>
         </li>
       </ul>
-    </section>) : (<></>)
+    </section>) : (<Navigate to="/"></Navigate>)
   );
 }
 

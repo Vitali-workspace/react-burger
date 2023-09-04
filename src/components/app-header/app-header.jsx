@@ -1,8 +1,11 @@
 import { Logo, BurgerIcon, ListIcon, ProfileIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link } from 'react-router-dom';
+import { useSelector } from "react-redux";
 import styleAppHeader from "./app-header.module.css";
 
 function AppHeader() {
+
+  const { isAuthorized } = useSelector(state => state.pages);
 
   return (
     <header className={styleAppHeader.header + " p-4"}>
@@ -18,7 +21,7 @@ function AppHeader() {
             </li>
 
             <li className="pl-5 pr-5">
-              <Link className={styleAppHeader.link} to="/login">
+              <Link className={styleAppHeader.link} to="/404">
                 {<ListIcon type="secondary" />}
                 <p className="text text_type_main-default text_color_inactive pl-2">Лента заказов</p>
               </Link>
@@ -29,10 +32,12 @@ function AppHeader() {
         <Link className={styleAppHeader.logo + " mt-1"} to="/">
           <Logo />
         </Link>
-        <Link className={styleAppHeader.link} to="/profile">
+
+        <Link className={styleAppHeader.link} to={isAuthorized ? "/profile" : "/login"}>
           <ProfileIcon type="secondary" />
           <p className="text text_type_main-default text_color_inactive pl-2 pr-5">Личный кабинет</p>
         </Link>
+
       </div>
     </header>
   );
