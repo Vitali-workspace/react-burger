@@ -72,6 +72,7 @@ function ProfileUser() {
           onBlur={blur}
           onFocus={focus}
           icon={inFocus.password ? "EditIcon" : ""}
+          minLength={6}
           required
         />
 
