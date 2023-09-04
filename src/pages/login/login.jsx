@@ -1,5 +1,5 @@
 import { Button, Input, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link, Navigate } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { useState } from "react";
 import { login } from "../../services/actions/action-login";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,6 +9,7 @@ import styleLogin from "./login.module.css";
 function Login() {
 
   const dispatch = useDispatch();
+  const navigation = useNavigate();
   const { isAuthorized, loginError } = useSelector(state => state.pages);
   const [inputsValue, setInputsValue] = useState({ email: "", password: "" });
   const [isStatusPassword, setStatusPassword] = useState(true);
@@ -24,6 +25,7 @@ function Login() {
   function submitForm(evt) {
     evt.preventDefault();
     dispatch(login(inputsValue));
+    navigation("/");
   }
 
   if (isAuthorized) {

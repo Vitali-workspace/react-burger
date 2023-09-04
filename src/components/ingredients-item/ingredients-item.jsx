@@ -16,7 +16,11 @@ function IngredientsItem({ ingredient, selectItem }) {
   return (
     <li className={styleItem.card} ref={dragRef} onClick={() => selectItem(ingredient)}>
 
-      <Link className={styleItem.link} to={{ pathname: `/ingredients/${_id}`, state: { fromCardClick: location } }}>
+      <Link className={styleItem.link}
+        to={`/ingredients/${_id}`}
+        state={{ background: location }}
+      >
+
         <div className={styleItem.container}>
           {!!quantity && <Counter count={quantity} size="default" />}
 

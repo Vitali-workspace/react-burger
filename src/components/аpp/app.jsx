@@ -29,8 +29,12 @@ function App() {
 
   const dispatch = useDispatch();
   const location = useLocation();
+
+  const { isAuthorized } = useSelector(state => state.pages);
   const modalOrderDetails = useSelector(state => state.orderDetails.openModal);
   const modalIngredientDetails = useSelector(state => state.ingredientDetails.openModal);
+  let background = location.state && location.state.background;
+
 
   function closeModalOrderDetails() {
     dispatch({ type: CLOSE_MODAL_ORDER_DETAILS });
@@ -41,20 +45,23 @@ function App() {
     dispatch({ type: REJECT_INGREDIENT });
   }
 
+
   useEffect(() => {
     dispatch(getIngredients());
-    dispatch(refreshToken());
-    dispatch(getUser());
-  }, [dispatch]);
 
-  const modal = location.state && location.state.fromCardClick;
+    if (!isAuthorized) {
+      dispatch(getUser());
+    }
+  }, [isAuthorized, dispatch]);
+
+
 
   return (
     <div>
       <AppHeader />
       <main className={styleApp.content}>
 
-        <Routes location={modalIngredientDetails ? modal : location}>
+        <Routes location={background} >
 
           <Route
             exact
@@ -82,7 +89,9 @@ function App() {
               </ProtectedRouteElement>
             } />
 
-          <Route exact path="/ingredients/:id" element={<IngredientPage />} />
+
+          <Route path="/ingredients:id" element={<IngredientPage />} />
+
           <Route path="*" element={<PageNotFound />} />
 
         </Routes>
@@ -97,16 +106,15 @@ function App() {
       }
 
       {
-        modalIngredientDetails && (
+        modalIngredientDetails && background && (
           <Routes>
-            <Route exact path="/ingredients/:id"
+            <Route path="/ingredients/:id"
               element={
                 <Modal closePopup={closeModalIngredientDetails}>
                   <IngredientDetails />
                 </Modal>
               } />
           </Routes>
-
         )
       }
 

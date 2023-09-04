@@ -39,7 +39,7 @@ function AppHeader() {
                 {({ isActive }) => (
                   <>
                     {<ListIcon type={isActive ? "primary" : "secondary"} />}
-                    <p className="text text_type_main-default text_color_inactive pl-2">Лента заказов</p>
+                    <p className="text text_type_main-default pl-2">Лента заказов</p>
                   </>
                 )}
               </NavLink>
@@ -59,7 +59,7 @@ function AppHeader() {
             {({ isActive }) => (
               <>
                 <ProfileIcon type={isActive ? "primary" : "secondary"} />
-                <p className="text text_type_main-default text_color_inactive pl-2 pr-5">Личный кабинет</p>
+                <p className="text text_type_main-default pl-2 pr-5">Личный кабинет</p>
               </>
             )}
           </NavLink>
