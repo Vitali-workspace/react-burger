@@ -11,6 +11,11 @@ function Login() {
   const dispatch = useDispatch();
   const { isAuthorized, loginError } = useSelector(state => state.pages);
   const [inputsValue, setInputsValue] = useState({ email: "", password: "" });
+  const [isStatusPassword, setStatusPassword] = useState(true);
+
+  function showPassword() {
+    setStatusPassword(!isStatusPassword);
+  }
 
   function handleChangeInput(evt) {
     setInputsValue({ ...inputsValue, [evt.target.name]: evt.target.value });
@@ -41,11 +46,13 @@ function Login() {
         />
 
         <PasswordInput
-          type="password"
+          type={isStatusPassword ? "password" : "text"}
           name="password"
           placeholder="Пароль"
           value={inputsValue.password || ""}
           onChange={handleChangeInput}
+          icon={isStatusPassword ? "ShowIcon" : "HideIcon"}
+          onIconClick={showPassword}
           required
         />
 

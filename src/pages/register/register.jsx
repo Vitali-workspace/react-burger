@@ -12,6 +12,11 @@ function Register() {
   const { isAuthorized, registerError } = useSelector(state => state.pages);
 
   const [inputsValue, setInputsValue] = useState({ name: "", email: "", password: "" });
+  const [isStatusPassword, setStatusPassword] = useState(true);
+
+  function showPassword() {
+    setStatusPassword(!isStatusPassword);
+  }
 
   function handleChangeInput(evt) {
     setInputsValue({ ...inputsValue, [evt.target.name]: evt.target.value });
@@ -48,11 +53,13 @@ function Register() {
           required
         />
         <PasswordInput
-          type="password"
+          type={isStatusPassword ? "password" : "text"}
           name="password"
           placeholder="Пароль"
           value={inputsValue.password}
           onChange={handleChangeInput}
+          icon={isStatusPassword ? "ShowIcon" : "HideIcon"}
+          onIconClick={showPassword}
           required
         />
 

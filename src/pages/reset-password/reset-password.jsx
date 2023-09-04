@@ -12,6 +12,11 @@ function ResetPassword() {
 
   const { isAuthorized, resetPasswordError, resetPasswordSuccess } = useSelector(state => state.pages);
   const [inputsValue, setInputsValue] = useState({ password: "", code: "" });
+  const [isStatusPassword, setStatusPassword] = useState(true);
+
+  function showPassword() {
+    setStatusPassword(!isStatusPassword);
+  }
 
   function handleChangeInput(evt) {
     setInputsValue({ ...inputsValue, [evt.target.name]: evt.target.value });
@@ -35,11 +40,13 @@ function ResetPassword() {
 
       <form className={styleReset.inputs} onSubmit={submitForm}>
         <PasswordInput
-          type="password"
+          type={isStatusPassword ? "password" : "text"}
           name="password"
           placeholder="Введите новый пароль"
           value={inputsValue.password || ''}
           onChange={handleChangeInput}
+          icon={isStatusPassword ? "ShowIcon" : "HideIcon"}
+          onIconClick={showPassword}
           error={resetPasswordError}
           required
         />
