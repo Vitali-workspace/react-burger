@@ -10,7 +10,7 @@ function ResetPassword() {
 
   const dispatch = useDispatch();
 
-  const { isAuthorized, resetPasswordError, resetPasswordSuccess } = useSelector(state => state.pages);
+  const { isAuthorized, resetPasswordError, resetPasswordSuccess, forgotPasswordSuccess } = useSelector(state => state.pages);
   const [inputsValue, setInputsValue] = useState({ password: "", token: "" });
   const [isStatusPassword, setStatusPassword] = useState(true);
 
@@ -27,13 +27,14 @@ function ResetPassword() {
     dispatch(resetPassword(inputsValue));
   }
 
-
-  if (isAuthorized) {
-    return <Navigate to="/" />
-  } else if (resetPasswordSuccess) {
-    return <Navigate to="/" />
-  } else if (resetPasswordError) {
-    return <Navigate to="/reset-password" />
+  if (resetPasswordSuccess || !forgotPasswordSuccess) {
+    return (
+      <Navigate to={"/login"} />
+    )
+  } else if (isAuthorized) {
+    return (
+      <Navigate to={"/"} />
+    )
   }
 
 
