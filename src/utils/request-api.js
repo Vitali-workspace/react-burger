@@ -1,171 +1,131 @@
-import { API_URL, API_AUTH } from "./constants";
+import { BASE_URL } from "./constants";
 import { token } from "../services/actions/action-login";
 import { getCookie } from "./cookie-api";
 
 
 class requestApi {
 
+  _checkError(response) {
+    console.log(response)
+    if (!response.ok) {
+      return Promise.reject(`произошла ошибка: ${response.status}`);
+    }
+    return response.json();
+  }
+
+
+  updateToken() {
+    return fetch(`${BASE_URL}/auth/token`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ token: localStorage.getItem(token.refresh) }),
+    }).then(this._checkError);
+  }
+
+  fetchWithRefresh = async (url, options) => {
+    try {
+      const res = await fetch(url, options);
+      return await this._checkError(res);
+    } catch (err) {
+      if (err.message === "jwt expired") {
+        const refreshData = await this.updateToken(); //обновляем токен
+        if (!refreshData.success) {
+          return Promise.reject(refreshData);
+        }
+        localStorage.setItem("refreshToken", refreshData.refreshToken);
+        localStorage.setItem("accessToken", refreshData.accessToken);
+        options.headers.authorization = refreshData.accessToken;
+        const res = await fetch(url, options); //повторяем запрос
+        return await this._checkError(res);
+      } else {
+        return Promise.reject(err);
+      }
+    }
+  };
+
+
   registration({ name, email, password }) {
-    return fetch(`${API_AUTH}/register`, {
+    return fetch(`${BASE_URL}/auth/register`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name, email, password }),
-    })
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-        return Promise.reject(`произошла ошибка: ${response.status}`);
-      })
-      .catch(console.error);
+    }).then(this._checkError);
   }
 
   login({ email, password }) {
-    return fetch(`${API_AUTH}/login`, {
+    return fetch(`${BASE_URL}/auth/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
-    })
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-        return Promise.reject(`произошла ошибка: ${response.status}`);
-      })
-      .catch(console.error);
+    }).then(this._checkError);
   }
 
   logout() {
-    return fetch(`${API_AUTH}/logout`, {
+    return fetch(`${BASE_URL}/auth/logout`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ token: localStorage.getItem(token.refresh) }),
-    })
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-        return Promise.reject(`произошла ошибка: ${response.status}`);
-      })
-      .catch(console.error);
-  }
-
-  updateToken() {
-    return fetch(`${API_AUTH}/token`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ token: localStorage.getItem(token.refresh) }),
-    })
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-        return Promise.reject(`произошла ошибка: ${response.status}`);
-      })
-      .catch(console.error);
+    }).then(this._checkError);
   }
 
 
   getOrderNumber(listId) {
-    return fetch(`${API_URL}/orders`, {
+    return fetch(`${BASE_URL}/orders`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ "ingredients": listId }),
-    })
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-        return Promise.reject(`произошла ошибка: ${response.status}`);
-      })
-      .catch(console.error);
+    }).then(this._checkError);
   }
 
   getIngredients() {
-    return fetch(`${API_URL}/ingredients`, {
+    return fetch(`${BASE_URL}/ingredients`, {
       method: "GET"
-    })
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-        return Promise.reject(`произошла ошибка: ${response.status}`);
-      })
-      .catch(console.error);
+    }).then(this._checkError);
   }
 
 
   getUserInfo() {
-    return fetch(`${API_AUTH}/user`, {
+    return this.fetchWithRefresh(`${BASE_URL}/auth/user`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
         "Authorization": getCookie(token.access),
       },
-    })
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-        return Promise.reject(`произошла ошибка: ${response.status}`);
-      })
-      .catch(console.error);
+    }).then(this._checkError);
   }
 
 
   updateUserInfo({ name, email, password }) {
-    return fetch(`${API_AUTH}/user`, {
+    return this.fetchWithRefresh(`${BASE_URL}/auth/user`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
         "Authorization": getCookie(token.access),
       },
       body: JSON.stringify({ name, email, password }),
-    })
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-        return Promise.reject(`произошла ошибка: ${response.status}`);
-      })
-      .catch(console.error);
+    }).then(this._checkError);
   }
 
 
   resetPassword({ token, password }) {
-    return fetch(`${API_URL}/password-reset/reset`, {
+    return this.fetchWithRefresh(`${BASE_URL}/password-reset/reset`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ token, password }),
-    })
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-        return Promise.reject(`произошла ошибка: ${response.status}`);
-      })
-      .catch(console.error);
+    }).then(this._checkError);
   }
 
 
   forgotPassword({ email }) {
-    return fetch(`${API_URL}/password-reset`, {
+    return fetch(`${BASE_URL}/password-reset`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email }),
-    })
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-        return Promise.reject(`произошла ошибка: ${response.status}`);
-      })
-      .catch(console.error);
+    }).then(this._checkError);
   }
-
 
 }
 
-const api = new requestApi(API_URL);
+const api = new requestApi(BASE_URL);
 
 export default api;
