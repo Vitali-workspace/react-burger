@@ -25,7 +25,7 @@ function Login() {
   function submitForm(evt) {
     evt.preventDefault();
     dispatch(login(inputsValue));
-    navigation(-2);
+    navigation(-1);
   }
 
   useEffect(() => {
