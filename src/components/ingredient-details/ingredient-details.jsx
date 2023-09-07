@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useParams, Navigate } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { SELECT_INGREDIENT } from "../../services/actions/action-ingredient-details";
 import styleDetails from "./ingredient-details.module.css";
 
@@ -12,19 +12,20 @@ function IngredientDetails() {
 
   const { ingredients } = useSelector(state => state.burgerIngredients);
   const { id } = useParams();
+  const ingredient = ingredients.find((ingredient) => ingredient._id === id);
 
   useEffect(() => {
-    if (!selectedIngredient && id && ingredients) {
+    if (!selectedIngredient && id) {
 
-      const ingredient = ingredients.find((ingredient) => ingredient._id === id);
+
       dispatch({ type: SELECT_INGREDIENT, selectedIngredient: ingredient });
     }
-  }, [selectedIngredient, id, ingredients, dispatch]);
+  }, [selectedIngredient, id, dispatch, ingredient]);
 
   const { name, calories, carbohydrates, fat, proteins, image_large } = selectedIngredient || {};
 
 
-  return (selectedIngredient ?
+  return (ingredient &&
     (<section className={styleDetails.container}>
       <h2 className={styleDetails.title + " text text_type_main-large mt-6 ml-10"}>Детали ингредиента</h2>
       <img src={image_large} alt={name} />
@@ -48,7 +49,7 @@ function IngredientDetails() {
           <p className="text text_type_digits-default pt-2">{carbohydrates}</p>
         </li>
       </ul>
-    </section>) : (<Navigate to="/"></Navigate>)
+    </section>)
   );
 }
 

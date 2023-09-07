@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { useLocation, Link } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDrag } from "react-dnd";
 import { TYPE_DND, ingredientPropTypes } from "../../utils/constants";
@@ -8,17 +8,25 @@ import styleItem from './ingredients-item.module.css';
 
 function IngredientsItem({ ingredient, selectItem }) {
 
+  const navigate = useNavigate();
   const location = useLocation();
   const { quantity, price, name, image, _id } = ingredient;
   const [, dragRef] = useDrag({ type: TYPE_DND.ITEM_FROM_INGREDIENTS, item: ingredient });
+
+  const showIngredientDetails = (ingredient) => {
+    navigate(`/ingredients/${ingredient._id}`, {
+      state: { background: location },
+    });
+  };
 
 
   return (
     <li className={styleItem.card} ref={dragRef} onClick={() => selectItem(ingredient)}>
 
-      <Link className={styleItem.link}
-        to={`/ingredients/${_id}`}
-        state={{ background: location }}
+      <div className={styleItem.link}
+        onClick={() => {
+          window.getSelection().toString() === "" && showIngredientDetails(ingredient);
+        }}
       >
 
         <div className={styleItem.container}>
@@ -34,7 +42,7 @@ function IngredientsItem({ ingredient, selectItem }) {
             <p className={`text text_type_main-default ${styleItem.title}`}>{name}</p>
           </div>
         </div>
-      </Link>
+      </div>
     </li>
   );
 }

@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import { Route, Routes, useLocation } from "react-router-dom";
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
@@ -22,17 +22,19 @@ import PageNotFound from "../../pages/page-not-found/page-not-found";
 import { getIngredients } from "../../services/actions/action-burger-ingredients";
 import { CLOSE_MODAL_INGREDIENT_DETAILS, REJECT_INGREDIENT } from "../../services/actions/action-ingredient-details";
 import { CLOSE_MODAL_ORDER_DETAILS } from "../../services/actions/action-order-details";
+import { getCookie } from "../../utils/cookie-api";
 import styleApp from "./app.module.css";
+
+
 
 
 function App() {
 
   const dispatch = useDispatch();
   const location = useLocation();
+  const navigate = useNavigate();
 
-  const { isAuthorized } = useSelector(state => state.pages);
   const modalOrderDetails = useSelector(state => state.orderDetails.openModal);
-  const modalIngredientDetails = useSelector(state => state.ingredientDetails.openModal);
   let background = location.state && location.state.background;
 
 
@@ -43,17 +45,18 @@ function App() {
   function closeModalIngredientDetails() {
     dispatch({ type: CLOSE_MODAL_INGREDIENT_DETAILS });
     dispatch({ type: REJECT_INGREDIENT });
+    navigate(-1);
   }
 
-
   useEffect(() => {
+    const checkToken = getCookie("accessToken");
     dispatch(getIngredients());
 
-    if (!isAuthorized) {
+    if (checkToken) {
+      dispatch(refreshToken())
       dispatch(getUser());
     }
-  }, [isAuthorized, dispatch]);
-
+  }, [dispatch]);
 
 
   return (
@@ -61,7 +64,7 @@ function App() {
       <AppHeader />
       <main className={styleApp.content}>
 
-        <Routes location={background} >
+        <Routes location={background || location} >
 
           <Route
             exact
@@ -90,7 +93,7 @@ function App() {
             } />
 
 
-          <Route path="/ingredients:id" element={<IngredientPage />} />
+          <Route path="/ingredients/:id" element={<IngredientPage />} />
 
           <Route path="*" element={<PageNotFound />} />
 
@@ -106,7 +109,7 @@ function App() {
       }
 
       {
-        modalIngredientDetails && background && (
+        background && (
           <Routes>
             <Route path="/ingredients/:id"
               element={
