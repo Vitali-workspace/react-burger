@@ -62,7 +62,6 @@ export function logout() {
 
 
 export function getUser() {
-
   return function (dispatch) {
     dispatch({ type: GET_USER_REQUEST });
 
@@ -71,7 +70,7 @@ export function getUser() {
         dispatch({ type: GET_USER_SUCCESS, user: data.user });
       })
       .catch((error) => {
-        if (error.message === ERROR.TIMER_JWT) {
+        if (error.message === "403") {
           dispatch(refreshToken());
         } else {
           dispatch({ type: GET_USER_ERROR, message: error.message });

@@ -6,9 +6,8 @@ import { getCookie } from "./cookie-api";
 class requestApi {
 
   _checkError(response) {
-    console.log(response)
     if (!response.ok) {
-      return Promise.reject(`произошла ошибка: ${response.status}`);
+      return Promise.reject(`${response.status}`);
     }
     return response.json();
   }
@@ -22,26 +21,7 @@ class requestApi {
     }).then(this._checkError);
   }
 
-  fetchWithRefresh = async (url, options) => {
-    try {
-      const res = await fetch(url, options);
-      return await this._checkError(res);
-    } catch (err) {
-      if (err.message === "jwt expired") {
-        const refreshData = await this.updateToken(); //обновляем токен
-        if (!refreshData.success) {
-          return Promise.reject(refreshData);
-        }
-        localStorage.setItem("refreshToken", refreshData.refreshToken);
-        localStorage.setItem("accessToken", refreshData.accessToken);
-        options.headers.authorization = refreshData.accessToken;
-        const res = await fetch(url, options); //повторяем запрос
-        return await this._checkError(res);
-      } else {
-        return Promise.reject(err);
-      }
-    }
-  };
+
 
 
   registration({ name, email, password }) {
@@ -85,7 +65,7 @@ class requestApi {
 
 
   getUserInfo() {
-    return this.fetchWithRefresh(`${BASE_URL}/auth/user`, {
+    return fetch(`${BASE_URL}/auth/user`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -96,7 +76,7 @@ class requestApi {
 
 
   updateUserInfo({ name, email, password }) {
-    return this.fetchWithRefresh(`${BASE_URL}/auth/user`, {
+    return fetch(`${BASE_URL}/auth/user`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -108,7 +88,7 @@ class requestApi {
 
 
   resetPassword({ token, password }) {
-    return this.fetchWithRefresh(`${BASE_URL}/password-reset/reset`, {
+    return fetch(`${BASE_URL}/password-reset/reset`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ token, password }),
