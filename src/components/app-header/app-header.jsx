@@ -34,7 +34,7 @@ function AppHeader() {
             <li className="pl-5 pr-5">
               <NavLink
                 className={styleAppHeader.link}
-                to="/404"
+                to="/list"
                 style={activeLink}>
                 {({ isActive }) => (
                   <>

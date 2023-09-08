@@ -10,7 +10,6 @@ import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import ProtectedRouteElement from "../protected-route-element/protected-route-element";
-import HiddenRoute from "../hidden-route/hidden-route";
 import Login from "../../pages/login/login";
 import Register from "../../pages/register/register";
 import ForgotPassword from "../../pages/forgot-password/forgot-password";
@@ -24,7 +23,6 @@ import { CLOSE_MODAL_INGREDIENT_DETAILS, REJECT_INGREDIENT } from "../../service
 import { CLOSE_MODAL_ORDER_DETAILS } from "../../services/actions/action-order-details";
 import { getCookie } from "../../utils/cookie-api";
 import styleApp from "./app.module.css";
-
 
 
 
@@ -77,21 +75,33 @@ function App() {
             }
           />
 
-          <Route path="/" element={<HiddenRoute />}>
-            <Route exact path="/login" element={<Login />} />
-            <Route exact path="/register" element={<Register />} />
-            <Route exact path="/forgot-password" element={<ForgotPassword />} />
-            <Route exact path="/reset-password" element={<ResetPassword />} />
+          <Route path="login"
+            element={<ProtectedRouteElement anonymous={true}>
+              <Login />
+            </ProtectedRouteElement>} />
+          <Route path="register"
+            element={<ProtectedRouteElement anonymous={true}>
+              <Register />
+            </ProtectedRouteElement>} />
+          <Route path="forgot-password"
+            element={<ProtectedRouteElement anonymous={true}>
+              <ForgotPassword />
+            </ProtectedRouteElement>} />
+          <Route path="reset-password"
+            element={<ProtectedRouteElement anonymous={true}>
+              <ResetPassword />
+            </ProtectedRouteElement>} />
+
+          <Route path="profile"
+            element={<ProtectedRouteElement anonymous={false}>
+              <Profile />
+            </ProtectedRouteElement>}>
           </Route>
 
-          <Route
-            path="/profile"
-            element={
-              <ProtectedRouteElement>
-                <Profile />
-              </ProtectedRouteElement>
-            } />
-
+          {/* Лента заказов */}
+          <Route path="list" element={<ProtectedRouteElement anonymous={false}>
+            <PageNotFound />
+          </ProtectedRouteElement>} />
 
           <Route path="/ingredients/:id" element={<IngredientPage />} />
 

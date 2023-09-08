@@ -1,6 +1,6 @@
 import { Button, Input, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link, Navigate, useNavigate, } from 'react-router-dom';
-import { useState, useEffect } from "react";
+import { Link, useNavigate } from 'react-router-dom';
+import { useState } from "react";
 import { login } from "../../services/actions/action-login";
 import { useDispatch, useSelector } from "react-redux";
 import styleLogin from "./login.module.css";
@@ -13,6 +13,7 @@ function Login() {
   const { isAuthorized, loginError } = useSelector(state => state.pages);
   const [inputsValue, setInputsValue] = useState({ email: "", password: "" });
   const [isStatusPassword, setStatusPassword] = useState(true);
+
 
   function showPassword() {
     setStatusPassword(!isStatusPassword);
@@ -27,12 +28,6 @@ function Login() {
     dispatch(login(inputsValue));
     navigation(-1);
   }
-
-  useEffect(() => {
-    if (isAuthorized) {
-      return <Navigate to="/" />
-    }
-  }, []);
 
 
   return (

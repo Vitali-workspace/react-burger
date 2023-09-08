@@ -1,5 +1,5 @@
 import { Button, Input, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link, Navigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useState } from "react";
 import { register } from "../../services/actions/action-register";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,10 +9,11 @@ import styleRegister from "./register.module.css";
 function Register() {
 
   const dispatch = useDispatch();
-  const { isAuthorized, registerError } = useSelector(state => state.pages);
+  const { registerError } = useSelector(state => state.pages);
 
   const [inputsValue, setInputsValue] = useState({ name: "", email: "", password: "" });
   const [isStatusPassword, setStatusPassword] = useState(true);
+
 
   function showPassword() {
     setStatusPassword(!isStatusPassword);
@@ -25,10 +26,6 @@ function Register() {
   function submitForm(evt) {
     evt.preventDefault();
     dispatch(register(inputsValue));
-  }
-
-  if (isAuthorized) {
-    return <Navigate to="/" />
   }
 
   return (

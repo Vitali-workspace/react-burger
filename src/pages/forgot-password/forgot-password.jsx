@@ -1,6 +1,6 @@
 import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState } from "react";
-import { Link, Navigate } from 'react-router-dom';
+import { Link, Navigate, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 import { forgotPassword } from "../../services/actions/action-forgot-password";
 import styleForgot from "./forgot-password.module.css";
@@ -9,8 +9,10 @@ import styleForgot from "./forgot-password.module.css";
 function ForgotPassword() {
 
   const dispatch = useDispatch();
+  const location = useLocation();
   const { isAuthorized, forgotPasswordError, forgotPasswordSuccess } = useSelector(state => state.pages);
   const [inputsValue, setInputsValue] = useState({ email: "" });
+  const from = location.state?.from || '/';
 
   function handleChangeInput(evt) {
     setInputsValue({ ...inputsValue, [evt.target.name]: evt.target.value });
@@ -22,7 +24,7 @@ function ForgotPassword() {
   }
 
   if (isAuthorized) {
-    return <Navigate to="/" />
+    return <Navigate to={from} />
   } else if (forgotPasswordSuccess) {
     return <Navigate to="/reset-password" />
   }
