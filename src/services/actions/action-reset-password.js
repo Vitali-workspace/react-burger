@@ -1,4 +1,4 @@
-import requestApi from "../../utils/request-api";
+import RequestApi from "../../utils/request-api";
 
 export const RESET_PASSWORD_ERROR = "RESET_PASSWORD_ERROR";
 export const RESET_PASSWORD_SUCCESS = "RESET_PASSWORD_SUCCESS";
@@ -10,7 +10,7 @@ export function resetPassword(info) {
   return function (dispatch) {
     dispatch({ type: RESET_PASSWORD_REQUEST });
 
-    requestApi.resetPassword(info)
+    RequestApi.resetPassword(info)
       .then((data) => {
         dispatch({ type: RESET_PASSWORD_SUCCESS });
 

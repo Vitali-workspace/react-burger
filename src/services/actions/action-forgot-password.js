@@ -1,4 +1,4 @@
-import requestApi from "../../utils/request-api";
+import RequestApi from "../../utils/request-api";
 
 export const FORGOT_PASSWORD_ERROR = "FORGOT_PASSWORD_ERROR";
 export const FORGOT_PASSWORD_SUCCESS = "FORGOT_PASSWORD_SUCCESS";
@@ -10,7 +10,7 @@ export function forgotPassword(info) {
   return function (dispatch) {
     dispatch({ type: FORGOT_PASSWORD_REQUEST });
 
-    requestApi.forgotPassword(info)
+    RequestApi.forgotPassword(info)
       .then(() => {
         dispatch({ type: FORGOT_PASSWORD_SUCCESS });
       })

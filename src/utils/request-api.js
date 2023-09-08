@@ -3,7 +3,7 @@ import { token } from "../services/actions/action-login";
 import { getCookie } from "./cookie-api";
 
 
-class requestApi {
+class RequestApi {
 
   _checkError(response) {
     if (!response.ok) {
@@ -106,6 +106,6 @@ class requestApi {
 
 }
 
-const api = new requestApi(BASE_URL);
+const api = new RequestApi(BASE_URL);
 
 export default api;

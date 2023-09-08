@@ -1,4 +1,4 @@
-import requestApi from "../../utils/request-api";
+import RequestApi from "../../utils/request-api";
 import { setCookie } from "../../utils/cookie-api";
 
 export const LOGIN_SUBMIT_REQUEST = "LOGIN_SUBMIT_REQUEST";
@@ -13,7 +13,7 @@ export function login(info) {
   return function (dispatch) {
     dispatch({ type: LOGIN_SUBMIT_REQUEST });
 
-    requestApi.login(info)
+    RequestApi.login(info)
       .then((data) => {
         dispatch({ type: LOGIN_SUBMIT_SUCCESS, user: data.user });
 

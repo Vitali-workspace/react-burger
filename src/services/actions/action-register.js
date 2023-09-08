@@ -1,4 +1,4 @@
-import requestApi from "../../utils/request-api";
+import RequestApi from "../../utils/request-api";
 import { setCookie } from "../../utils/cookie-api";
 
 export const REGISTER_SUBMIT_ERROR = "REGISTER_SUBMIT_ERROR";
@@ -13,7 +13,7 @@ export function register(info) {
   return function (dispatch) {
     dispatch({ type: REGISTER_SUBMIT_REQUEST });
 
-    requestApi.registration(info)
+    RequestApi.registration(info)
       .then((data) => {
         dispatch({ type: REGISTER_SUBMIT_SUCCESS, user: data.user });
 

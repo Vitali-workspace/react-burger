@@ -1,4 +1,4 @@
-import requestApi from "../../utils/request-api";
+import RequestApi from "../../utils/request-api";
 import { deleteCookie, setCookie } from "../../utils/cookie-api";
 
 export const PROFILE_SUBMIT_ERROR = "PROFILE_SUBMIT_ERROR";
@@ -25,13 +25,13 @@ export function profileInfo(info) {
   return function (dispatch) {
     dispatch({ type: PROFILE_SUBMIT_REQUEST });
 
-    requestApi.updateUserInfo(info)
+    RequestApi.updateUserInfo(info)
       .then((data) => {
         dispatch({ type: PROFILE_SUBMIT_SUCCESS, user: data.user });
       })
       .catch((error) => {
         if (error.message === ERROR.TIMER_JWT) {
-          dispatch(requestApi.updateToken());
+          dispatch(RequestApi.updateToken());
         } else {
           dispatch({ type: PROFILE_SUBMIT_ERROR, message: error.message });
         }
@@ -45,7 +45,7 @@ export function logout() {
   return function (dispatch) {
     dispatch({ type: LOGOUT_REQUEST });
 
-    requestApi.logout()
+    RequestApi.logout()
       .then(() => {
         dispatch({ type: LOGOUT_SUCCESS });
 
@@ -65,7 +65,7 @@ export function getUser() {
   return function (dispatch) {
     dispatch({ type: GET_USER_REQUEST });
 
-    requestApi.getUserInfo()
+    RequestApi.getUserInfo()
       .then((data) => {
         dispatch({ type: GET_USER_SUCCESS, user: data.user });
       })
@@ -84,7 +84,7 @@ export function refreshToken() {
   return function (dispatch) {
     dispatch({ type: UPDATE_TOKEN_REQUEST });
 
-    requestApi.updateToken()
+    RequestApi.updateToken()
       .then((data) => {
         dispatch({ type: UPDATE_TOKEN_SUCCESS });
 
