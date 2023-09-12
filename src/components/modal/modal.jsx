@@ -8,7 +8,7 @@ import styleModal from "./modal.module.css";
 
 function Modal({ children, closePopup }) {
 
-  const modalRoot = document.getElementById('root');
+  const modalRoot = document.getElementById("modals");
 
   useEffect(() => {
     const handleKeyDown = function (e) {

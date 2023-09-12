@@ -1,4 +1,4 @@
-import requestApi from "../../utils/request-api";
+import RequestApi from "../../utils/request-api";
 
 export const OPEN_ORDER_DETAILS_MODAL = 'OPEN_ORDER_DETAILS_MODAL';
 export const CLOSE_MODAL_ORDER_DETAILS = 'CLOSE_MODAL_ORDER_DETAILS';
@@ -11,7 +11,7 @@ export function actionOrderDetails(order) {
   return function (dispatch) {
     dispatch({ type: GET_ORDER_DETAILS_REQUEST });
 
-    requestApi.getOrderNumber(order)
+    RequestApi.getOrderNumber(order)
       .then((response) => {
         dispatch({
           type: GET_ORDER_DETAILS_SUCCESS,

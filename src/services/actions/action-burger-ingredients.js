@@ -1,4 +1,4 @@
-import requestApi from "../../utils/request-api";
+import RequestApi from "../../utils/request-api";
 export const REPLACE_BUN = 'REPLACE_BUN';
 export const SELECT_TAB = 'SELECT_TAB';
 export const GET_INGREDIENTS_ERROR = 'GET_INGREDIENTS_ERROR';
@@ -11,7 +11,7 @@ export const INCREASE_INGREDIENT = 'INCREASE_INGREDIENT';
 export function getIngredients() {
   return function (dispatch) {
     dispatch({ type: GET_INGREDIENTS_REQUEST });
-    requestApi.getIngredients()
+    RequestApi.getIngredients()
       .then((response) => {
         dispatch({
           type: GET_INGREDIENTS_SUCCESS,

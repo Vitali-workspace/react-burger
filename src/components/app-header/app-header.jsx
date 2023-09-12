@@ -1,7 +1,14 @@
 import { Logo, BurgerIcon, ListIcon, ProfileIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import { Link, NavLink } from 'react-router-dom';
+import { useSelector } from "react-redux";
 import styleAppHeader from "./app-header.module.css";
 
 function AppHeader() {
+
+  const { isAuthorized } = useSelector(state => state.pages);
+  const activeStyle = { color: "#F2F2F3" };
+  const inactiveStyle = { color: "#8585AD" };
+  const activeLink = ({ isActive }) => isActive ? activeStyle : inactiveStyle;
 
   return (
     <header className={styleAppHeader.header + " p-4"}>
@@ -9,29 +16,55 @@ function AppHeader() {
 
         <nav className={styleAppHeader.navigation}>
           <ul className={styleAppHeader.list}>
+
             <li className="pl-5 pr-5">
-              <a className={styleAppHeader.link} href="http://localhost:3000/">
-                {<BurgerIcon type="primary" />}
-                <p className="text text_type_main-default pl-2 pr-2">Конструктор</p>
-              </a>
+              <NavLink
+                className={styleAppHeader.link}
+                style={activeLink}
+                to="/">
+                {({ isActive }) => (
+                  <>
+                    <BurgerIcon type={isActive ? "primary" : "secondary"} />
+                    <p className="text text_type_main-default pl-2 pr-2">Конструктор</p>
+                  </>
+                )}
+              </NavLink>
             </li>
 
             <li className="pl-5 pr-5">
-              <a className={styleAppHeader.link} href="http://localhost:3000/">
-                {<ListIcon type="secondary" />}
-                <p className="text text_type_main-default text_color_inactive pl-2">Лента заказов</p>
-              </a>
+              <NavLink
+                className={styleAppHeader.link}
+                to="/list"
+                style={activeLink}>
+                {({ isActive }) => (
+                  <>
+                    {<ListIcon type={isActive ? "primary" : "secondary"} />}
+                    <p className="text text_type_main-default pl-2">Лента заказов</p>
+                  </>
+                )}
+              </NavLink>
             </li>
           </ul>
         </nav>
 
-        <a className={styleAppHeader.logo + " mt-1"} href="http://localhost:3000/">
+        <Link className={styleAppHeader.logo + " mt-1"} to="/">
           <Logo />
-        </a>
-        <a className={styleAppHeader.link} href="http://localhost:3000/">
-          <ProfileIcon type="secondary" />
-          <p className="text text_type_main-default text_color_inactive pl-2 pr-5">Личный кабинет</p>
-        </a>
+        </Link>
+
+        <div className={styleAppHeader.list}>
+          <NavLink
+            className={styleAppHeader.link}
+            to={isAuthorized ? "/profile" : "/login"}
+            style={activeLink}>
+            {({ isActive }) => (
+              <>
+                <ProfileIcon type={isActive ? "primary" : "secondary"} />
+                <p className="text text_type_main-default pl-2 pr-5">Личный кабинет</p>
+              </>
+            )}
+          </NavLink>
+        </div>
+
       </div>
     </header>
   );

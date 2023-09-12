@@ -9,6 +9,10 @@
   text-align: center;
 }
 
+.link {
+  all: unset;
+}
+
 .container {
   display: flex;
   position: relative;

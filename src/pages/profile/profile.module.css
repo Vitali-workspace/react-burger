@@ -1,0 +1,45 @@
+.container {
+  display: flex;
+  width: 1280px;
+  justify-content: flex-start;
+  text-align: center;
+  gap: 0 60px;
+}
+
+.navigation {
+  display: flex;
+  flex-direction: column;
+  width: 320px;
+  margin-left: 20px;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 35px 0;
+  list-style-type: none;
+  padding: 0;
+}
+
+.description {
+  text-align: start;
+  color: #8585AD;
+}
+
+.link {
+  text-decoration: none;
+  color: #4C4CFF;
+}
+
+.active {
+  color: #F2F2F3;
+  text-decoration: none;
+}
+
+.button {
+  background-color: transparent;
+  color: #4C4CFF;
+  border: none;
+  cursor: pointer;
+}
