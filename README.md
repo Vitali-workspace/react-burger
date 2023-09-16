@@ -1,4 +1,5 @@
 # Игра React Burger
+Игра с возможностью сборки бургера.
 
 ## Available Scripts
 
