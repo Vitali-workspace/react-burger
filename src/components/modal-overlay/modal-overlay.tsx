@@ -1,7 +1,7 @@
-import PropTypes from 'prop-types';
+import { FC } from "react";
 import styleOverlay from "./modal-overlay.module.css";
 
-function ModalOverlay(props) {
+const ModalOverlay: FC<{ overlayCloseClick: () => void }> = (props) => {
 
   return (
     <section
@@ -10,7 +10,5 @@ function ModalOverlay(props) {
     </section>
   );
 }
-
-ModalOverlay.propTypes = { overlayCloseClick: PropTypes.func }
 
 export default ModalOverlay;
