@@ -6,6 +6,6 @@
   flex-direction: column;
   align-items: center;
   height: 57vh;
-  justify-content: end;
+  justify-content: flex-end;
   gap: 40px 0;
 }
