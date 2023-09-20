@@ -1,14 +1,17 @@
+import { FC } from "react";
 import { Logo, BurgerIcon, ListIcon, ProfileIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, NavLink } from 'react-router-dom';
 import { useSelector } from "react-redux";
 import styleAppHeader from "./app-header.module.css";
 
-function AppHeader() {
+const activeStyle = { color: "#F2F2F3" };
+const inactiveStyle = { color: "#8585AD" };
+const activeLink = ({ isActive }: { isActive: boolean }) => isActive ? activeStyle : inactiveStyle;
 
-  const { isAuthorized } = useSelector(state => state.pages);
-  const activeStyle = { color: "#F2F2F3" };
-  const inactiveStyle = { color: "#8585AD" };
-  const activeLink = ({ isActive }) => isActive ? activeStyle : inactiveStyle;
+
+const AppHeader: FC = () => {
+
+  const { isAuthorized } = useSelector((state: any) => state.pages);
 
   return (
     <header className={styleAppHeader.header + " p-4"}>
