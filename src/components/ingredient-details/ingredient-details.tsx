@@ -1,23 +1,37 @@
-import { useEffect } from "react";
+import { useEffect, FC } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from 'react-router-dom'
 import { SELECT_INGREDIENT } from "../../services/actions/action-ingredient-details";
 import styleDetails from "./ingredient-details.module.css";
 
+interface IIngredientInfo {
+  name: string;
+  type: string;
+  image: string;
+  image_mobile: string;
+  image_large: string;
+  calories: number;
+  proteins: number;
+  fat: number;
+  carbohydrates: number;
+  price: number;
+  quantity: number;
+  __v: number;
+  _id: string;
+}
 
-function IngredientDetails() {
+
+const IngredientDetails: FC = () => {
 
   const dispatch = useDispatch();
-  const { selectedIngredient } = useSelector(state => state.ingredientDetails);
+  const { selectedIngredient } = useSelector((state: any) => state.ingredientDetails);
 
-  const { ingredients } = useSelector(state => state.burgerIngredients);
+  const { ingredients } = useSelector((state: any) => state.burgerIngredients);
   const { id } = useParams();
-  const ingredient = ingredients.find((ingredient) => ingredient._id === id);
+  const ingredient = ingredients.find((ingredient: IIngredientInfo) => ingredient._id === id);
 
   useEffect(() => {
     if (!selectedIngredient && id) {
-
-
       dispatch({ type: SELECT_INGREDIENT, selectedIngredient: ingredient });
     }
   }, [selectedIngredient, id, dispatch, ingredient]);
