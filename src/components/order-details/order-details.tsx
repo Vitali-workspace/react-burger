@@ -1,11 +1,12 @@
+import { FC } from "react";
 import { useSelector } from "react-redux";
 import iconOrder from "../../images/done.svg";
 import styleOrder from "./order-details.module.css";
 
 
-function OrderDetails() {
+const OrderDetails: FC = () => {
 
-  const { orderId } = useSelector(state => state.orderDetails);
+  const { orderId } = useSelector((state: any) => state.orderDetails);
 
   return (
     <div className={styleOrder.container + " mt-15"}>
