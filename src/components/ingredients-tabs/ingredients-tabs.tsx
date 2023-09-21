@@ -1,13 +1,17 @@
-import PropTypes from 'prop-types';
+import { FC } from 'react';
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useSelector } from "react-redux";
 import { NAMES_INGREDIENTS } from "../../utils/constants";
 import styleTabs from "./ingredients-tabs.module.css";
 
+interface ITabs {
+  tabClick: (e: string) => void;
+}
 
-function IngredientsTabs({ tabClick }) {
 
-  const current = useSelector(state => state.burgerIngredients.tab);
+const IngredientsTabs: FC<ITabs> = ({ tabClick }) => {
+
+  const current = useSelector((state: any) => state.burgerIngredients.tab);
 
   return (
     <nav className={styleTabs.tabs}>
@@ -41,6 +45,5 @@ function IngredientsTabs({ tabClick }) {
   );
 }
 
-IngredientsTabs.propTypes = { tabClick: PropTypes.func };
 
 export default IngredientsTabs;
