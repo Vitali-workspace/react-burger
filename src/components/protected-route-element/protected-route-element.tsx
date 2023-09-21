@@ -1,11 +1,16 @@
+import { FC, ReactNode } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
-import PropTypes from 'prop-types';
+
+interface IProtectedRouteProps {
+  children?: ReactNode;
+  anonymous?: boolean;
+}
 
 
-function ProtectedRouteElement({ children, anonymous }) {
+const ProtectedRouteElement: FC<IProtectedRouteProps> = ({ children, anonymous }) => {
 
-  const { isAuthorized } = useSelector(state => state.pages);
+  const { isAuthorized } = useSelector((state: any) => state.pages);
 
   const location = useLocation();
   const from = location.state?.from || '/';
@@ -18,13 +23,9 @@ function ProtectedRouteElement({ children, anonymous }) {
     return <Navigate to="/login" state={{ from: location }} />;
   }
 
-  return children;
+  return <>{children}</>;
 }
 
 
 export default ProtectedRouteElement;
 
-ProtectedRouteElement.propTypes = {
-  children: PropTypes.element,
-  anonymous: PropTypes.bool,
-};
