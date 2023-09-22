@@ -1,19 +1,41 @@
-import PropTypes from 'prop-types';
+import { FC } from "react";
 import { useLocation, useNavigate } from 'react-router-dom';
 import { CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDrag } from "react-dnd";
-import { TYPE_DND, ingredientPropTypes } from "../../utils/constants";
+import { TYPE_DND } from "../../utils/constants";
 import styleItem from './ingredients-item.module.css';
 
+interface IIngredientInfo {
+  name: string;
+  type: string;
+  image: string;
+  image_mobile: string;
+  image_large: string;
+  calories: number;
+  proteins: number;
+  fat: number;
+  carbohydrates: number;
+  price: number;
+  quantity: number;
+  __v: number;
+  _id: string;
+  uuid?: string;
+}
 
-function IngredientsItem({ ingredient, selectItem }) {
+interface IList {
+  ingredient: IIngredientInfo;
+  selectItem: (ingredient: IIngredientInfo) => void;
+}
+
+
+const IngredientsItem: FC<IList> = ({ ingredient, selectItem }) => {
 
   const navigate = useNavigate();
   const location = useLocation();
-  const { quantity, price, name, image, _id } = ingredient;
+  const { quantity, price, name, image } = ingredient;
   const [, dragRef] = useDrag({ type: TYPE_DND.ITEM_FROM_INGREDIENTS, item: ingredient });
 
-  const showIngredientDetails = (ingredient) => {
+  const showIngredientDetails = (ingredient: IIngredientInfo) => {
     navigate(`/ingredients/${ingredient._id}`, {
       state: { background: location },
     });
@@ -25,7 +47,11 @@ function IngredientsItem({ ingredient, selectItem }) {
 
       <div className={styleItem.link}
         onClick={() => {
-          window.getSelection().toString() === "" && showIngredientDetails(ingredient);
+          //!window.getSelection().toString() === "" && showIngredientDetails(ingredient);
+          const selection = window.getSelection();
+          if (selection !== null && selection.toString() === "") {
+            showIngredientDetails(ingredient);
+          }
         }}
       >
 
@@ -47,7 +73,5 @@ function IngredientsItem({ ingredient, selectItem }) {
   );
 }
 
-
-IngredientsItem.propTypes = { ingredient: ingredientPropTypes, selectItem: PropTypes.func };
 
 export default IngredientsItem;
