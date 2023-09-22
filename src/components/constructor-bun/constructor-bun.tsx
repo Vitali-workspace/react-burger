@@ -1,13 +1,15 @@
-import PropTypes from "prop-types";
+import { FC } from "react";
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useSelector } from "react-redux";
 import { TYPE_BUN } from "../../utils/constants";
 import styleBun from "./constructor-bun.module.css"
 
+interface IBun { type?: "top" | "bottom" | undefined }
 
-function ConstructorBun({ type }) {
 
-  const { bun } = useSelector(state => state.burgerConstructor);
+const ConstructorBun: FC<IBun> = ({ type }) => {
+
+  const { bun } = useSelector((state: any) => state.burgerConstructor);
 
   return (
     <li className="ml-8">
@@ -34,6 +36,5 @@ function ConstructorBun({ type }) {
   );
 }
 
-ConstructorBun.propTypes = { type: PropTypes.string };
 
 export default ConstructorBun;
