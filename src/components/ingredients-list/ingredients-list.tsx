@@ -1,10 +1,32 @@
-import PropTypes from 'prop-types';
+import { FC } from "react";
 import IngredientsItem from "../ingredients-item/ingredients-item";
-import { ingredientPropTypes } from "../../utils/constants";
 import styleList from "./ingredients-list.module.css";
 
+interface IIngredientInfo {
+  name: string;
+  type: string;
+  image: string;
+  image_mobile: string;
+  image_large: string;
+  calories: number;
+  proteins: number;
+  fat: number;
+  carbohydrates: number;
+  price: number;
+  quantity: number;
+  __v: number;
+  _id: string;
+  uuid?: string;
+}
 
-function IngredientsList({ ingredients, selectItem }) {
+interface IList {
+  ingredients: Array<IIngredientInfo>;
+  selectItem: (ingredient: IIngredientInfo) => void;
+}
+
+
+const IngredientsList: FC<IList> = ({ ingredients, selectItem }) => {
+
   return (
     <ul className={`${styleList.list} mt-6 mb-10 ml-4 mr-4`}>
       {
@@ -14,7 +36,6 @@ function IngredientsList({ ingredients, selectItem }) {
             <IngredientsItem
               ingredient={ingredient}
               key={_id}
-              count={1}
               selectItem={selectItem}
             />
           )
@@ -24,9 +45,5 @@ function IngredientsList({ ingredients, selectItem }) {
   );
 }
 
-IngredientsList.propTypes = {
-  ingredients: PropTypes.arrayOf(ingredientPropTypes),
-  selectItem: PropTypes.func,
-};
 
 export default IngredientsList;
