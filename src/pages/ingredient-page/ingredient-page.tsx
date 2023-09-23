@@ -1,8 +1,9 @@
+import { FC } from "react";
 import IngredientDetails from "../../components/ingredient-details/ingredient-details";
 import styleDetails from "./ingredient-page.module.css";
 
 
-function IngredientPage() {
+const IngredientPage: FC = () => {
 
   return (
     <section className={styleDetails.container}>

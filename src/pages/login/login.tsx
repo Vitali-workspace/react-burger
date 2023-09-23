@@ -1,31 +1,36 @@
-import { Button, Input, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
+import { useState, FC, FormEvent, ChangeEvent } from "react";
+import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, useNavigate } from 'react-router-dom';
-import { useState } from "react";
 import { login } from "../../services/actions/action-login";
 import { useDispatch, useSelector } from "react-redux";
 import styleLogin from "./login.module.css";
 
+interface ILogin {
+  email: string;
+  password: string;
+}
 
-function Login() {
+
+const Login: FC = () => {
 
   const dispatch = useDispatch();
   const navigation = useNavigate();
-  const { isAuthorized, loginError } = useSelector(state => state.pages);
-  const [inputsValue, setInputsValue] = useState({ email: "", password: "" });
-  const [isStatusPassword, setStatusPassword] = useState(true);
+  const { isAuthorized, loginError } = useSelector((state: any) => state.pages);
+  const [inputsValue, setInputsValue] = useState<ILogin>({ email: "", password: "" });
+  const [isStatusPassword, setStatusPassword] = useState<boolean>(true);
 
 
   function showPassword() {
     setStatusPassword(!isStatusPassword);
   }
 
-  function handleChangeInput(evt) {
+  function handleChangeInput(evt: ChangeEvent<HTMLInputElement>) {
     setInputsValue({ ...inputsValue, [evt.target.name]: evt.target.value });
   }
 
-  function submitForm(evt) {
+  function submitForm(evt: FormEvent) {
     evt.preventDefault();
-    dispatch(login(inputsValue));
+    dispatch(login(inputsValue) as any);
     navigation(-1);
   }
 
@@ -45,7 +50,7 @@ function Login() {
           required
         />
 
-        <PasswordInput
+        <Input
           type={isStatusPassword ? "password" : "text"}
           name="password"
           placeholder="Пароль"

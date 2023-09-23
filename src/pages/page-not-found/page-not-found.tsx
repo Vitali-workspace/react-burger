@@ -1,9 +1,11 @@
+import { FC } from "react";
 import { useNavigate } from 'react-router-dom';
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import stylePage from "./page-not-found.module.css";
 
 
-function PageNotFound() {
+const PageNotFound: FC = () => {
+
   const navigation = useNavigate();
 
   function handleClick() {

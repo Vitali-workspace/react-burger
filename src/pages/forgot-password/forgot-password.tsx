@@ -1,26 +1,30 @@
+import { useState, FC, FormEvent, ChangeEvent } from "react";
 import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useState } from "react";
 import { Link, Navigate, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 import { forgotPassword } from "../../services/actions/action-forgot-password";
 import styleForgot from "./forgot-password.module.css";
 
+interface IForgotPassword {
+  email: string;
+}
 
-function ForgotPassword() {
+
+const ForgotPassword: FC = () => {
 
   const dispatch = useDispatch();
   const location = useLocation();
-  const { isAuthorized, forgotPasswordError, forgotPasswordSuccess } = useSelector(state => state.pages);
-  const [inputsValue, setInputsValue] = useState({ email: "" });
+  const { isAuthorized, forgotPasswordError, forgotPasswordSuccess } = useSelector((state: any) => state.pages);
+  const [inputsValue, setInputsValue] = useState<IForgotPassword>({ email: "" });
   const from = location.state?.from || '/';
 
-  function handleChangeInput(evt) {
+  function handleChangeInput(evt: ChangeEvent<HTMLInputElement>) {
     setInputsValue({ ...inputsValue, [evt.target.name]: evt.target.value });
   }
 
-  function submitForm(evt) {
+  function submitForm(evt: FormEvent) {
     evt.preventDefault();
-    dispatch(forgotPassword(inputsValue));
+    dispatch(forgotPassword(inputsValue) as any);
   }
 
   if (isAuthorized) {

@@ -1,31 +1,36 @@
-import { Button, Input, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
+import { useState, FC, FormEvent, ChangeEvent } from "react";
+import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link } from 'react-router-dom';
-import { useState } from "react";
 import { register } from "../../services/actions/action-register";
 import { useDispatch, useSelector } from "react-redux";
 import styleRegister from "./register.module.css";
 
+interface IRegister {
+  name: string;
+  email: string;
+  password: string;
+}
 
-function Register() {
+const Register: FC = () => {
 
   const dispatch = useDispatch();
-  const { registerError } = useSelector(state => state.pages);
+  const { registerError } = useSelector((state: any) => state.pages);
 
-  const [inputsValue, setInputsValue] = useState({ name: "", email: "", password: "" });
-  const [isStatusPassword, setStatusPassword] = useState(true);
+  const [inputsValue, setInputsValue] = useState<IRegister>({ name: "", email: "", password: "" });
+  const [isStatusPassword, setStatusPassword] = useState<boolean>(true);
 
 
   function showPassword() {
     setStatusPassword(!isStatusPassword);
   }
 
-  function handleChangeInput(evt) {
+  function handleChangeInput(evt: ChangeEvent<HTMLInputElement>) {
     setInputsValue({ ...inputsValue, [evt.target.name]: evt.target.value });
   }
 
-  function submitForm(evt) {
+  function submitForm(evt: FormEvent) {
     evt.preventDefault();
-    dispatch(register(inputsValue));
+    dispatch(register(inputsValue) as any);
   }
 
   return (
@@ -49,7 +54,7 @@ function Register() {
           error={registerError}
           required
         />
-        <PasswordInput
+        <Input
           type={isStatusPassword ? "password" : "text"}
           name="password"
           placeholder="Пароль"

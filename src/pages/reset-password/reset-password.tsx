@@ -1,31 +1,36 @@
-import { Button, Input, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useState } from "react";
+import { useState, FC, FormEvent, ChangeEvent } from "react";
+import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, Navigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { resetPassword } from "../../services/actions/action-reset-password";
 import styleReset from "./reset-password.module.css";
 
+interface IResetPassword {
+  password: string;
+  token: string;
+}
 
-function ResetPassword() {
+
+const ResetPassword: FC = () => {
 
   const dispatch = useDispatch();
 
-  const { resetPasswordError, resetPasswordSuccess, forgotPasswordSuccess } = useSelector(state => state.pages);
-  const [inputsValue, setInputsValue] = useState({ password: "", token: "" });
-  const [isStatusPassword, setStatusPassword] = useState(true);
+  const { resetPasswordError, resetPasswordSuccess, forgotPasswordSuccess } = useSelector((state: any) => state.pages);
+  const [inputsValue, setInputsValue] = useState<IResetPassword>({ password: "", token: "" });
+  const [isStatusPassword, setStatusPassword] = useState<boolean>(true);
 
 
   function showPassword() {
     setStatusPassword(!isStatusPassword);
   }
 
-  function handleChangeInput(evt) {
+  function handleChangeInput(evt: ChangeEvent<HTMLInputElement>) {
     setInputsValue({ ...inputsValue, [evt.target.name]: evt.target.value });
   }
 
-  function submitForm(evt) {
+  function submitForm(evt: FormEvent) {
     evt.preventDefault();
-    dispatch(resetPassword(inputsValue));
+    dispatch(resetPassword(inputsValue) as any);
   }
 
   if (resetPasswordSuccess || !forgotPasswordSuccess) {
@@ -40,7 +45,7 @@ function ResetPassword() {
       <h2 className={`text text_type_main-medium + ${styleReset.title}`}>Восстановление пароля</h2>
 
       <form className={styleReset.inputs} onSubmit={submitForm}>
-        <PasswordInput
+        <Input
           type={isStatusPassword ? "password" : "text"}
           name="password"
           placeholder="Введите новый пароль"
