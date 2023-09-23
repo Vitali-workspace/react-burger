@@ -2,10 +2,27 @@ import { BASE_URL } from "./constants";
 import { token } from "../services/actions/action-login";
 import { getCookie } from "./cookie-api";
 
+interface IForm {
+  name?: string;
+  email: string;
+  password?: string;
+}
+
+interface IResetPassword {
+  token: string;
+  password: string;
+}
+
 
 class RequestApi {
 
-  _checkError(response) {
+  BASE_URL: string;
+
+  constructor(BASE_URL: string) {
+    this.BASE_URL = BASE_URL;
+  }
+
+  _checkError(response: Response) {
     if (!response.ok) {
       return Promise.reject(`${response.status}`);
     }
@@ -22,9 +39,7 @@ class RequestApi {
   }
 
 
-
-
-  registration({ name, email, password }) {
+  registration({ name, email, password }: IForm) {
     return fetch(`${BASE_URL}/auth/register`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -32,7 +47,7 @@ class RequestApi {
     }).then(this._checkError);
   }
 
-  login({ email, password }) {
+  login({ email, password }: IForm) {
     return fetch(`${BASE_URL}/auth/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -49,7 +64,7 @@ class RequestApi {
   }
 
 
-  getOrderNumber(listId) {
+  getOrderNumber(listId: number[]) {
     return fetch(`${BASE_URL}/orders`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -70,24 +85,24 @@ class RequestApi {
       headers: {
         "Content-Type": "application/json",
         "Authorization": getCookie(token.access),
-      },
+      } as HeadersInit,
     }).then(this._checkError);
   }
 
 
-  updateUserInfo({ name, email, password }) {
+  updateUserInfo({ name, email, password }: IForm) {
     return fetch(`${BASE_URL}/auth/user`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
         "Authorization": getCookie(token.access),
-      },
+      } as HeadersInit,
       body: JSON.stringify({ name, email, password }),
     }).then(this._checkError);
   }
 
 
-  resetPassword({ token, password }) {
+  resetPassword({ token, password }: IResetPassword) {
     return fetch(`${BASE_URL}/password-reset/reset`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -96,7 +111,7 @@ class RequestApi {
   }
 
 
-  forgotPassword({ email }) {
+  forgotPassword({ email }: IForm) {
     return fetch(`${BASE_URL}/password-reset`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },

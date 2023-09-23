@@ -1,7 +1,11 @@
+interface ITypeBun {
+  TOP: "top",
+  BOTTOM: "bottom",
+}
 
 export const BASE_URL = "https://norma.nomoreparties.space/api";
 
-export const TYPE_BUN = {
+export const TYPE_BUN: ITypeBun = {
   TOP: "top",
   BOTTOM: "bottom",
 };
