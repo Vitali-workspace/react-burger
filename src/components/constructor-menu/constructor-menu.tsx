@@ -21,7 +21,7 @@ interface IIngredientInfo {
 }
 
 interface IConstructorMenu {
-  deleteIngredients: (_id: string, uuid?: string) => void;
+  deleteIngredients: (_id: string, uuid: string) => void;
 }
 
 

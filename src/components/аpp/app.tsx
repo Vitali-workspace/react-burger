@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, FC } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
@@ -26,13 +26,13 @@ import styleApp from "./app.module.css";
 
 
 
-function App() {
+const App: FC = () => {
 
   const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
 
-  const modalOrderDetails = useSelector(state => state.orderDetails.openModal);
+  const modalOrderDetails = useSelector((state: any) => state.orderDetails.openModal);
   let background = location.state && location.state.background;
 
 
@@ -48,11 +48,11 @@ function App() {
 
   useEffect(() => {
     const checkToken = getCookie("accessToken");
-    dispatch(getIngredients());
+    dispatch(getIngredients() as any);
 
     if (checkToken) {
-      dispatch(refreshToken())
-      dispatch(getUser());
+      dispatch(refreshToken() as any)
+      dispatch(getUser() as any);
     }
   }, [dispatch]);
 
@@ -65,7 +65,6 @@ function App() {
         <Routes location={background || location} >
 
           <Route
-            exact
             path="/"
             element={
               <DndProvider backend={HTML5Backend}>

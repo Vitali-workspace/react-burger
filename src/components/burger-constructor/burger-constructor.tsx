@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, FC } from "react";
 import { useNavigate } from 'react-router-dom';
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import ConstructorMenu from "../constructor-menu/constructor-menu";
@@ -13,25 +13,42 @@ import { TYPE_BUN, TYPE_DND, TYPE_INGREDIENT } from "../../utils/constants";
 import icon from "../../images/gem.svg"
 import styleConstructor from "./burger-constructor.module.css";
 
+interface IIngredientInfo {
+  name: string;
+  type: string;
+  image: string;
+  image_mobile: string;
+  image_large: string;
+  calories: number;
+  proteins: number;
+  fat: number;
+  carbohydrates: number;
+  price: number;
+  quantity: number;
+  __v: number;
+  _id: string;
+  uuid?: string;
+}
 
-function BurgerConstructor() {
+
+const BurgerConstructor: FC = () => {
 
   const dispatch = useDispatch();
   const navigation = useNavigate();
 
-  const { bun } = useSelector(state => state.burgerConstructor);
-  const { isAuthorized } = useSelector(state => state.pages);
-  const constructorIngredients = useSelector(state => state.burgerConstructor.ingredients);
+  const { bun } = useSelector((state: any) => state.burgerConstructor);
+  const { isAuthorized } = useSelector((state: any) => state.pages);
+  const constructorIngredients = useSelector((state: any) => state.burgerConstructor.ingredients);
 
   const [, dropTargetRef] = useDrop({
     accept: TYPE_DND.ITEM_FROM_INGREDIENTS,
-    drop(ingredient) {
+    drop(ingredient: IIngredientInfo) {
       handleOnDrop(ingredient);
     }
   });
 
   const totalPrice = useMemo(() => {
-    return constructorIngredients.reduce((sumPrice, current) => {
+    return constructorIngredients.reduce((sumPrice: number, current: IIngredientInfo) => {
       if (current.price) {
         return sumPrice + current.price;
       }
@@ -40,21 +57,21 @@ function BurgerConstructor() {
   }, [bun, constructorIngredients]);
 
 
-  function handleDeleteClick(uuid, _id) {
+  function handleDeleteClick(uuid: string, _id: string) {
     dispatch({ type: REMOVE_INGREDIENT, uuid: uuid });
     dispatch({ type: DECREASE_INGREDIENT, _id: _id });
   }
 
   function buttonOrderClick() {
     if (isAuthorized) {
-      const listOrderId = [bun._id, ...constructorIngredients.map((ingredient) => ingredient._id), bun._id];
-      dispatch(actionOrderDetails(listOrderId));
+      const listOrderId = [bun._id, ...constructorIngredients.map((ingredient: IIngredientInfo) => ingredient._id), bun._id];
+      dispatch(actionOrderDetails(listOrderId) as any);
     } else {
       navigation("/login");
     }
   }
 
-  function handleOnDrop(ingredient) {
+  function handleOnDrop(ingredient: IIngredientInfo) {
     const { type, _id } = ingredient;
 
     switch (type) {

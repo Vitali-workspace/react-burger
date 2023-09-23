@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { TYPE_BUN } from "../../utils/constants";
 import styleBun from "./constructor-bun.module.css"
 
-interface IBun { type?: "top" | "bottom" | undefined }
+interface IBun { type: "top" | "bottom" | undefined }
 
 
 const ConstructorBun: FC<IBun> = ({ type }) => {
