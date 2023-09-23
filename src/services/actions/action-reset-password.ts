@@ -5,9 +5,9 @@ export const RESET_PASSWORD_SUCCESS = "RESET_PASSWORD_SUCCESS";
 export const RESET_PASSWORD_REQUEST = "RESET_PASSWORD_REQUEST";
 
 
-export function resetPassword(info) {
+export function resetPassword(info: any) {
 
-  return function (dispatch) {
+  return function (dispatch: any) {
     dispatch({ type: RESET_PASSWORD_REQUEST });
 
     RequestApi.resetPassword(info)

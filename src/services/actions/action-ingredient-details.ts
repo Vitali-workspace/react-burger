@@ -4,7 +4,7 @@ export const CLOSE_MODAL_INGREDIENT_DETAILS = 'CLOSE_MODAL_INGREDIENT_DETAILS';
 export const OPEN_MODAL_INGREDIENT_DETAILS = 'OPEN_MODAL_INGREDIENT_DETAILS';
 
 
-export function selectIngredient(ingredient) {
+export function selectIngredient(ingredient: any) {
   return {
     type: SELECT_INGREDIENT,
     selectedIngredient: ingredient,

@@ -7,8 +7,8 @@ export const GET_ORDER_DETAILS_ERROR = 'GET_ORDER_DETAILS_ERROR';
 export const GET_ORDER_DETAILS_SUCCESS = 'GET_ORDER_DETAILS_SUCCESS';
 
 
-export function actionOrderDetails(order) {
-  return function (dispatch) {
+export function actionOrderDetails(order: any) {
+  return function (dispatch: any) {
     dispatch({ type: GET_ORDER_DETAILS_REQUEST });
 
     RequestApi.getOrderNumber(order)

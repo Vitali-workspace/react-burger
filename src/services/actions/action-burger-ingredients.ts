@@ -9,13 +9,13 @@ export const INCREASE_INGREDIENT = 'INCREASE_INGREDIENT';
 
 
 export function getIngredients() {
-  return function (dispatch) {
+  return function (dispatch: any) {
     dispatch({ type: GET_INGREDIENTS_REQUEST });
     RequestApi.getIngredients()
       .then((response) => {
         dispatch({
           type: GET_INGREDIENTS_SUCCESS,
-          ingredients: response.data.map(ingredient => ({ ...ingredient, quantity: 0 })),
+          ingredients: response.data.map((ingredient: any) => ({ ...ingredient, quantity: 0 })),
         })
       })
       .catch(() => {
