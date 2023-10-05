@@ -34,7 +34,7 @@ const Profile: FC = () => {
           <li>
             <NavLink
               className={({ isActive }) => (isActive ? styleLinkActive : styleLink)}
-              to="/profile/orders/:id">
+              to="/profile/orders">
               История заказов
             </NavLink>
           </li>
