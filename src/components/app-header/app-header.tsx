@@ -37,7 +37,7 @@ const AppHeader: FC = () => {
             <li className="pl-5 pr-5">
               <NavLink
                 className={styleAppHeader.link}
-                to="/list"
+                to="/feed"
                 style={activeLink}>
                 {({ isActive }) => (
                   <>

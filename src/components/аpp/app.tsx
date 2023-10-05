@@ -16,6 +16,8 @@ import ForgotPassword from "../../pages/forgot-password/forgot-password";
 import ResetPassword from "../../pages/reset-password/reset-password";
 import IngredientPage from "../../pages/ingredient-page/ingredient-page";
 import Profile from "../../pages/profile/profile";
+import OrderFeed from "../../pages/order-feed/order-feed";
+import ProfileHistory from "../../pages/profile-history/profile-history";
 import { getUser, refreshToken } from "../../services/actions/action-profile";
 import PageNotFound from "../../pages/page-not-found/page-not-found";
 import { getIngredients } from "../../services/actions/action-burger-ingredients";
@@ -97,10 +99,21 @@ const App: FC = () => {
             </ProtectedRouteElement>}>
           </Route>
 
-          {/* Лента заказов */}
-          <Route path="list" element={<ProtectedRouteElement anonymous={false}>
-            <PageNotFound />
-          </ProtectedRouteElement>} />
+          <Route path="profile/orders"
+            element={<ProtectedRouteElement anonymous={false}>
+              <ProfileHistory />
+            </ProtectedRouteElement>}>
+          </Route>
+
+          {/* <Route path="profile/orders/:id"
+            element={<ProtectedRouteElement anonymous={false}>
+              <></>
+            </ProtectedRouteElement>}>
+          </Route> */}
+
+          <Route path="feed" element={<OrderFeed />} />
+
+          {/* <Route path="feed/:id" element={ <></>} /> */}
 
           <Route path="/ingredients/:id" element={<IngredientPage />} />
 
