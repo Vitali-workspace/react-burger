@@ -1,47 +1,21 @@
 import { FC } from "react";
+import OrderList from "../../components/order-list/order-list";
+import FeedStatistics from "../../components/feed-statistics/feed-statistics";
 import styleOrderFeed from "./order-feed.module.css"
 
-const orderFeed: FC = () => {
 
+const OrderFeed: FC = () => {
 
   return (
-    <section className={styleOrderFeed.container}>
-      <h2>Лента заказов</h2>
+    <section className={styleOrderFeed.container + " mt-10"}>
       <div>
-        <ul className={styleOrderFeed.list}>
-          <li></li>
-        </ul>
+        <h2 className="text text_type_main-large">Лента заказов</h2>
+        <OrderList />
       </div>
-
-      <div>
-        <div>
-          <div>
-            <h3 className="text text_type_main-medium">Готовы:</h3>
-            <ul>
-              <li></li>
-            </ul>
-          </div>
-
-          <div>
-            <h3 className="text text_type_main-medium">В работе:</h3>
-            <ul>
-              <li></li>
-            </ul>
-          </div>
-        </div>
-
-        <div>
-          <h3 className="text text_type_main-medium">Выполнено за всё время:</h3>
-          <span className="text text_type_digits-large">3</span>
-        </div>
-        <div>
-          <h3 className="text text_type_main-medium">Выполнено за сегодня:</h3>
-          <span className="text text_type_digits-large">1</span>
-        </div>
-      </div>
+      <FeedStatistics />
     </section>
   )
 
 }
 
-export default orderFeed;
+export default OrderFeed;
