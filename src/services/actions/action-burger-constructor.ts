@@ -32,7 +32,7 @@ export interface IActionClearConstructor {
   readonly type: typeof CLEAR_CONSTRUCTOR;
 }
 
-export type TActions =
+export type TActionsBurgerConstructor =
   | IActionMoveIngredient
   | IActionSelectBuns
   | IActionAddIngredient
