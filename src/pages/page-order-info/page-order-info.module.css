@@ -1,0 +1,46 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 640px;
+}
+
+.block {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.number {
+  text-align: center;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  row-gap: 16px;
+  list-style-type: none;
+  padding: 0;
+  margin: 24px 32px 0 0;
+}
+
+.image {
+  height: 64px;
+  width: 64px;
+}
+
+.price {
+  display: flex;
+  align-items: center;
+  column-gap: 7px;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 48px;
+}
