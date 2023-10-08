@@ -1,8 +1,16 @@
 import { ADD_INGREDIENT, MOVE_INGREDIENT, REMOVE_INGREDIENT, SELECT_BUNS } from "../actions/action-burger-constructor";
+import { IIngredientInfo, TBun } from "../types/services-types";
+import { TActionsBurgerConstructor } from "../actions/action-burger-constructor";
 
-const initialState = { ingredients: [], bun: null };
+interface IStateBurgerConstructor {
+  ingredients: IIngredientInfo[];
+  bun: TBun;
+};
 
-export const reducerBurgerConstructor = (state = initialState, action) => {
+const initialState: IStateBurgerConstructor = { ingredients: [], bun: null };
+
+
+export const reducerBurgerConstructor = (state = initialState, action: TActionsBurgerConstructor): IStateBurgerConstructor => {
   switch (action.type) {
     case REMOVE_INGREDIENT: {
       return {
