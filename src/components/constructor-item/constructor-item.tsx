@@ -1,8 +1,8 @@
 import { useRef, FC } from "react";
 import { ConstructorElement, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from "../../services/hooks/services-hooks";
 import { useDrag, useDrop } from "react-dnd";
-import { MOVE_INGREDIENT } from "../../services/actions/action-burger-constructor";
+import { actionMoveIngredient } from "../../services/actions/action-burger-constructor";
 import { TYPE_DND } from "../../utils/constants";
 import stylesItem from "./constructor-item.module.css";
 
@@ -33,7 +33,7 @@ interface IConstructorItem {
 
 const ConstructorItem: FC<IConstructorItem> = ({ ingredient, index, deleteIngredients }) => {
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { name, price, image, uuid, _id } = ingredient;
 
   const elementRef = useRef<HTMLLIElement>(null);
@@ -53,7 +53,7 @@ const ConstructorItem: FC<IConstructorItem> = ({ ingredient, index, deleteIngred
         return
       }
 
-      const dragIndex = item.index;
+      const dragIndex = item.index!;
       const hoverIndex = index;
 
       if (dragIndex === hoverIndex) {
@@ -75,11 +75,7 @@ const ConstructorItem: FC<IConstructorItem> = ({ ingredient, index, deleteIngred
         }
       }
 
-      dispatch({
-        type: MOVE_INGREDIENT,
-        dragIndex: dragIndex,
-        hoverIndex: hoverIndex,
-      });
+      dispatch(actionMoveIngredient(dragIndex, hoverIndex));
 
       item.index = hoverIndex;
     }
