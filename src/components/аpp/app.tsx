@@ -1,5 +1,5 @@
 import { useEffect, FC } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../services/hooks/services-hooks";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
@@ -18,33 +18,34 @@ import IngredientPage from "../../pages/ingredient-page/ingredient-page";
 import Profile from "../../pages/profile/profile";
 import OrderFeed from "../../pages/order-feed/order-feed";
 import ProfileHistory from "../../pages/profile-history/profile-history";
-import { getUser, refreshToken } from "../../services/actions/action-profile";
 import PageNotFound from "../../pages/page-not-found/page-not-found";
+import { getUser, refreshToken } from "../../services/actions/action-profile";
 import { getIngredients } from "../../services/actions/action-burger-ingredients";
-import { CLOSE_MODAL_INGREDIENT_DETAILS, REJECT_INGREDIENT } from "../../services/actions/action-ingredient-details";
-import { CLOSE_MODAL_ORDER_DETAILS } from "../../services/actions/action-order-details";
 import { getCookie } from "../../utils/cookie-api";
+import { actionCloseModalOrder } from "../../services/actions/action-order-details";
+import { actionRejectIngredient, actionCloseModalDetails } from "../../services/actions/action-ingredient-details";
 import styleApp from "./app.module.css";
 
 
 
 const App: FC = () => {
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
+
   const location = useLocation();
   const navigate = useNavigate();
 
-  const modalOrderDetails = useSelector((state: any) => state.orderDetails.openModal);
+  const modalOrderDetails = useAppSelector((state) => state.orderDetails.openModal);
   let background = location.state && location.state.background;
 
 
   function closeModalOrderDetails() {
-    dispatch({ type: CLOSE_MODAL_ORDER_DETAILS });
+    dispatch(actionCloseModalOrder());
   }
 
   function closeModalIngredientDetails() {
-    dispatch({ type: CLOSE_MODAL_INGREDIENT_DETAILS });
-    dispatch({ type: REJECT_INGREDIENT });
+    dispatch(actionCloseModalDetails());
+    dispatch(actionRejectIngredient());
     navigate(-1);
   }
 
@@ -53,7 +54,7 @@ const App: FC = () => {
     dispatch(getIngredients() as any);
 
     if (checkToken) {
-      dispatch(refreshToken() as any)
+      dispatch(refreshToken() as any);
       dispatch(getUser() as any);
     }
   }, [dispatch]);
