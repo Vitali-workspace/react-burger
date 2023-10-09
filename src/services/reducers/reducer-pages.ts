@@ -8,12 +8,41 @@ import {
 } from "../actions/action-profile";
 import { FORGOT_PASSWORD_ERROR, FORGOT_PASSWORD_SUCCESS, FORGOT_PASSWORD_REQUEST } from "../actions/action-forgot-password";
 import { RESET_PASSWORD_ERROR, RESET_PASSWORD_SUCCESS, RESET_PASSWORD_REQUEST } from "../actions/action-reset-password";
+import { IForm, TActionsPages } from "../types/services-types";
 
 
-const initialState = {
+interface IStatePages {
+  isAuthorized: boolean,
+  user: IForm,
 
+  loginRequest: boolean,
+  loginError: boolean,
+  registerRequest: boolean,
+  registerError: boolean,
+  logoutRequest: boolean,
+  logoutError: boolean,
+
+  forgotPasswordSuccess: boolean,
+  forgotPasswordRequest: boolean,
+  forgotPasswordError: boolean,
+
+  resetPasswordRequest: boolean,
+  resetPasswordError: boolean,
+  resetPasswordSuccess: boolean,
+
+  getUserRequest: boolean,
+  getUserError: boolean,
+
+  profileRequest: boolean,
+  profileError: boolean,
+
+  updateTokenRequest: boolean,
+  updateTokenError: boolean,
+}
+
+
+const initialState: IStatePages = {
   isAuthorized: false,
-
   user: { name: "", email: "", password: "" },
 
   loginRequest: false,
@@ -41,7 +70,8 @@ const initialState = {
   updateTokenError: false,
 }
 
-export const reducerPages = (state = initialState, action) => {
+
+export const reducerPages = (state = initialState, action: TActionsPages): IStatePages => {
   switch (action.type) {
     case LOGIN_SUBMIT_REQUEST: {
       return { ...state, loginRequest: true, loginError: false }

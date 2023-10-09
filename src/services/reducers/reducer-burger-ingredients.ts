@@ -8,9 +8,18 @@ import {
   REPLACE_BUN,
   SELECT_TAB,
 } from "../actions/action-burger-ingredients";
+import { IIngredientCount } from "../types/services-types";
+import { TActionsBurgerIngredients } from "../actions/action-burger-ingredients";
 
 
-const initialState = {
+export interface IStateBurgerIngredients {
+  ingredients: IIngredientCount[],
+  ingredientsRequest: boolean,
+  ingredientsError: boolean,
+  tab: string,
+}
+
+const initialState: IStateBurgerIngredients = {
   ingredients: [],
   ingredientsRequest: false,
   ingredientsError: false,
@@ -18,7 +27,7 @@ const initialState = {
 };
 
 
-export const reducerBurgerIngredients = (state = initialState, action) => {
+export const reducerBurgerIngredients = (state = initialState, action: TActionsBurgerIngredients): IStateBurgerIngredients => {
   switch (action.type) {
     case GET_INGREDIENTS_REQUEST: {
       return {

@@ -5,8 +5,18 @@ import {
   CLOSE_MODAL_ORDER_DETAILS,
   OPEN_ORDER_DETAILS_MODAL,
 } from "../actions/action-order-details";
+import { TActionsOrderDetails } from "../actions/action-order-details";
 
-const initialState = {
+
+interface IStateOrderDetails {
+  orderId: string,
+  openModal: boolean,
+  orderDetailsRequest: boolean,
+  orderDetailsError: boolean,
+}
+
+
+const initialState: IStateOrderDetails = {
   orderId: '',
   openModal: false,
   orderDetailsRequest: false,
@@ -14,7 +24,7 @@ const initialState = {
 };
 
 
-export const reducerOrderDetails = (state = initialState, action) => {
+export const reducerOrderDetails = (state = initialState, action: TActionsOrderDetails): IStateOrderDetails => {
 
   switch (action.type) {
     case GET_ORDER_DETAILS_REQUEST: {
