@@ -40,7 +40,7 @@ export const actionLoginSubmitSuccess = (user: IForm): IActionLoginSubmitSuccess
 
 
 
-export const login: AppThunkAction = (info: any) => (dispatch: AppDispatch) => {
+export const login: AppThunkAction = (info) => (dispatch: AppDispatch) => {
   dispatch(actionLoginSubmitRequest());
 
   RequestApi.login(info)

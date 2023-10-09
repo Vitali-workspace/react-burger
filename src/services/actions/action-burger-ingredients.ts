@@ -1,5 +1,5 @@
 import RequestApi from "../../utils/request-api";
-import { IIngredientInfo } from "../types/services-types";
+import { IIngredientCount } from "../types/services-types";
 import { AppDispatch, AppThunkAction } from "../types/services-types";
 
 export const REPLACE_BUN: 'REPLACE_BUN' = 'REPLACE_BUN';
@@ -27,7 +27,7 @@ export interface IActionGetIngredientsError {
 
 export interface IActionGetIngredientsSuccess {
   readonly type: typeof GET_INGREDIENTS_SUCCESS;
-  readonly ingredients: IIngredientInfo[];
+  readonly ingredients: IIngredientCount[];
 }
 
 export interface IActionGetIngredientsRequest {
@@ -67,7 +67,7 @@ export const actionSelectTab = (tab: string): IActionSelectTab => ({ type: SELEC
 
 export const actionGetIngredientsError = (): IActionGetIngredientsError => ({ type: GET_INGREDIENTS_ERROR });
 
-export const actionGetIngredientsSuccess = (ingredients: IIngredientInfo[]): IActionGetIngredientsSuccess => ({
+export const actionGetIngredientsSuccess = (ingredients: IIngredientCount[]): IActionGetIngredientsSuccess => ({
   type: GET_INGREDIENTS_SUCCESS,
   ingredients,
 });
@@ -87,7 +87,7 @@ export const getIngredients: AppThunkAction = () => (dispatch: AppDispatch) => {
 
   RequestApi.getIngredients()
     .then((response) => {
-      const ingredients = response.data.map((ingredient: IIngredientInfo) => ({ ...ingredient, quantity: 0 }));
+      const ingredients = response.data.map((ingredient: IIngredientCount) => ({ ...ingredient, quantity: 0 }));
       dispatch(actionGetIngredientsSuccess(ingredients));
     })
     .catch(() => {

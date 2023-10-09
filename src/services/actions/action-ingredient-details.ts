@@ -1,4 +1,4 @@
-import { IIngredientInfo } from "../types/services-types";
+import { IIngredientCount } from "../types/services-types";
 
 export const REJECT_INGREDIENT: 'REJECT_INGREDIENT' = 'REJECT_INGREDIENT';
 export const SELECT_INGREDIENT: 'SELECT_INGREDIENT' = 'SELECT_INGREDIENT';
@@ -11,7 +11,7 @@ export interface IActionRejectIngredient {
 
 export interface IActionSelectIngredient {
   readonly type: typeof SELECT_INGREDIENT;
-  readonly selectedIngredient: IIngredientInfo;
+  readonly selectedIngredient: IIngredientCount;
 }
 
 export interface IActionCloseModalDetails {
@@ -31,7 +31,7 @@ export type TActionsIngredientDetails =
 
 export const actionRejectIngredient = (): IActionRejectIngredient => ({ type: REJECT_INGREDIENT });
 
-export const actionSelectIngredient = (selectedIngredient: IIngredientInfo): IActionSelectIngredient => ({
+export const actionSelectIngredient = (selectedIngredient: IIngredientCount): IActionSelectIngredient => ({
   type: SELECT_INGREDIENT,
   selectedIngredient,
 });

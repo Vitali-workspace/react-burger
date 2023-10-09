@@ -1,4 +1,4 @@
-import { IIngredientInfo, TBun } from "../types/services-types";
+import { TBun, IIngredientConstructor } from "../types/services-types";
 
 export const MOVE_INGREDIENT: 'MOVE_INGREDIENT' = 'MOVE_INGREDIENT';
 export const SELECT_BUNS: 'SELECT_BUNS' = 'SELECT_BUNS';
@@ -20,7 +20,7 @@ export interface IActionSelectBuns {
 
 export interface IActionAddIngredient {
   readonly type: typeof ADD_INGREDIENT;
-  readonly ingredient: IIngredientInfo;
+  readonly ingredient: IIngredientConstructor;
 }
 
 export interface IActionRemoveIngredient {
@@ -48,7 +48,7 @@ export const actionMoveIngredient = (dragIndex: number, hoverIndex: number): IAc
 
 export const actionSelectBuns = (bun: TBun): IActionSelectBuns => ({ type: SELECT_BUNS, bun });
 
-export const actionAddIngredient = (ingredient: IIngredientInfo): IActionAddIngredient => ({
+export const actionAddIngredient = (ingredient: IIngredientConstructor): IActionAddIngredient => ({
   type: ADD_INGREDIENT,
   ingredient,
 });
