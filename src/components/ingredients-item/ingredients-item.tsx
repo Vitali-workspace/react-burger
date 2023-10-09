@@ -47,7 +47,6 @@ const IngredientsItem: FC<IList> = ({ ingredient, selectItem }) => {
 
       <div className={styleItem.link}
         onClick={() => {
-          //!window.getSelection().toString() === "" && showIngredientDetails(ingredient);
           const selection = window.getSelection();
           if (selection !== null && selection.toString() === "") {
             showIngredientDetails(ingredient);

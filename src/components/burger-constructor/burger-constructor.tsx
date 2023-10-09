@@ -4,51 +4,35 @@ import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import ConstructorMenu from "../constructor-menu/constructor-menu";
 import ConstructorBun from "../constructor-bun/constructor-bun";
 import { useDrop } from "react-dnd";
-import { useDispatch, useSelector } from "react-redux";
-import { REPLACE_BUN, INCREASE_INGREDIENT, DECREASE_INGREDIENT } from "../../services/actions/action-burger-ingredients";
-import { REMOVE_INGREDIENT, ADD_INGREDIENT, SELECT_BUNS } from "../../services/actions/action-burger-constructor";
+import { useAppDispatch, useAppSelector } from "../../services/hooks/services-hooks";
+import { actionRemoveIngredient, actionSelectBuns, actionAddIngredient } from "../../services/actions/action-burger-constructor";
+import { actionDecreaseIngredient, actionIncreaseIngredient, actionReplaceBun } from "../../services/actions/action-burger-ingredients";
 import { actionOrderDetails } from "../../services/actions/action-order-details";
 import { v4 as uuid } from "uuid";
 import { TYPE_BUN, TYPE_DND, TYPE_INGREDIENT } from "../../utils/constants";
+import { IIngredientConstructor } from "../../services/types/services-types";
 import icon from "../../images/gem.svg"
 import styleConstructor from "./burger-constructor.module.css";
-
-interface IIngredientInfo {
-  name: string;
-  type: string;
-  image: string;
-  image_mobile: string;
-  image_large: string;
-  calories: number;
-  proteins: number;
-  fat: number;
-  carbohydrates: number;
-  price: number;
-  quantity: number;
-  __v: number;
-  _id: string;
-  uuid?: string;
-}
 
 
 const BurgerConstructor: FC = () => {
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigation = useNavigate();
 
-  const { bun } = useSelector((state: any) => state.burgerConstructor);
-  const { isAuthorized } = useSelector((state: any) => state.pages);
-  const constructorIngredients = useSelector((state: any) => state.burgerConstructor.ingredients);
+  const { bun } = useAppSelector((state) => state.burgerConstructor);
+  const { isAuthorized } = useAppSelector((state) => state.pages);
+  const constructorIngredients = useAppSelector((state) => state.burgerConstructor.ingredients);
 
   const [, dropTargetRef] = useDrop({
     accept: TYPE_DND.ITEM_FROM_INGREDIENTS,
-    drop(ingredient: IIngredientInfo) {
+    drop(ingredient: IIngredientConstructor) {
       handleOnDrop(ingredient);
     }
   });
 
   const totalPrice = useMemo(() => {
-    return constructorIngredients.reduce((sumPrice: number, current: IIngredientInfo) => {
+    return constructorIngredients.reduce((sumPrice: number, current: IIngredientConstructor) => {
       if (current.price) {
         return sumPrice + current.price;
       }
@@ -58,31 +42,33 @@ const BurgerConstructor: FC = () => {
 
 
   function handleDeleteClick(uuid: string, _id: string) {
-    dispatch({ type: REMOVE_INGREDIENT, uuid: uuid });
-    dispatch({ type: DECREASE_INGREDIENT, _id: _id });
+    dispatch(actionRemoveIngredient(uuid));
+    dispatch(actionDecreaseIngredient(_id));
   }
 
   function buttonOrderClick() {
     if (isAuthorized) {
-      const listOrderId = [bun._id, ...constructorIngredients.map((ingredient: IIngredientInfo) => ingredient._id), bun._id];
-      dispatch(actionOrderDetails(listOrderId) as any);
+      if (bun !== null) {
+        const listOrderId = [bun._id, ...constructorIngredients.map((ingredient: IIngredientConstructor) => ingredient._id), bun._id];
+        dispatch(actionOrderDetails(listOrderId) as any);
+      }
     } else {
       navigation("/login");
     }
   }
 
-  function handleOnDrop(ingredient: IIngredientInfo) {
+  function handleOnDrop(ingredient: IIngredientConstructor) {
     const { type, _id } = ingredient;
 
     switch (type) {
       case TYPE_INGREDIENT.BUN: {
-        dispatch({ type: REPLACE_BUN, _id: _id });
-        dispatch({ type: SELECT_BUNS, bun: ingredient });
+        dispatch(actionReplaceBun(_id));
+        dispatch(actionSelectBuns(ingredient));
         break;
       }
       default: {
-        dispatch({ type: INCREASE_INGREDIENT, _id: _id });
-        dispatch({ type: ADD_INGREDIENT, ingredient: { ...ingredient, uuid: uuid() } });
+        dispatch(actionIncreaseIngredient(_id));
+        dispatch(actionAddIngredient({ ...ingredient, uuid: uuid() }));
         break;
       }
     }

@@ -4,28 +4,12 @@ import { useAppDispatch } from "../../services/hooks/services-hooks";
 import { useDrag, useDrop } from "react-dnd";
 import { actionMoveIngredient } from "../../services/actions/action-burger-constructor";
 import { TYPE_DND } from "../../utils/constants";
+import { IIngredientConstructor } from "../../services/types/services-types";
 import stylesItem from "./constructor-item.module.css";
 
-interface IIngredientInfo {
-  name: string;
-  type: string;
-  image: string;
-  image_mobile: string;
-  image_large: string;
-  calories: number;
-  proteins: number;
-  fat: number;
-  carbohydrates: number;
-  price: number;
-  quantity: number;
-  __v: number;
-  _id: string;
-  uuid: string;
-  index?: number;
-}
 
 interface IConstructorItem {
-  ingredient: IIngredientInfo;
+  ingredient: IIngredientConstructor;
   index: number;
   deleteIngredients: (_id: string, uuid: string) => void;
 }
@@ -48,7 +32,7 @@ const ConstructorItem: FC<IConstructorItem> = ({ ingredient, index, deleteIngred
 
   const [, dropRef] = useDrop({
     accept: TYPE_DND.ITEM_FROM_CONSTRUCTOR,
-    hover: (item: IIngredientInfo, monitor) => {
+    hover: (item: IIngredientConstructor, monitor) => {
       if (!elementRef.current) {
         return
       }
