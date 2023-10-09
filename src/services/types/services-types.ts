@@ -1,3 +1,45 @@
+import { TActionsBurgerConstructor } from "../actions/action-burger-constructor";
+import { TActionsBurgerIngredients } from "../actions/action-burger-ingredients";
+import { TActionsForgotPassword } from "../actions/action-forgot-password";
+import { TActionsIngredientDetails } from "../actions/action-ingredient-details";
+import { TActionsLogin } from "../actions/action-login";
+import { TActionsOrderDetails } from "../actions/action-order-details";
+import { TActionsProfile } from "../actions/action-profile";
+import { TActionsRegister } from "../actions/action-register";
+import { TActionsResetPassword } from "../actions/action-reset-password";
+import type { ThunkAction, ThunkDispatch } from 'redux-thunk';
+import { store } from "../store";
+import { Action, ActionCreator } from 'redux';
+
+
+export type TActionsApp =
+  | TActionsBurgerConstructor
+  | TActionsBurgerIngredients
+  | TActionsForgotPassword
+  | TActionsIngredientDetails
+  | TActionsLogin
+  | TActionsOrderDetails
+  | TActionsProfile
+  | TActionsRegister
+  | TActionsResetPassword;
+
+export type TActionsPages =
+  | TActionsForgotPassword
+  | TActionsLogin
+  | TActionsProfile
+  | TActionsRegister
+  | TActionsResetPassword;
+
+export type RootState = ReturnType<typeof store.getState>;
+
+export type AppDispatch = ThunkDispatch<RootState, unknown, TActionsApp>;
+
+//export type AppThunkAction<ReturnType = void> = ThunkAction<ReturnType, RootState, unknown, TActionsApp>;
+//export type AppThunkAction<TReturn = void> = ActionCreator<ThunkAction<TReturn, Action, RootState, TActionsApp>>;
+//export type AppThunkAction<ReturnType = void> = ActionCreator<ThunkAction<ReturnType, Action, RootState, TActionsApp>>;
+
+export type AppThunkAction<TReturn = void> = ActionCreator<ThunkAction<TReturn, RootState, Action, TActionsApp>>;
+
 export type TBun = IIngredientInfo | null;
 
 export interface IIngredientInfo {
@@ -15,6 +57,15 @@ export interface IIngredientInfo {
   _id: string;
   quantity?: number;
   uuid?: string;
+}
+
+export interface IIngredientCount extends IIngredientInfo {
+  quantity: number;
+}
+
+export interface IIngredientConstructor extends IIngredientInfo {
+  uuid: string;
+  index: number;
 }
 
 export interface IOrder {
@@ -35,3 +86,30 @@ export interface IResponseOrders {
   total: number;
   totalToday: number;
 }
+
+export interface IForm {
+  name?: string;
+  email: string;
+  password: string;
+}
+
+export interface IFormEmail {
+  email: string;
+}
+
+export interface IResetPassword {
+  password: string;
+  token: string;
+}
+
+export interface ILogin {
+  email: string;
+  password: string;
+}
+
+export interface IFocus {
+  name: boolean;
+  email: boolean;
+  password: boolean;
+}
+
