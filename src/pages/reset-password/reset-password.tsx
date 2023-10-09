@@ -1,21 +1,17 @@
 import { useState, FC, FormEvent, ChangeEvent } from "react";
 import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, Navigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../services/hooks/services-hooks";
 import { resetPassword } from "../../services/actions/action-reset-password";
+import { IResetPassword } from "../../services/types/services-types";
 import styleReset from "./reset-password.module.css";
-
-interface IResetPassword {
-  password: string;
-  token: string;
-}
 
 
 const ResetPassword: FC = () => {
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const { resetPasswordError, resetPasswordSuccess, forgotPasswordSuccess } = useSelector((state: any) => state.pages);
+  const { resetPasswordError, resetPasswordSuccess, forgotPasswordSuccess } = useAppSelector((state) => state.pages);
   const [inputsValue, setInputsValue] = useState<IResetPassword>({ password: "", token: "" });
   const [isStatusPassword, setStatusPassword] = useState<boolean>(true);
 

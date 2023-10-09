@@ -2,20 +2,16 @@ import { useState, FC, FormEvent, ChangeEvent } from "react";
 import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, useNavigate } from 'react-router-dom';
 import { login } from "../../services/actions/action-login";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../services/hooks/services-hooks";
+import { ILogin } from "../../services/types/services-types";
 import styleLogin from "./login.module.css";
-
-interface ILogin {
-  email: string;
-  password: string;
-}
 
 
 const Login: FC = () => {
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigation = useNavigate();
-  const { isAuthorized, loginError } = useSelector((state: any) => state.pages);
+  const { isAuthorized, loginError } = useAppSelector((state) => state.pages);
   const [inputsValue, setInputsValue] = useState<ILogin>({ email: "", password: "" });
   const [isStatusPassword, setStatusPassword] = useState<boolean>(true);
 

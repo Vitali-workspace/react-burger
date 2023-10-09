@@ -1,28 +1,17 @@
 
 import { useState, useMemo, FC, FormEvent, ChangeEvent, FocusEvent, SyntheticEvent } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../services/hooks/services-hooks";
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { profileInfo } from "../../services/actions/action-profile";
+import { IFocus, IForm } from "../../services/types/services-types";
 import styleProfileUser from "./profile-user.module.css";
-
-interface IProfileUser {
-  name: string;
-  email: string;
-  password: string;
-}
-
-interface IFocus {
-  name: boolean;
-  email: boolean;
-  password: boolean;
-}
 
 
 const ProfileUser: FC = () => {
 
-  const dispatch = useDispatch();
-  const { name, email, password } = useSelector((state: any) => state.pages.user);
-  const [inputsValue, setInputsValue] = useState<IProfileUser>({ name: name, email: email, password: password });
+  const dispatch = useAppDispatch();
+  const { name, email, password } = useAppSelector((state) => state.pages.user);
+  const [inputsValue, setInputsValue] = useState<IForm>({ name: name, email: email, password: password });
 
   function handleChangeInput(evt: ChangeEvent<HTMLInputElement>) {
     setInputsValue({ ...inputsValue, [evt.target.name]: evt.target.value });
@@ -30,7 +19,7 @@ const ProfileUser: FC = () => {
 
   function submitForm(evt: FormEvent) {
     evt.preventDefault();
-    dispatch(profileInfo(inputsValue) as any)
+    dispatch(profileInfo(inputsValue) as any);
   }
 
   const [inFocus, setFocus] = useState<IFocus>({ name: false, email: false, password: false });

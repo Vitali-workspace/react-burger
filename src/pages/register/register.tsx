@@ -2,7 +2,7 @@ import { useState, FC, FormEvent, ChangeEvent } from "react";
 import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link } from 'react-router-dom';
 import { register } from "../../services/actions/action-register";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../services/hooks/services-hooks";
 import styleRegister from "./register.module.css";
 
 interface IRegister {
@@ -13,8 +13,8 @@ interface IRegister {
 
 const Register: FC = () => {
 
-  const dispatch = useDispatch();
-  const { registerError } = useSelector((state: any) => state.pages);
+  const dispatch = useAppDispatch();
+  const { registerError } = useAppSelector((state) => state.pages);
 
   const [inputsValue, setInputsValue] = useState<IRegister>({ name: "", email: "", password: "" });
   const [isStatusPassword, setStatusPassword] = useState<boolean>(true);

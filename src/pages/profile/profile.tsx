@@ -1,7 +1,7 @@
 
 import { FC } from "react";
 import { NavLink, useNavigate } from 'react-router-dom';
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from "../../services/hooks/services-hooks";
 import { logout } from "../../services/actions/action-profile";
 import ProfileUser from '../profile-user/profile-user';
 import styleProfile from "./profile.module.css";
@@ -11,7 +11,7 @@ const Profile: FC = () => {
 
   const styleLink = `${styleProfile.link} text text_type_main-medium text_color_inactive`;
   const styleLinkActive = `${styleProfile.active} text text_type_main-medium`;
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigation = useNavigate();
 
   function exit() {
