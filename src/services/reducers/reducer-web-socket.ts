@@ -1,13 +1,14 @@
+import { TActionsWebSocket } from "../actions/action-web-socket";
 import { TOrders } from "../types/services-types";
-import { TWSActions } from "../actions/action-web-socket";
-export const WS_CONNECTION_START: 'WS_CONNECTION_START' = 'WS_CONNECTION_START';
-export const WS_CONNECTION_SUCCESS: 'WS_CONNECTION_SUCCESS' = 'WS_CONNECTION_SUCCESS';
-export const WS_CONNECTION_ERROR: 'WS_CONNECTION_ERROR' = 'WS_CONNECTION_ERROR';
-export const WS_CONNECTION_CLOSED: 'WS_CONNECTION_CLOSED' = 'WS_CONNECTION_CLOSED';
-export const WS_GET_ORDERS: 'WS_GET_ORDERS' = 'WS_GET_ORDERS';
+
+export const WS_CONNECTION_START = "WS_CONNECTION_START";
+export const WS_CONNECTION_SUCCESS = "WS_CONNECTION_SUCCESS";
+export const WS_CONNECTION_ERROR = "WS_CONNECTION_ERROR";
+export const WS_CONNECTION_CLOSED = "WS_CONNECTION_CLOSED";
+export const WS_GET_ORDERS = "WS_GET_ORDERS";
 
 
-interface IWSState {
+interface IStateWS {
   wsConnected: boolean;
   orders: TOrders;
   userOrders: TOrders;
@@ -17,7 +18,7 @@ interface IWSState {
   error?: Event;
 }
 
-const initialState: IWSState = {
+const initialState: IStateWS = {
   wsConnected: false,
   orders: [],
   userOrders: [],
@@ -27,7 +28,7 @@ const initialState: IWSState = {
 };
 
 
-export const reducerWebSocket = (state = initialState, action: TWSActions) => {
+export const reducerWebSocket = (state = initialState, action: TActionsWebSocket): IStateWS => {
 
   switch (action.type) {
 
