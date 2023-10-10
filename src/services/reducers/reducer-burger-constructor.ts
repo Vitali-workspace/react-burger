@@ -1,5 +1,5 @@
 import { ADD_INGREDIENT, MOVE_INGREDIENT, REMOVE_INGREDIENT, SELECT_BUNS } from "../actions/action-burger-constructor";
-import { IIngredientInfo, TBun, IIngredientConstructor } from "../types/services-types";
+import { TBun, IIngredientConstructor } from "../types/services-types";
 import { TActionsBurgerConstructor } from "../actions/action-burger-constructor";
 
 interface IStateBurgerConstructor {
