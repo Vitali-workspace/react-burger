@@ -36,7 +36,7 @@ export interface IWSActionSendOrder {
 }
 
 
-export type TWSActions =
+export type TActionsWebSocket =
   | IWSActionConnectionStart
   | IWSActionConnectionSuccess
   | IWSActionConnectionError
