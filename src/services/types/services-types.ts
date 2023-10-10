@@ -1,3 +1,5 @@
+import { ThunkAction, ThunkDispatch } from 'redux-thunk';
+import { Action, ActionCreator } from 'redux';
 import { TActionsBurgerConstructor } from "../actions/action-burger-constructor";
 import { TActionsBurgerIngredients } from "../actions/action-burger-ingredients";
 import { TActionsForgotPassword } from "../actions/action-forgot-password";
@@ -7,9 +9,9 @@ import { TActionsOrderDetails } from "../actions/action-order-details";
 import { TActionsProfile } from "../actions/action-profile";
 import { TActionsRegister } from "../actions/action-register";
 import { TActionsResetPassword } from "../actions/action-reset-password";
-import type { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import { store } from "../store";
-import { Action, ActionCreator } from 'redux';
+
+import { TActionsWebSocket } from '../actions/action-web-socket';
 
 
 export type TActionsApp =
@@ -21,7 +23,8 @@ export type TActionsApp =
   | TActionsOrderDetails
   | TActionsProfile
   | TActionsRegister
-  | TActionsResetPassword;
+  | TActionsResetPassword
+  | TActionsWebSocket;
 
 export type TActionsPages =
   | TActionsForgotPassword
@@ -112,4 +115,21 @@ export interface IFocus {
   email: boolean;
   password: boolean;
 }
+
+
+export interface IOrderFeed {
+  ingredients: IIngredientCount[];
+  _id: string;
+  status: string;
+  number: number;
+  name: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export interface IStatusOrdersFeed {
+  ready: number[];
+  pending: number[];
+}
+
 
