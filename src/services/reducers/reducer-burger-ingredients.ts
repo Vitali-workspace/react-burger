@@ -5,6 +5,7 @@ import {
   GET_INGREDIENTS_SUCCESS,
   INCREASE_INGREDIENT,
   DECREASE_INGREDIENT,
+  CLEAR_QUANTITY,
   REPLACE_BUN,
   SELECT_TAB,
 } from "../actions/action-burger-ingredients";
@@ -84,6 +85,12 @@ export const reducerBurgerIngredients = (state = initialState, action: TActionsB
         ingredients: [...state.ingredients].map(ingredient => {
           return ingredient._id === action._id ? { ...ingredient, quantity: --ingredient.quantity } : ingredient;
         })
+      }
+    }
+    case CLEAR_QUANTITY: {
+      return {
+        ...state,
+        ingredients: [...state.ingredients].map(ingredient => ({ ...ingredient, quantity: 0 })),
       }
     }
     default: {
