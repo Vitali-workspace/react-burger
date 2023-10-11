@@ -17,8 +17,8 @@ import ResetPassword from "../../pages/reset-password/reset-password";
 import IngredientPage from "../../pages/ingredient-page/ingredient-page";
 import Profile from "../../pages/profile/profile";
 import OrderFeed from "../../pages/order-feed/order-feed";
-import ProfileHistory from "../../pages/profile-history/profile-history";
 import PageNotFound from "../../pages/page-not-found/page-not-found";
+import PageOrderInfo from "../../pages/page-order-info/page-order-info";
 import { getUser, refreshToken } from "../../services/actions/action-profile";
 import { getIngredients } from "../../services/actions/action-burger-ingredients";
 import { getCookie } from "../../utils/cookie-api";
@@ -102,19 +102,19 @@ const App: FC = () => {
 
           <Route path="profile/orders"
             element={<ProtectedRouteElement anonymous={false}>
-              <ProfileHistory />
+              <Profile />
             </ProtectedRouteElement>}>
           </Route>
 
-          {/* <Route path="profile/orders/:id"
+          <Route path="profile/orders/:id"
             element={<ProtectedRouteElement anonymous={false}>
-              <></>
+              <PageOrderInfo />
             </ProtectedRouteElement>}>
-          </Route> */}
+          </Route>
 
           <Route path="feed" element={<OrderFeed />} />
 
-          {/* <Route path="feed/:id" element={ <></>} /> */}
+          <Route path="feed/:id" element={<PageOrderInfo />} />
 
           <Route path="/ingredients/:id" element={<IngredientPage />} />
 
