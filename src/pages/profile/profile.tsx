@@ -1,16 +1,20 @@
 
 import { FC } from "react";
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { useAppDispatch } from "../../services/hooks/services-hooks";
 import { logout } from "../../services/actions/action-profile";
 import ProfileUser from '../profile-user/profile-user';
+import ProfileHistory from "../profile-history/profile-history";
 import styleProfile from "./profile.module.css";
 
 
 const Profile: FC = () => {
 
+  const location = useLocation();
+
   const styleLink = `${styleProfile.link} text text_type_main-medium text_color_inactive`;
   const styleLinkActive = `${styleProfile.active} text text_type_main-medium`;
+
   const dispatch = useAppDispatch();
   const navigation = useNavigate();
 
@@ -23,17 +27,17 @@ const Profile: FC = () => {
   return (
     <section className={`${styleProfile.container} mt-30`}>
       <div className={styleProfile.navigation}>
-        <ul className={styleProfile.list}>
+        <ul className={styleProfile.list + " "}>
           <li>
             <NavLink
-              className={({ isActive }) => (isActive ? styleLinkActive : styleLink)}
+              className={location.pathname === "/profile" ? styleLinkActive : styleLink}
               to="/profile">
               Профиль
             </NavLink>
           </li>
           <li>
             <NavLink
-              className={({ isActive }) => (isActive ? styleLinkActive : styleLink)}
+              className={location.pathname === "/profile/orders" ? styleLinkActive : styleLink}
               to="/profile/orders">
               История заказов
             </NavLink>
@@ -50,7 +54,9 @@ const Profile: FC = () => {
           В этом разделе вы можете изменить свои персональные данные
         </p>
       </div>
-      <ProfileUser />
+
+      {location.pathname === "/profile/orders" ? <ProfileHistory /> : <ProfileUser />}
+
     </section>
   )
 }
