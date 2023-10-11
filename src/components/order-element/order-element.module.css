@@ -8,11 +8,6 @@
   cursor: pointer;
 }
 
-.test {
-  height: 62px;
-  width: 36px;
-}
-
 .header {
   display: flex;
   justify-content: space-between;
@@ -27,4 +22,13 @@
 .footer {
   display: flex;
   justify-content: space-between;
+  margin-top: 10px;
+}
+
+.done {
+  color: #00CCCC;
+}
+
+.cancel {
+  color: #E52B1A;
 }
