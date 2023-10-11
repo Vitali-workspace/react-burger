@@ -14,8 +14,10 @@
 }
 
 .list {
+  height: 314px;
   display: flex;
   flex-direction: column;
+  flex-wrap: wrap;
   row-gap: 8px;
   list-style-type: none;
 }
