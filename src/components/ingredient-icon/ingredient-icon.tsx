@@ -19,7 +19,7 @@ const IngredientIcon: FC<IIngredientIcon> = ({ ingredient, index, styleShift, re
       <img className={styleIcon.icon} src={ingredient.image_mobile} alt={ingredient.name} />
       {
         !!remainder && index === 5 && (
-          <span className={`${styleIcon.count} text text_type_main-default`}>{`+${remainder}`}</span>
+          <span className={`${styleIcon.count} text text_type_digits-default`}>{`+${remainder}`}</span>
         )
       }
     </div>
