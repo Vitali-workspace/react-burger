@@ -18,6 +18,8 @@ const OrderElement: FC<TOrderList> = ({ order }) => {
   const location = useLocation();
   const navigate = useNavigate();
 
+  const resizeStyle = (location.pathname === "/profile/orders") ? styleOrder.block : "";
+
   const { number, ingredients, status, createdAt, name, _id } = order;
   const priceBurger = useMemo(() => ingredients.reduce((sumPrice, current) => sumPrice + current.price * current.quantity, 0), [ingredients]);
   const dateCreationBurger = useMemo(() => formatDateOrder(createdAt), [createdAt]);
@@ -25,16 +27,16 @@ const OrderElement: FC<TOrderList> = ({ order }) => {
   const burgerStatus = (status: string) => {
     switch (status) {
       case "created": {
-        return <span className={`text text_type_main-small ${styleOrder.created}`}>Создан</span>
+        return <span className={`text text_type_main-small mb-2 ${styleOrder.created}`}>Создан</span>
       }
       case "pending": {
-        return <span className={`text text_type_main-small ${styleOrder.pending}`}>Готовится</span>
+        return <span className={`text text_type_main-small mb-2 ${styleOrder.pending}`}>Готовится</span>
       }
       case "done": {
-        return <span className={`text text_type_main-small ${styleOrder.done}`}>Выполнен</span>
+        return <span className={`text text_type_main-small mb-2 ${styleOrder.done}`}>Выполнен</span>
       }
       default: {
-        return <span className={`text text_type_main-small ${styleOrder.cancel}`}>Отменён</span>
+        return <span className={`text text_type_main-small mb-2 ${styleOrder.cancel}`}>Отменён</span>
       }
     }
   }
@@ -45,7 +47,7 @@ const OrderElement: FC<TOrderList> = ({ order }) => {
   }
 
   return (
-    <li className={styleOrder.container + " mt-10 p-6"} onClick={showOrderInfo}>
+    <li className={styleOrder.container + " mt-10 p-6 " + resizeStyle} onClick={showOrderInfo}>
 
       <div className={styleOrder.header}>
         <p className="text text_type_digits-default">{`#${number}`}</p>

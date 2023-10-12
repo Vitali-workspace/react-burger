@@ -4,7 +4,6 @@
   margin: 0;
   background-color: #1C1C21;
   border-radius: 30px;
-  width: 536px;
   cursor: pointer;
 }
 
@@ -31,4 +30,9 @@
 
 .cancel {
   color: #E52B1A;
+}
+
+.block {
+  width: 799px;
+  padding-right: 18px;
 }
