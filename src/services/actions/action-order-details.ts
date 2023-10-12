@@ -1,6 +1,4 @@
 import RequestApi from "../../utils/request-api";
-import { actionClearConstructor } from "./action-burger-constructor";
-import { actionClearQuantity } from "./action-burger-ingredients";
 import { AppDispatch, AppThunkAction } from "../types/services-types";
 
 
