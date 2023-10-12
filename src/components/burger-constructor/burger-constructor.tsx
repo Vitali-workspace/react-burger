@@ -1,4 +1,4 @@
-import { useMemo, FC } from "react";
+import { useMemo, FC, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import ConstructorMenu from "../constructor-menu/constructor-menu";
@@ -8,6 +8,8 @@ import { useAppDispatch, useAppSelector } from "../../services/hooks/services-ho
 import { actionRemoveIngredient, actionSelectBuns, actionAddIngredient } from "../../services/actions/action-burger-constructor";
 import { actionDecreaseIngredient, actionIncreaseIngredient, actionReplaceBun } from "../../services/actions/action-burger-ingredients";
 import { actionOrderDetails } from "../../services/actions/action-order-details";
+import { actionClearQuantity } from "../../services/actions/action-burger-ingredients";
+import { actionClearConstructor } from "../../services/actions/action-burger-constructor";
 import { v4 as uuid } from "uuid";
 import { TYPE_BUN, TYPE_DND, TYPE_INGREDIENT } from "../../utils/constants";
 import { IIngredientConstructor } from "../../services/types/services-types";
@@ -16,6 +18,19 @@ import styleConstructor from "./burger-constructor.module.css";
 
 
 const BurgerConstructor: FC = () => {
+
+  const [buttonText, setButtonText] = useState("Оформить заказ");
+  const [isDisabled, setIsDisabled] = useState(false);
+
+  function handleTimer() {
+    setButtonText("Ждите формирование заказа");
+    setIsDisabled(true);
+
+    setTimeout(() => {
+      setButtonText("Оформить заказ");
+      setIsDisabled(false);
+    }, 16000);
+  }
 
   const dispatch = useAppDispatch();
   const navigation = useNavigate();
@@ -51,6 +66,9 @@ const BurgerConstructor: FC = () => {
       if (bun !== null) {
         const listOrderId = [bun._id, ...constructorIngredients.map((ingredient: IIngredientConstructor) => ingredient._id), bun._id];
         dispatch(actionOrderDetails(listOrderId) as any);
+        dispatch(actionClearQuantity());
+        dispatch(actionClearConstructor());
+        handleTimer();
       }
     } else {
       navigation("/login");
@@ -90,8 +108,8 @@ const BurgerConstructor: FC = () => {
           <img className={styleConstructor.image} src={icon} alt="валюта" />
         </span>
 
-        <Button htmlType="button" onClick={buttonOrderClick} type="primary" disabled={!bun} size="large">
-          Оформить заказ
+        <Button htmlType="button" onClick={buttonOrderClick} type="primary" disabled={!bun || isDisabled} size="large">
+          {buttonText}
         </Button>
       </div>
     </section>

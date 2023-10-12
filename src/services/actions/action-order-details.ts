@@ -62,8 +62,6 @@ export const actionOrderDetails: AppThunkAction = (order) => (dispatch: AppDispa
       const order = response.order.number.toString();
       dispatch(actionGetOrderSuccess(order));
       dispatch(actionOpenOrderModal());
-      dispatch(actionClearQuantity());
-      dispatch(actionClearConstructor());
     })
     .catch(() => {
       dispatch(actionGetOrderError());

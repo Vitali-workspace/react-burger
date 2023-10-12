@@ -1,7 +1,7 @@
 import { applyMiddleware, compose, createStore } from "redux";
 import thunk from "redux-thunk";
 import { rootReducer } from "./reducers";
-import { wsActions, middlewareWebSocket } from "./middleware/middleware-web-socket"; //! wsActions переименовать
+import { wsActions, middlewareWebSocket } from "./middleware/middleware-web-socket";
 
 declare global {
   interface Window { __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose }

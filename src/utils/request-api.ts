@@ -67,7 +67,10 @@ class RequestApi {
   getOrderNumber(listId: number[]) {
     return fetch(`${BASE_URL}/orders`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": getCookie(token.access),
+      } as HeadersInit,
       body: JSON.stringify({ "ingredients": listId }),
     }).then(this._checkError);
   }
