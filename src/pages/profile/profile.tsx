@@ -1,8 +1,8 @@
-
 import { FC } from "react";
 import { NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { useAppDispatch } from "../../services/hooks/services-hooks";
 import { logout } from "../../services/actions/action-profile";
+import { AppThunkAction } from "../../services/types/services-types";
 import ProfileUser from '../profile-user/profile-user';
 import ProfileHistory from "../profile-history/profile-history";
 import styleProfile from "./profile.module.css";
@@ -19,7 +19,7 @@ const Profile: FC = () => {
   const navigation = useNavigate();
 
   function exit() {
-    dispatch(logout() as any);
+    dispatch(logout() as AppThunkAction);
     navigation("/login");
   }
 

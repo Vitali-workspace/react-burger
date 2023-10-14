@@ -33,7 +33,7 @@ const PageOrderInfo: FC = () => {
   useEffect(() => {
     if (!selectedOrder && id && orders) {
       const order = orders.find((order: IOrderFeed) => order._id === id);
-      order && dispatch(actionSelectFeedOrder(order) as any);
+      order && dispatch(actionSelectFeedOrder(order));
     }
   }, [selectedOrder, id, orders, dispatch]);
 

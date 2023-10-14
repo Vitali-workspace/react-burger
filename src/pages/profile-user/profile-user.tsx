@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from "../../services/hooks/services-ho
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { profileInfo } from "../../services/actions/action-profile";
 import { IFocus, IForm } from "../../services/types/services-types";
+import { AppThunkAction } from "../../services/types/services-types";
 import styleProfileUser from "./profile-user.module.css";
 
 
@@ -19,7 +20,7 @@ const ProfileUser: FC = () => {
 
   function submitForm(evt: FormEvent) {
     evt.preventDefault();
-    dispatch(profileInfo(inputsValue) as any);
+    dispatch(profileInfo(inputsValue) as AppThunkAction);
   }
 
   const [inFocus, setFocus] = useState<IFocus>({ name: false, email: false, password: false });

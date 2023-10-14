@@ -3,6 +3,7 @@ import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-component
 import { Link, Navigate, useLocation } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from "../../services/hooks/services-hooks";
 import { forgotPassword } from "../../services/actions/action-forgot-password";
+import { AppThunkAction } from "../../services/types/services-types";
 import styleForgot from "./forgot-password.module.css";
 
 interface IForgotPassword {
@@ -24,7 +25,7 @@ const ForgotPassword: FC = () => {
 
   function submitForm(evt: FormEvent) {
     evt.preventDefault();
-    dispatch(forgotPassword(inputsValue) as any);
+    dispatch(forgotPassword(inputsValue) as AppThunkAction);
   }
 
   if (isAuthorized) {

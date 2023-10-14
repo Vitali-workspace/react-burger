@@ -29,7 +29,7 @@ const ProfileHistory: FC = () => {
 
   useEffect(() => {
     if (validOrders && validOrders.length) {
-      dispatch(actionCheckOrders(validOrders) as any);
+      dispatch(actionCheckOrders(validOrders));
     }
   });
 

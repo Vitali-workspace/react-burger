@@ -3,6 +3,7 @@ import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-component
 import { Link } from 'react-router-dom';
 import { register } from "../../services/actions/action-register";
 import { useAppDispatch, useAppSelector } from "../../services/hooks/services-hooks";
+import { AppThunkAction } from "../../services/types/services-types";
 import styleRegister from "./register.module.css";
 
 interface IRegister {
@@ -30,7 +31,7 @@ const Register: FC = () => {
 
   function submitForm(evt: FormEvent) {
     evt.preventDefault();
-    dispatch(register(inputsValue) as any);
+    dispatch(register(inputsValue) as AppThunkAction);
   }
 
   return (

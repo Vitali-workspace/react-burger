@@ -4,6 +4,7 @@ import { Link, Navigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../services/hooks/services-hooks";
 import { resetPassword } from "../../services/actions/action-reset-password";
 import { IResetPassword } from "../../services/types/services-types";
+import { AppThunkAction } from "../../services/types/services-types";
 import styleReset from "./reset-password.module.css";
 
 
@@ -26,7 +27,7 @@ const ResetPassword: FC = () => {
 
   function submitForm(evt: FormEvent) {
     evt.preventDefault();
-    dispatch(resetPassword(inputsValue) as any);
+    dispatch(resetPassword(inputsValue) as AppThunkAction);
   }
 
   if (resetPasswordSuccess || !forgotPasswordSuccess) {

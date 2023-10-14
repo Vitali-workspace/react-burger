@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { login } from "../../services/actions/action-login";
 import { useAppDispatch, useAppSelector } from "../../services/hooks/services-hooks";
 import { ILogin } from "../../services/types/services-types";
+import { AppThunkAction } from "../../services/types/services-types";
 import styleLogin from "./login.module.css";
 
 
@@ -26,7 +27,7 @@ const Login: FC = () => {
 
   function submitForm(evt: FormEvent) {
     evt.preventDefault();
-    dispatch(login(inputsValue) as any);
+    dispatch(login(inputsValue) as AppThunkAction);
     navigation(-1);
   }
 
