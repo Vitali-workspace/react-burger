@@ -145,7 +145,7 @@ export const profileInfo: AppThunkAction = (info) => (dispatch: AppDispatch) => 
     })
     .catch((error) => {
       if (error.message === ERROR.TIMER_JWT) {
-        dispatch(refreshToken() as any);
+        dispatch(refreshToken() as AppThunkAction);
       } else {
         dispatch(actionProfileSubmitError(error.message));
       }
@@ -194,7 +194,7 @@ export const getUser: AppThunkAction = () => (dispatch: AppDispatch) => {
     })
     .catch((error) => {
       if (error.message === "403") {
-        dispatch(refreshToken() as any);
+        dispatch(refreshToken() as AppThunkAction);
       } else {
         dispatch(actionGetUserError(error.message));
       }

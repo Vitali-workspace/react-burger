@@ -26,8 +26,8 @@ const OrderFeed: FC = () => {
 
   useEffect(() => {
     if (validOrders && validOrders.length && checkStatus) {
-      dispatch(actionCheckOrders(validOrders) as any);
-      dispatch(actionStatusOrders(checkStatus) as any);
+      dispatch(actionCheckOrders(validOrders));
+      dispatch(actionStatusOrders(checkStatus));
     }
   });
 

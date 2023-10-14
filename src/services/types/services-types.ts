@@ -9,6 +9,7 @@ import { TActionsOrderDetails } from "../actions/action-order-details";
 import { TActionsProfile } from "../actions/action-profile";
 import { TActionsRegister } from "../actions/action-register";
 import { TActionsResetPassword } from "../actions/action-reset-password";
+import { TActionsFeed } from '../actions/action-order-feed';
 import { store } from "../store";
 
 import { TActionsWebSocket } from '../actions/action-web-socket';
@@ -24,7 +25,9 @@ export type TActionsApp =
   | TActionsProfile
   | TActionsRegister
   | TActionsResetPassword
+  | TActionsFeed
   | TActionsWebSocket;
+
 
 export type TActionsPages =
   | TActionsForgotPassword
@@ -37,11 +40,7 @@ export type RootState = ReturnType<typeof store.getState>;
 
 export type AppDispatch = ThunkDispatch<RootState, unknown, TActionsApp>;
 
-//export type AppThunkAction<ReturnType = void> = ThunkAction<ReturnType, RootState, unknown, TActionsApp>;
-//export type AppThunkAction<TReturn = void> = ActionCreator<ThunkAction<TReturn, Action, RootState, TActionsApp>>;
-//export type AppThunkAction<ReturnType = void> = ActionCreator<ThunkAction<ReturnType, Action, RootState, TActionsApp>>;
-
-export type AppThunkAction<TReturn = void> = ActionCreator<ThunkAction<TReturn, RootState, Action, TActionsApp>>;
+export type AppThunkAction<ReturnType = void> = ActionCreator<ThunkAction<ReturnType, RootState, Action<any>, TActionsApp>>;
 
 export type TBun = IIngredientInfo | null;
 

@@ -24,6 +24,7 @@ import { getIngredients } from "../../services/actions/action-burger-ingredients
 import { getCookie } from "../../utils/cookie-api";
 import { actionCloseModalOrder } from "../../services/actions/action-order-details";
 import { actionRejectIngredient, actionCloseModalDetails } from "../../services/actions/action-ingredient-details";
+import { AppThunkAction } from "../../services/types/services-types";
 import styleApp from "./app.module.css";
 
 
@@ -51,11 +52,11 @@ const App: FC = () => {
 
   useEffect(() => {
     const checkToken = getCookie("accessToken");
-    dispatch(getIngredients() as any);
+    dispatch(getIngredients() as AppThunkAction);
 
     if (checkToken) {
-      dispatch(refreshToken() as any);
-      dispatch(getUser() as any);
+      dispatch(refreshToken() as AppThunkAction);
+      dispatch(getUser() as AppThunkAction);
     }
   }, [dispatch]);
 
