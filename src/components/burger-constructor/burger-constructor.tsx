@@ -13,6 +13,7 @@ import { actionClearConstructor } from "../../services/actions/action-burger-con
 import { v4 as uuid } from "uuid";
 import { TYPE_BUN, TYPE_DND, TYPE_INGREDIENT } from "../../utils/constants";
 import { IIngredientConstructor } from "../../services/types/services-types";
+import { AppThunkAction } from "../../services/types/services-types";
 import icon from "../../images/gem.svg"
 import styleConstructor from "./burger-constructor.module.css";
 
@@ -65,7 +66,7 @@ const BurgerConstructor: FC = () => {
     if (isAuthorized) {
       if (bun !== null) {
         const listOrderId = [bun._id, ...constructorIngredients.map((ingredient: IIngredientConstructor) => ingredient._id), bun._id];
-        dispatch(actionOrderDetails(listOrderId) as any);
+        dispatch(actionOrderDetails(listOrderId) as AppThunkAction);
         dispatch(actionClearQuantity());
         dispatch(actionClearConstructor());
         handleTimer();

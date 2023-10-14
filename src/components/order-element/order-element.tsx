@@ -43,7 +43,7 @@ const OrderElement: FC<TOrderList> = ({ order }) => {
 
   function showOrderInfo() {
     navigate(`${location.pathname}/${_id}`, { state: { orderElement: location } });
-    dispatch(actionSelectFeedOrder(order) as any);
+    dispatch(actionSelectFeedOrder(order));
   }
 
   return (
