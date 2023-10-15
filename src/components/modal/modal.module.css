@@ -10,6 +10,7 @@
   display: flex;
   flex-direction: column;
   position: relative;
+  align-items: center;
   background-color: #1C1C21;
   width: 720px;
   border-radius: 6%;
@@ -17,7 +18,7 @@
 
 .buttonClose {
   all: unset;
-  position: relative;
+  position: absolute;
   display: inline;
   top: 60px;
   left: 656px;

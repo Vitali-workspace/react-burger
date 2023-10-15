@@ -81,41 +81,6 @@ export const actionIncreaseIngredient = (_id: string): IActionIncreaseIngredient
 export const actionClearQuantity = (): IActionClearQuantity => ({ type: CLEAR_QUANTITY });
 
 
-// export const getIngredients: AppThunkAction = () =>  {
-
-//   return (dispatch: AppDispatch) => {
-//     dispatch(actionGetIngredientsRequest());
-
-//     RequestApi.getIngredients()
-//       .then((response) => {
-//         const ingredients = response.data.map((ingredient: IIngredientCount) => ({ ...ingredient, quantity: 0 }));
-//         dispatch(actionGetIngredientsSuccess(ingredients));
-//       })
-//       .catch(() => {
-//         dispatch(actionGetIngredientsError());
-//       })
-//   }
-
-// };
-
-
-// export const getIngredients: AppThunkAction<Promise<void>> = () => async (dispatch: AppDispatch) => {
-//   dispatch(actionGetIngredientsRequest());
-
-//   try {
-//     const response = await RequestApi.getIngredients();
-//     const ingredients = response.data.map((ingredient: IIngredientCount) => ({ ...ingredient, quantity: 0 }));
-//     dispatch(actionGetIngredientsSuccess(ingredients));
-//   } catch (error) {
-//     dispatch(actionGetIngredientsError());
-//   }
-// };
-
-
-
-
-//! Правильный
-
 export const getIngredients: AppThunkAction = () => (dispatch: AppDispatch) => {
   dispatch(actionGetIngredientsRequest());
 
