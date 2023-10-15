@@ -5,7 +5,7 @@ import styleStatistics from "./feed-statistics.module.css"
 
 const FeedStatistics: FC = () => {
 
-  const { ready, pending } = useAppSelector((state) => state.oderFeed);
+  const { ready, pending } = useAppSelector((state) => state.orderFeed);
   const { total, totalToday } = useAppSelector((state) => state.webSocket);
 
   const maxOrdersReady = ready.slice(0, 20);
