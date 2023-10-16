@@ -45,7 +45,7 @@ export const register: AppThunkAction = (info) => (dispatch: AppDispatch) => {
   RequestApi.registration(info)
     .then((data) => {
       dispatch(actionRegisterSubmitSuccess(data.user));
-      setCookie(token.access, data.accessToken, info);
+      setCookie(token.access, data.accessToken, { expires: 120 * 60 });
       localStorage.setItem(token.refresh, data.refreshToken);
     })
     .catch((error) => {

@@ -46,7 +46,7 @@ export const login: AppThunkAction = (info) => (dispatch: AppDispatch) => {
   RequestApi.login(info)
     .then((data) => {
       dispatch(actionLoginSubmitSuccess(data.user));
-      setCookie(token.access, data.accessToken, info);
+      setCookie(token.access, data.accessToken, { expires: 120 * 60 });
       localStorage.setItem(token.refresh, data.refreshToken);
     })
     .catch((error) => {

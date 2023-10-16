@@ -168,6 +168,8 @@ export const logout: AppThunkAction = () => (dispatch: AppDispatch) => {
       dispatch(actionLogoutSuccess());
 
       deleteCookie(token.access);
+      deleteCookie(token.refresh);
+      localStorage.removeItem(token.access);
       localStorage.removeItem(token.refresh);
     })
     .catch((error) => {
@@ -193,7 +195,7 @@ export const getUser: AppThunkAction = () => (dispatch: AppDispatch) => {
       dispatch(actionGetUserSuccess(data.user));
     })
     .catch((error) => {
-      if (error.message === "403") {
+      if (error === "jwt expired") {
         dispatch(refreshToken() as AppThunkAction);
       } else {
         dispatch(actionGetUserError(error.message));
