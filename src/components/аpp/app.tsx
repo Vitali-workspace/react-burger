@@ -19,11 +19,13 @@ import Profile from "../../pages/profile/profile";
 import OrderFeed from "../../pages/order-feed/order-feed";
 import PageNotFound from "../../pages/page-not-found/page-not-found";
 import PageOrderInfo from "../../pages/page-order-info/page-order-info";
+import ModalOrderInfo from "../modal-order-info/modal-order-info";
 import { getUser, refreshToken } from "../../services/actions/action-profile";
 import { getIngredients } from "../../services/actions/action-burger-ingredients";
 import { getCookie } from "../../utils/cookie-api";
 import { actionCloseModalOrder } from "../../services/actions/action-order-details";
 import { actionRejectIngredient, actionCloseModalDetails } from "../../services/actions/action-ingredient-details";
+import { actionRejectFeedOrder } from "../../services/actions/action-order-feed";
 import { AppThunkAction } from "../../services/types/services-types";
 import styleApp from "./app.module.css";
 
@@ -32,13 +34,14 @@ import styleApp from "./app.module.css";
 const App: FC = () => {
 
   const dispatch = useAppDispatch();
+  const { isAuthorized } = useAppSelector((state) => state.pages);
 
   const location = useLocation();
   const navigate = useNavigate();
 
+  let modalOrderInfo = location.state && location.state.orderElement;
   const modalOrderDetails = useAppSelector((state) => state.orderDetails.openModal);
-  let background = location.state && location.state.background;
-
+  let modalIngredient = location.state && location.state.background;
 
   function closeModalOrderDetails() {
     dispatch(actionCloseModalOrder());
@@ -47,6 +50,11 @@ const App: FC = () => {
   function closeModalIngredientDetails() {
     dispatch(actionCloseModalDetails());
     dispatch(actionRejectIngredient());
+    navigate(-1);
+  }
+
+  function closeModalOrderInfo() {
+    dispatch(actionRejectFeedOrder());
     navigate(-1);
   }
 
@@ -66,7 +74,7 @@ const App: FC = () => {
       <AppHeader />
       <main className={styleApp.content}>
 
-        <Routes location={background || location} >
+        <Routes location={modalIngredient || modalOrderInfo || location} >
 
           <Route
             path="/"
@@ -115,7 +123,7 @@ const App: FC = () => {
 
           <Route path="feed" element={<OrderFeed />} />
 
-          <Route path="feed/:id" element={<PageOrderInfo />} />
+          <Route path="/feed/:id" element={<PageOrderInfo />} />
 
           <Route path="/ingredients/:id" element={<IngredientPage />} />
 
@@ -133,7 +141,7 @@ const App: FC = () => {
       }
 
       {
-        background && (
+        modalIngredient && (
           <Routes>
             <Route path="/ingredients/:id"
               element={
@@ -144,6 +152,33 @@ const App: FC = () => {
           </Routes>
         )
       }
+
+      {
+        modalOrderInfo && (
+          <Routes>
+            <Route path="feed/:id"
+              element={
+                <Modal closePopup={closeModalOrderInfo}>
+                  <PageOrderInfo />
+                </Modal>
+              } />
+          </Routes>
+        )
+      }
+
+      {
+        modalOrderInfo && (
+          <Routes>
+            <Route path="profile/orders/:id"
+              element={
+                <Modal closePopup={closeModalOrderInfo}>
+                  <ModalOrderInfo />
+                </Modal>
+              } />
+          </Routes>
+        )
+      }
+
 
     </div>
   );
