@@ -1,6 +1,6 @@
 import RequestApi from "../../utils/request-api";
 import { setCookie } from "../../utils/cookie-api";
-import { IForm } from "../types/services-types";
+import { IFormStorage } from "../types/services-types";
 import { AppDispatch, AppThunkAction } from "../types/services-types";
 
 export const LOGIN_SUBMIT_REQUEST = "LOGIN_SUBMIT_REQUEST";
@@ -19,7 +19,7 @@ export interface IActionLoginSubmitError {
 
 export interface IActionLoginSubmitSuccess {
   readonly type: typeof LOGIN_SUBMIT_SUCCESS;
-  readonly user: IForm;
+  readonly user: IFormStorage;
 }
 
 
@@ -33,7 +33,7 @@ export const actionLoginSubmitRequest = (): IActionLoginSubmitRequest => ({ type
 
 export const actionLoginSubmitError = (): IActionLoginSubmitError => ({ type: LOGIN_SUBMIT_ERROR });
 
-export const actionLoginSubmitSuccess = (user: IForm): IActionLoginSubmitSuccess => ({
+export const actionLoginSubmitSuccess = (user: IFormStorage): IActionLoginSubmitSuccess => ({
   type: LOGIN_SUBMIT_SUCCESS,
   user,
 });

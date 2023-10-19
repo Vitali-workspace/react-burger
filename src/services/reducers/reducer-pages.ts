@@ -8,12 +8,12 @@ import {
 } from "../actions/action-profile";
 import { FORGOT_PASSWORD_ERROR, FORGOT_PASSWORD_SUCCESS, FORGOT_PASSWORD_REQUEST } from "../actions/action-forgot-password";
 import { RESET_PASSWORD_ERROR, RESET_PASSWORD_SUCCESS, RESET_PASSWORD_REQUEST } from "../actions/action-reset-password";
-import { IForm, TActionsPages } from "../types/services-types";
+import { IFormStorage, TActionsPages } from "../types/services-types";
 
 
 interface IStatePages {
   isAuthorized: boolean,
-  user: IForm,
+  user: IFormStorage,
 
   loginRequest: boolean,
   loginError: boolean,

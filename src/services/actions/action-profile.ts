@@ -1,6 +1,6 @@
 import RequestApi from "../../utils/request-api";
 import { deleteCookie, setCookie } from "../../utils/cookie-api";
-import { IForm } from "../types/services-types";
+import { IFormStorage } from "../types/services-types";
 import { AppDispatch, AppThunkAction } from "../types/services-types";
 
 export const PROFILE_SUBMIT_ERROR = "PROFILE_SUBMIT_ERROR";
@@ -29,7 +29,7 @@ export interface IActionProfileSubmitError {
 
 export interface IActionProfileSubmitSuccess {
   readonly type: typeof PROFILE_SUBMIT_SUCCESS;
-  readonly user: IForm;
+  readonly user: IFormStorage;
 }
 
 export interface IActionProfileSubmitRequest {
@@ -74,7 +74,7 @@ export interface IActionGetUserError {
 
 export interface IActionGetUserSuccess {
   readonly type: typeof GET_USER_SUCCESS;
-  readonly user: IForm;
+  readonly user: IFormStorage;
 }
 
 
@@ -126,7 +126,7 @@ export const actionProfileSubmitError = (message: string): IActionProfileSubmitE
   message,
 });
 
-export const actionProfileSubmitSuccess = (user: IForm): IActionProfileSubmitSuccess => ({
+export const actionProfileSubmitSuccess = (user: IFormStorage): IActionProfileSubmitSuccess => ({
   type: PROFILE_SUBMIT_SUCCESS,
   user,
 });
@@ -184,7 +184,7 @@ export const actionGetUserRequest = (): IActionGetUserRequest => ({ type: GET_US
 
 export const actionGetUserError = (message: string): IActionGetUserError => ({ type: GET_USER_ERROR, message });
 
-export const actionGetUserSuccess = (user: IForm): IActionGetUserSuccess => ({ type: GET_USER_SUCCESS, user });
+export const actionGetUserSuccess = (user: IFormStorage): IActionGetUserSuccess => ({ type: GET_USER_SUCCESS, user });
 
 
 export const getUser: AppThunkAction = () => (dispatch: AppDispatch) => {

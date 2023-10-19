@@ -26,9 +26,6 @@ export const reducerOrderFeed = (state = initialState, action: TActionsFeed): IS
 
   switch (action.type) {
 
-    case REJECT_FEED_ORDER: {
-      return { ...state, selectedOrder: null }
-    }
     case SELECT_FEED_ORDER: {
       return { ...state, selectedOrder: action.payload };
     }
@@ -41,6 +38,9 @@ export const reducerOrderFeed = (state = initialState, action: TActionsFeed): IS
     }
     case CHECK_ORDERS: {
       return { ...state, orders: action.payload };
+    }
+    case REJECT_FEED_ORDER: {
+      return { ...state, selectedOrder: null }
     }
     default: { return state }
   }

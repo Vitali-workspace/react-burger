@@ -1,6 +1,6 @@
 import RequestApi from "../../utils/request-api";
 import { setCookie } from "../../utils/cookie-api";
-import { IForm } from "../types/services-types";
+import { IFormStorage } from "../types/services-types";
 import { AppDispatch, AppThunkAction } from "../types/services-types";
 
 export const REGISTER_SUBMIT_ERROR = "REGISTER_SUBMIT_ERROR";
@@ -19,7 +19,7 @@ export interface IActionRegisterSubmitError {
 
 export interface IActionRegisterSubmitSuccess {
   readonly type: typeof REGISTER_SUBMIT_SUCCESS;
-  readonly user: IForm;
+  readonly user: IFormStorage;
 }
 
 export type TActionsRegister =
@@ -32,7 +32,7 @@ export const actionRegisterSubmitRequest = (): IActionRegisterSubmitRequest => (
 
 export const actionRegisterSubmitError = (): IActionRegisterSubmitError => ({ type: REGISTER_SUBMIT_ERROR });
 
-export const actionRegisterSubmitSuccess = (user: IForm): IActionRegisterSubmitSuccess => ({
+export const actionRegisterSubmitSuccess = (user: IFormStorage): IActionRegisterSubmitSuccess => ({
   type: REGISTER_SUBMIT_SUCCESS,
   user,
 });

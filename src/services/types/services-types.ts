@@ -99,6 +99,12 @@ export interface IFormEmail {
   email: string;
 }
 
+export interface IFormStorage {
+  name: string;
+  email: string;
+  password: string;
+}
+
 export interface IResetPassword {
   password: string;
   token: string;
