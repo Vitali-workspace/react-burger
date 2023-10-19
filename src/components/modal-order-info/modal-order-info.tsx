@@ -5,7 +5,6 @@ import { useAppDispatch, useAppSelector } from "../../services/hooks/services-ho
 import { formatDateOrder } from "../../utils/format-date-order";
 import { IOrderFeed } from "../../services/types/services-types";
 import { actionSelectFeedOrder } from "../../services/actions/action-order-feed";
-import { testBurger } from "../../utils/constants";
 import { IIngredientConstructor } from "../../services/types/services-types";
 import styleOrderInfo from "./modal-order-info.module.css";
 
@@ -18,9 +17,6 @@ const ModalOrderInfo: FC = () => {
   const { orders } = useAppSelector((state) => state.orderFeed);
   const { selectedOrder } = useAppSelector((state) => state.orderFeed);
   const { id } = useParams<{ id?: string }>();
-  //const { orders } = useAppSelector((state) => state.webSocket);
-
-  //console.log(orders, 'ордер из ws');
 
   if (selectedOrder !== null) {
     localStorage.setItem("StorageOrder", JSON.stringify(selectedOrder));
@@ -29,7 +25,7 @@ const ModalOrderInfo: FC = () => {
   const savedStorageOrder = localStorage.getItem("StorageOrder");
   const saveOrder = savedStorageOrder ? JSON.parse(savedStorageOrder) : {};
 
-  const { number, name, status, ingredients, createdAt } = saveOrder; //! testBurger
+  const { number, name, status, ingredients, createdAt } = saveOrder;
   const checkDateCreation = createdAt && formatDateOrder(createdAt);
   const priceBurger = ingredients && ingredients.reduce((sumPrice: number, current: IIngredientConstructor) => sumPrice + current.quantity! * current.price, 0);
 
@@ -69,7 +65,7 @@ const ModalOrderInfo: FC = () => {
 
       <ul className={styleOrderInfo.list + " custom-scroll"}>
         {
-          ingredients.map((ingredient: any, index: any) => (
+          ingredients.map((ingredient: IIngredientConstructor, index: number) => (
 
             <li key={ingredient._id}>
               <div className={styleOrderInfo.block}>

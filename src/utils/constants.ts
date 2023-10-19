@@ -29,5 +29,3 @@ export const TYPE_INGREDIENT = {
   MAIN: "main",
   SAUCE: "sauce",
 };
-
-

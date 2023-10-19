@@ -1,10 +1,10 @@
-
 import { useState, useMemo, FC, FormEvent, ChangeEvent, FocusEvent, SyntheticEvent } from "react";
 import { useAppDispatch, useAppSelector } from "../../services/hooks/services-hooks";
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { profileInfo } from "../../services/actions/action-profile";
 import { IFocus, IFormStorage } from "../../services/types/services-types";
 import { AppThunkAction } from "../../services/types/services-types";
+import { storageName, storageEmail } from "../../utils/storage";
 import styleProfileUser from "./profile-user.module.css";
 
 
@@ -14,19 +14,11 @@ const ProfileUser: FC = () => {
 
   const { name, email, password } = useAppSelector((state) => state.pages.user);
 
-  if (name !== "") {
-    localStorage.setItem("StorageName", name);
-  }
-
-  if (email !== "") {
-    localStorage.setItem("StorageEmail", email);
-  }
-
-  const savedName = localStorage.getItem("StorageName") || "пусто";
-  const savedEmail = localStorage.getItem("StorageEmail") || "пусто";
+  const fieldName = storageName(name);
+  const fieldEmail = storageEmail(email);
 
 
-  const [inputsValue, setInputsValue] = useState<IFormStorage>({ name: savedName, email: savedEmail, password: password });
+  const [inputsValue, setInputsValue] = useState<IFormStorage>({ name: fieldName, email: fieldEmail, password: password });
   const [inFocus, setFocus] = useState<IFocus>({ name: false, email: false, password: false });
 
   const checkInput = useMemo(() => {

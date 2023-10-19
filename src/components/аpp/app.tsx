@@ -34,7 +34,6 @@ import styleApp from "./app.module.css";
 const App: FC = () => {
 
   const dispatch = useAppDispatch();
-  const { isAuthorized } = useAppSelector((state) => state.pages);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -66,7 +65,8 @@ const App: FC = () => {
       dispatch(refreshToken() as AppThunkAction);
       dispatch(getUser() as AppThunkAction);
     }
-  }, [dispatch]);
+
+  }, []);
 
 
   return (

@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { register } from "../../services/actions/action-register";
 import { useAppDispatch, useAppSelector } from "../../services/hooks/services-hooks";
 import { AppThunkAction } from "../../services/types/services-types";
+import { storageName, storageEmail } from "../../utils/storage";
 import styleRegister from "./register.module.css";
 
 interface IRegister {
@@ -20,6 +21,8 @@ const Register: FC = () => {
   const [inputsValue, setInputsValue] = useState<IRegister>({ name: "", email: "", password: "" });
   const [isStatusPassword, setStatusPassword] = useState<boolean>(true);
 
+  storageName(inputsValue.name);
+  storageEmail(inputsValue.email);
 
   function showPassword() {
     setStatusPassword(!isStatusPassword);
