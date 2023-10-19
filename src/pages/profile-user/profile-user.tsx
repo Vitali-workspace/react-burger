@@ -3,7 +3,7 @@ import { useState, useMemo, FC, FormEvent, ChangeEvent, FocusEvent, SyntheticEve
 import { useAppDispatch, useAppSelector } from "../../services/hooks/services-hooks";
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { profileInfo } from "../../services/actions/action-profile";
-import { IFocus, IForm } from "../../services/types/services-types";
+import { IFocus, IFormStorage } from "../../services/types/services-types";
 import { AppThunkAction } from "../../services/types/services-types";
 import styleProfileUser from "./profile-user.module.css";
 
@@ -11,8 +11,28 @@ import styleProfileUser from "./profile-user.module.css";
 const ProfileUser: FC = () => {
 
   const dispatch = useAppDispatch();
+
   const { name, email, password } = useAppSelector((state) => state.pages.user);
-  const [inputsValue, setInputsValue] = useState<IForm>({ name: name, email: email, password: password });
+
+  if (name !== "") {
+    localStorage.setItem("StorageName", name);
+  }
+
+  if (email !== "") {
+    localStorage.setItem("StorageEmail", email);
+  }
+
+  const savedName = localStorage.getItem("StorageName") || "пусто";
+  const savedEmail = localStorage.getItem("StorageEmail") || "пусто";
+
+
+  const [inputsValue, setInputsValue] = useState<IFormStorage>({ name: savedName, email: savedEmail, password: password });
+  const [inFocus, setFocus] = useState<IFocus>({ name: false, email: false, password: false });
+
+  const checkInput = useMemo(() => {
+    return name !== inputsValue.name || email !== inputsValue.email || password !== inputsValue.password;
+  }, [inputsValue, name, password, email]);
+
 
   function handleChangeInput(evt: ChangeEvent<HTMLInputElement>) {
     setInputsValue({ ...inputsValue, [evt.target.name]: evt.target.value });
@@ -23,8 +43,6 @@ const ProfileUser: FC = () => {
     dispatch(profileInfo(inputsValue) as AppThunkAction);
   }
 
-  const [inFocus, setFocus] = useState<IFocus>({ name: false, email: false, password: false });
-
   function focus(evt: FocusEvent<HTMLInputElement>) {
     setFocus({ ...inFocus, [evt.target.name]: true })
   }
@@ -33,14 +51,11 @@ const ProfileUser: FC = () => {
     setFocus({ ...inFocus, [evt.target.name]: false })
   }
 
-  const checkInput = useMemo(() => {
-    return name !== inputsValue.name || email !== inputsValue.email || password !== inputsValue.password;
-  }, [inputsValue, name, password, email]);
-
   function сancelForm(evt: SyntheticEvent) {
     evt.preventDefault();
     setInputsValue({ name, email, password })
   }
+
 
   return (
     <section>
