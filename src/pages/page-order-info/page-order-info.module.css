@@ -1,0 +1,83 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 640px;
+}
+
+.block {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.number {
+  text-align: center;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  min-height: 309px;
+  max-height: 33vh;
+  row-gap: 16px;
+  list-style-type: none;
+  padding: 0;
+  margin: 21px 0 0 0;
+  padding-right: 20px;
+  overflow-y: auto;
+}
+
+.image {
+  z-index: 10;
+  height: 56px;
+  width: 80px;
+}
+
+.price {
+  display: flex;
+  align-items: center;
+  column-gap: 7px;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 48px;
+}
+
+.layer {
+  width: 64px;
+  height: 64px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  border-radius: 100px;
+  background: linear-gradient(45deg, rgba(128, 26, 178, 1), rgba(74, 76, 255, 1));
+  z-index: 1;
+}
+
+.layer::after {
+  display: block;
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  left: 2px;
+  bottom: 2px;
+  background: #131316;
+  border-radius: 100px;
+  content: '';
+}
+
+.done {
+  color: #00CCCC;
+}
+
+.cancel {
+  color: #E52B1A;
+}

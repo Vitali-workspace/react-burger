@@ -1,8 +1,9 @@
 import { useState, FC, FormEvent, ChangeEvent } from "react";
 import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, Navigate, useLocation } from 'react-router-dom';
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../services/hooks/services-hooks";
 import { forgotPassword } from "../../services/actions/action-forgot-password";
+import { AppThunkAction } from "../../services/types/services-types";
 import styleForgot from "./forgot-password.module.css";
 
 interface IForgotPassword {
@@ -12,11 +13,11 @@ interface IForgotPassword {
 
 const ForgotPassword: FC = () => {
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const location = useLocation();
-  const { isAuthorized, forgotPasswordError, forgotPasswordSuccess } = useSelector((state: any) => state.pages);
+  const { isAuthorized, forgotPasswordError, forgotPasswordSuccess } = useAppSelector((state) => state.pages);
   const [inputsValue, setInputsValue] = useState<IForgotPassword>({ email: "" });
-  const from = location.state?.from || '/';
+  const from = location.state?.from || "/";
 
   function handleChangeInput(evt: ChangeEvent<HTMLInputElement>) {
     setInputsValue({ ...inputsValue, [evt.target.name]: evt.target.value });
@@ -24,7 +25,7 @@ const ForgotPassword: FC = () => {
 
   function submitForm(evt: FormEvent) {
     evt.preventDefault();
-    dispatch(forgotPassword(inputsValue) as any);
+    dispatch(forgotPassword(inputsValue) as AppThunkAction);
   }
 
   if (isAuthorized) {

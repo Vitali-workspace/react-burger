@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useSelector } from "react-redux";
+import { useAppSelector } from '../../services/hooks/services-hooks';
 import { NAMES_INGREDIENTS } from "../../utils/constants";
 import styleTabs from "./ingredients-tabs.module.css";
 
@@ -11,7 +11,7 @@ interface ITabs {
 
 const IngredientsTabs: FC<ITabs> = ({ tabClick }) => {
 
-  const current = useSelector((state: any) => state.burgerIngredients.tab);
+  const current = useAppSelector((state) => state.burgerIngredients.tab);
 
   return (
     <nav className={styleTabs.tabs}>

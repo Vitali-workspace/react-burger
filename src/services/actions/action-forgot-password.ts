@@ -1,23 +1,47 @@
 import RequestApi from "../../utils/request-api";
-
-export const FORGOT_PASSWORD_ERROR = "FORGOT_PASSWORD_ERROR";
-export const FORGOT_PASSWORD_SUCCESS = "FORGOT_PASSWORD_SUCCESS";
-export const FORGOT_PASSWORD_REQUEST = "FORGOT_PASSWORD_REQUEST";
+import { AppDispatch, AppThunkAction } from "../types/services-types";
 
 
-export function forgotPassword(info: any) {
+export const FORGOT_PASSWORD_ERROR: "FORGOT_PASSWORD_ERROR" = "FORGOT_PASSWORD_ERROR";
+export const FORGOT_PASSWORD_SUCCESS: "FORGOT_PASSWORD_SUCCESS" = "FORGOT_PASSWORD_SUCCESS";
+export const FORGOT_PASSWORD_REQUEST: "FORGOT_PASSWORD_REQUEST" = "FORGOT_PASSWORD_REQUEST";
 
-  return function (dispatch: any) {
-    dispatch({ type: FORGOT_PASSWORD_REQUEST });
+export interface IActionForgotPasswordError {
+  readonly type: typeof FORGOT_PASSWORD_ERROR;
+}
 
-    RequestApi.forgotPassword(info)
-      .then(() => {
-        dispatch({ type: FORGOT_PASSWORD_SUCCESS });
-      })
-      .catch((error) => {
-        dispatch({ type: FORGOT_PASSWORD_ERROR });
+export interface IActionForgotPasswordSuccess {
+  readonly type: typeof FORGOT_PASSWORD_SUCCESS;
+}
 
-        console.log(error);
-      })
-  }
+export interface IActionForgotPasswordRequest {
+  readonly type: typeof FORGOT_PASSWORD_REQUEST;
+}
+
+export type TActionsForgotPassword =
+  | IActionForgotPasswordError
+  | IActionForgotPasswordSuccess
+  | IActionForgotPasswordRequest;
+
+
+export const actionForgotPasswordError = (): IActionForgotPasswordError => ({ type: FORGOT_PASSWORD_ERROR });
+
+export const actionForgotPasswordSuccess = (): IActionForgotPasswordSuccess => ({ type: FORGOT_PASSWORD_SUCCESS });
+
+export const actionForgotPasswordRequest = (): IActionForgotPasswordRequest => ({ type: FORGOT_PASSWORD_REQUEST });
+
+
+
+export const forgotPassword: AppThunkAction = (email) => (dispatch: AppDispatch) => {
+  dispatch(actionForgotPasswordRequest());
+
+  RequestApi.forgotPassword(email)
+    .then(() => {
+      dispatch(actionForgotPasswordSuccess());
+    })
+    .catch((error) => {
+      dispatch(actionForgotPasswordError());
+
+      console.log(error);
+    })
 }

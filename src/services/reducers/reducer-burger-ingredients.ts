@@ -5,12 +5,22 @@ import {
   GET_INGREDIENTS_SUCCESS,
   INCREASE_INGREDIENT,
   DECREASE_INGREDIENT,
+  CLEAR_QUANTITY,
   REPLACE_BUN,
   SELECT_TAB,
 } from "../actions/action-burger-ingredients";
+import { IIngredientCount } from "../types/services-types";
+import { TActionsBurgerIngredients } from "../actions/action-burger-ingredients";
 
 
-const initialState = {
+export interface IStateBurgerIngredients {
+  ingredients: IIngredientCount[],
+  ingredientsRequest: boolean,
+  ingredientsError: boolean,
+  tab: string,
+}
+
+const initialState: IStateBurgerIngredients = {
   ingredients: [],
   ingredientsRequest: false,
   ingredientsError: false,
@@ -18,7 +28,7 @@ const initialState = {
 };
 
 
-export const reducerBurgerIngredients = (state = initialState, action) => {
+export const reducerBurgerIngredients = (state = initialState, action: TActionsBurgerIngredients): IStateBurgerIngredients => {
   switch (action.type) {
     case GET_INGREDIENTS_REQUEST: {
       return {
@@ -75,6 +85,12 @@ export const reducerBurgerIngredients = (state = initialState, action) => {
         ingredients: [...state.ingredients].map(ingredient => {
           return ingredient._id === action._id ? { ...ingredient, quantity: --ingredient.quantity } : ingredient;
         })
+      }
+    }
+    case CLEAR_QUANTITY: {
+      return {
+        ...state,
+        ingredients: [...state.ingredients].map(ingredient => ({ ...ingredient, quantity: 0 })),
       }
     }
     default: {

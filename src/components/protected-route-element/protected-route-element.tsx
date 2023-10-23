@@ -1,6 +1,6 @@
 import { FC, ReactNode } from "react";
 import { Navigate, useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "../../services/hooks/services-hooks";
 
 interface IProtectedRouteProps {
   children?: ReactNode;
@@ -10,7 +10,7 @@ interface IProtectedRouteProps {
 
 const ProtectedRouteElement: FC<IProtectedRouteProps> = ({ children, anonymous }) => {
 
-  const { isAuthorized } = useSelector((state: any) => state.pages);
+  const { isAuthorized } = useAppSelector((state) => state.pages);
 
   const location = useLocation();
   const from = location.state?.from || '/';

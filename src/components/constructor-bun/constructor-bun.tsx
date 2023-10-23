@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "../../services/hooks/services-hooks";
 import { TYPE_BUN } from "../../utils/constants";
 import styleBun from "./constructor-bun.module.css"
 
@@ -9,7 +9,7 @@ interface IBun { type: "top" | "bottom" | undefined }
 
 const ConstructorBun: FC<IBun> = ({ type }) => {
 
-  const { bun } = useSelector((state: any) => state.burgerConstructor);
+  const { bun } = useAppSelector((state) => state.burgerConstructor);
 
   return (
     <li className="ml-8">

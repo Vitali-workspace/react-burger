@@ -1,9 +1,9 @@
 import { useMemo, useRef, FC, SyntheticEvent } from "react";
 import IngredientsTabs from "../ingredients-tabs/ingredients-tabs";
 import IngredientsList from "../ingredients-list/ingredients-list";
-import { useDispatch, useSelector } from "react-redux";
-import { SELECT_TAB } from "../../services/actions/action-burger-ingredients";
-import { OPEN_MODAL_INGREDIENT_DETAILS, selectIngredient } from "../../services/actions/action-ingredient-details";
+import { useAppDispatch, useAppSelector } from "../../services/hooks/services-hooks";
+import { actionSelectTab } from "../../services/actions/action-burger-ingredients";
+import { actionOpenModalDetails, actionSelectIngredient } from "../../services/actions/action-ingredient-details";
 import { TYPE_INGREDIENT, NAMES_INGREDIENTS } from "../../utils/constants";
 import styleIngredients from "./burger-ingredients.module.css"
 
@@ -27,8 +27,8 @@ interface IIngredientInfo {
 
 const BurgerIngredients: FC = () => {
 
-  const dispatch = useDispatch();
-  const { ingredients } = useSelector((state: any) => state.burgerIngredients);
+  const dispatch = useAppDispatch();
+  const { ingredients } = useAppSelector((state) => state.burgerIngredients);
 
   const listBuns = useMemo(() => ingredients.filter((ingredient: IIngredientInfo) => ingredient.type === TYPE_INGREDIENT.BUN), [ingredients]);
   const listMains = useMemo(() => ingredients.filter((ingredient: IIngredientInfo) => ingredient.type === TYPE_INGREDIENT.MAIN), [ingredients]);
@@ -39,12 +39,12 @@ const BurgerIngredients: FC = () => {
   const refSauce = useRef<HTMLParagraphElement>(null);
 
   function handleClickIngredient(ingredient: IIngredientInfo) {
-    dispatch(selectIngredient(ingredient));
-    dispatch({ type: OPEN_MODAL_INGREDIENT_DETAILS });
+    dispatch(actionSelectIngredient(ingredient));
+    dispatch(actionOpenModalDetails());
   }
 
   function handleClickTab(tab: string) {
-    dispatch({ type: SELECT_TAB, tab });
+    dispatch(actionSelectTab(tab));
 
     switch (tab) {
       case NAMES_INGREDIENTS.SAUCE:
@@ -78,11 +78,11 @@ const BurgerIngredients: FC = () => {
 
 
       if (scroll >= scrollMain) {
-        dispatch({ type: SELECT_TAB, tab: NAMES_INGREDIENTS.MAIN });
+        dispatch(actionSelectTab(NAMES_INGREDIENTS.MAIN));
       } else if (scroll < scrollSauce) {
-        dispatch({ type: SELECT_TAB, tab: NAMES_INGREDIENTS.BUN });
+        dispatch(actionSelectTab(NAMES_INGREDIENTS.BUN));
       } else {
-        dispatch({ type: SELECT_TAB, tab: NAMES_INGREDIENTS.SAUCE });
+        dispatch(actionSelectTab(NAMES_INGREDIENTS.SAUCE));
       }
     }
   }

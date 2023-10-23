@@ -39,6 +39,35 @@ class RequestApi {
   }
 
 
+  fetchWithRefresh = async (url: string, options: RequestInit) => {
+    try {
+      const res = await fetch(url, options);
+      return await this._checkError(res);
+
+    } catch (err: any) {
+      if (err.message === "jwt expired") {
+
+        const refreshData = await this.updateToken(); //обновление токена
+        if (!refreshData.success) {
+          return Promise.reject(refreshData);
+        }
+
+        localStorage.setItem("refreshToken", refreshData.refreshToken);
+        localStorage.setItem("accessToken", refreshData.accessToken);
+
+        if (options.headers) {
+          (options.headers as { [key: string]: string }).authorization =
+            refreshData.accessToken;
+        }
+
+        const res = await fetch(url, options); //повтор запроса
+        return await this._checkError(res);
+      } else {
+        return Promise.reject(err);
+      }
+    }
+  };
+
   registration({ name, email, password }: IForm) {
     return fetch(`${BASE_URL}/auth/register`, {
       method: "POST",
@@ -67,7 +96,10 @@ class RequestApi {
   getOrderNumber(listId: number[]) {
     return fetch(`${BASE_URL}/orders`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": getCookie(token.access),
+      } as HeadersInit,
       body: JSON.stringify({ "ingredients": listId }),
     }).then(this._checkError);
   }
@@ -80,7 +112,7 @@ class RequestApi {
 
 
   getUserInfo() {
-    return fetch(`${BASE_URL}/auth/user`, {
+    return this.fetchWithRefresh(`${BASE_URL}/auth/user`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -91,7 +123,7 @@ class RequestApi {
 
 
   updateUserInfo({ name, email, password }: IForm) {
-    return fetch(`${BASE_URL}/auth/user`, {
+    return this.fetchWithRefresh(`${BASE_URL}/auth/user`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -103,7 +135,7 @@ class RequestApi {
 
 
   resetPassword({ token, password }: IResetPassword) {
-    return fetch(`${BASE_URL}/password-reset/reset`, {
+    return this.fetchWithRefresh(`${BASE_URL}/password-reset/reset`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ token, password }),

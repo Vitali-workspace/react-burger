@@ -4,6 +4,8 @@ interface ITypeBun {
 }
 
 export const BASE_URL = "https://norma.nomoreparties.space/api";
+export const WS_URL_PROFILE_ORDERS = "wss://norma.nomoreparties.space/orders";
+export const WS_URL_ALL_ORDERS = "wss://norma.nomoreparties.space/orders/all";
 
 export const TYPE_BUN: ITypeBun = {
   TOP: "top",
@@ -27,5 +29,3 @@ export const TYPE_INGREDIENT = {
   MAIN: "main",
   SAUCE: "sauce",
 };
-
-

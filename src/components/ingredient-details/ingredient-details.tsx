@@ -1,43 +1,32 @@
 import { useEffect, FC } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../services/hooks/services-hooks";
 import { useParams } from 'react-router-dom'
-import { SELECT_INGREDIENT } from "../../services/actions/action-ingredient-details";
+import { actionSelectIngredient } from "../../services/actions/action-ingredient-details";
+import { IIngredientCount } from "../../services/types/services-types";
 import styleDetails from "./ingredient-details.module.css";
-
-interface IIngredientInfo {
-  name: string;
-  type: string;
-  image: string;
-  image_mobile: string;
-  image_large: string;
-  calories: number;
-  proteins: number;
-  fat: number;
-  carbohydrates: number;
-  price: number;
-  quantity: number;
-  __v: number;
-  _id: string;
-}
 
 
 const IngredientDetails: FC = () => {
 
-  const dispatch = useDispatch();
-  const { selectedIngredient } = useSelector((state: any) => state.ingredientDetails);
+  const dispatch = useAppDispatch();
+  const { selectedIngredient } = useAppSelector((state) => state.ingredientDetails);
 
-  const { ingredients } = useSelector((state: any) => state.burgerIngredients);
+  const { ingredients } = useAppSelector((state) => state.burgerIngredients);
   const { id } = useParams();
-  const ingredient = ingredients.find((ingredient: IIngredientInfo) => ingredient._id === id);
+  const ingredient = ingredients.find((ingredient: IIngredientCount) => ingredient._id === id);
 
   useEffect(() => {
     if (!selectedIngredient && id) {
-      dispatch({ type: SELECT_INGREDIENT, selectedIngredient: ingredient });
+      if (ingredient !== undefined)
+        dispatch(actionSelectIngredient(ingredient));
     }
   }, [selectedIngredient, id, dispatch, ingredient]);
 
   const { name, calories, carbohydrates, fat, proteins, image_large } = selectedIngredient || {};
 
+  if (!ingredient) {
+    return null;
+  }
 
   return (ingredient &&
     (<section className={styleDetails.container}>

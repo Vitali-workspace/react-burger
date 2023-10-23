@@ -29,7 +29,7 @@
 
 .link {
   text-decoration: none;
-  color: #4C4CFF;
+  color: #8585AD;
 }
 
 .active {
@@ -39,7 +39,7 @@
 
 .button {
   background-color: transparent;
-  color: #4C4CFF;
+  color: #8585AD;
   border: none;
   cursor: pointer;
 }

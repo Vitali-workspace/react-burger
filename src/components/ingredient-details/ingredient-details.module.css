@@ -11,7 +11,8 @@
 
 .title {
   display: flex;
-  align-self: flex-start;
+  position: relative;
+  right: 150px;
   margin-bottom: 10px;
 }
 

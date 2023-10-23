@@ -1,31 +1,15 @@
 import { useRef, FC } from "react";
 import { ConstructorElement, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from "../../services/hooks/services-hooks";
 import { useDrag, useDrop } from "react-dnd";
-import { MOVE_INGREDIENT } from "../../services/actions/action-burger-constructor";
+import { actionMoveIngredient } from "../../services/actions/action-burger-constructor";
 import { TYPE_DND } from "../../utils/constants";
+import { IIngredientConstructor } from "../../services/types/services-types";
 import stylesItem from "./constructor-item.module.css";
 
-interface IIngredientInfo {
-  name: string;
-  type: string;
-  image: string;
-  image_mobile: string;
-  image_large: string;
-  calories: number;
-  proteins: number;
-  fat: number;
-  carbohydrates: number;
-  price: number;
-  quantity: number;
-  __v: number;
-  _id: string;
-  uuid: string;
-  index?: number;
-}
 
 interface IConstructorItem {
-  ingredient: IIngredientInfo;
+  ingredient: IIngredientConstructor;
   index: number;
   deleteIngredients: (_id: string, uuid: string) => void;
 }
@@ -33,7 +17,7 @@ interface IConstructorItem {
 
 const ConstructorItem: FC<IConstructorItem> = ({ ingredient, index, deleteIngredients }) => {
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { name, price, image, uuid, _id } = ingredient;
 
   const elementRef = useRef<HTMLLIElement>(null);
@@ -48,12 +32,12 @@ const ConstructorItem: FC<IConstructorItem> = ({ ingredient, index, deleteIngred
 
   const [, dropRef] = useDrop({
     accept: TYPE_DND.ITEM_FROM_CONSTRUCTOR,
-    hover: (item: IIngredientInfo, monitor) => {
+    hover: (item: IIngredientConstructor, monitor) => {
       if (!elementRef.current) {
         return
       }
 
-      const dragIndex = item.index;
+      const dragIndex = item.index!;
       const hoverIndex = index;
 
       if (dragIndex === hoverIndex) {
@@ -75,11 +59,7 @@ const ConstructorItem: FC<IConstructorItem> = ({ ingredient, index, deleteIngred
         }
       }
 
-      dispatch({
-        type: MOVE_INGREDIENT,
-        dragIndex: dragIndex,
-        hoverIndex: hoverIndex,
-      });
+      dispatch(actionMoveIngredient(dragIndex, hoverIndex));
 
       item.index = hoverIndex;
     }

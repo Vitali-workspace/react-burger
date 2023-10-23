@@ -1,0 +1,42 @@
+.container {
+  width: 64px;
+  height: 64px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  border-radius: 100px;
+  background: linear-gradient(45deg, rgba(128, 26, 178, 1), rgba(74, 76, 255, 1));
+}
+
+.container::after {
+  display: block;
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  left: 2px;
+  bottom: 2px;
+  background: #131316;
+  border-radius: 100px;
+  content: '';
+}
+
+.icon {
+  z-index: 1;
+  height: 56px;
+  width: 80px;
+}
+
+.count {
+  display: flex;
+  justify-content: center;
+  background: rgba(28, 28, 33, .6);
+  align-items: center;
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  left: 2px;
+  bottom: 2px;
+  border-radius: 100px;
+  z-index: 2;
+}

@@ -1,0 +1,38 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  background-color: #1C1C21;
+  border-radius: 30px;
+  cursor: pointer;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.price {
+  display: flex;
+  align-items: center;
+  column-gap: 7px;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.done {
+  color: #00CCCC;
+}
+
+.cancel {
+  color: #E52B1A;
+}
+
+.block {
+  width: 799px;
+  padding-right: 18px;
+}

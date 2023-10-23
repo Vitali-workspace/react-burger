@@ -1,5 +1,5 @@
 import { useEffect, FC } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../services/hooks/services-hooks";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
@@ -16,45 +16,57 @@ import ForgotPassword from "../../pages/forgot-password/forgot-password";
 import ResetPassword from "../../pages/reset-password/reset-password";
 import IngredientPage from "../../pages/ingredient-page/ingredient-page";
 import Profile from "../../pages/profile/profile";
-import { getUser, refreshToken } from "../../services/actions/action-profile";
+import OrderFeed from "../../pages/order-feed/order-feed";
 import PageNotFound from "../../pages/page-not-found/page-not-found";
+import PageOrderInfo from "../../pages/page-order-info/page-order-info";
+import ModalOrderInfo from "../modal-order-info/modal-order-info";
+import { getUser, refreshToken } from "../../services/actions/action-profile";
 import { getIngredients } from "../../services/actions/action-burger-ingredients";
-import { CLOSE_MODAL_INGREDIENT_DETAILS, REJECT_INGREDIENT } from "../../services/actions/action-ingredient-details";
-import { CLOSE_MODAL_ORDER_DETAILS } from "../../services/actions/action-order-details";
 import { getCookie } from "../../utils/cookie-api";
+import { actionCloseModalOrder } from "../../services/actions/action-order-details";
+import { actionRejectIngredient, actionCloseModalDetails } from "../../services/actions/action-ingredient-details";
+import { actionRejectFeedOrder } from "../../services/actions/action-order-feed";
+import { AppThunkAction } from "../../services/types/services-types";
 import styleApp from "./app.module.css";
 
 
 
 const App: FC = () => {
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
+
   const location = useLocation();
   const navigate = useNavigate();
 
-  const modalOrderDetails = useSelector((state: any) => state.orderDetails.openModal);
-  let background = location.state && location.state.background;
-
+  let modalOrderInfo = location.state && location.state.orderElement;
+  const modalOrderDetails = useAppSelector((state) => state.orderDetails.openModal);
+  let modalIngredient = location.state && location.state.background;
 
   function closeModalOrderDetails() {
-    dispatch({ type: CLOSE_MODAL_ORDER_DETAILS });
+    dispatch(actionCloseModalOrder());
   }
 
   function closeModalIngredientDetails() {
-    dispatch({ type: CLOSE_MODAL_INGREDIENT_DETAILS });
-    dispatch({ type: REJECT_INGREDIENT });
+    dispatch(actionCloseModalDetails());
+    dispatch(actionRejectIngredient());
+    navigate(-1);
+  }
+
+  function closeModalOrderInfo() {
+    dispatch(actionRejectFeedOrder());
     navigate(-1);
   }
 
   useEffect(() => {
     const checkToken = getCookie("accessToken");
-    dispatch(getIngredients() as any);
+    dispatch(getIngredients() as AppThunkAction);
 
     if (checkToken) {
-      dispatch(refreshToken() as any)
-      dispatch(getUser() as any);
+      dispatch(refreshToken() as AppThunkAction);
+      dispatch(getUser() as AppThunkAction);
     }
-  }, [dispatch]);
+
+  }, []);
 
 
   return (
@@ -62,7 +74,7 @@ const App: FC = () => {
       <AppHeader />
       <main className={styleApp.content}>
 
-        <Routes location={background || location} >
+        <Routes location={modalIngredient || modalOrderInfo || location} >
 
           <Route
             path="/"
@@ -97,10 +109,21 @@ const App: FC = () => {
             </ProtectedRouteElement>}>
           </Route>
 
-          {/* Лента заказов */}
-          <Route path="list" element={<ProtectedRouteElement anonymous={false}>
-            <PageNotFound />
-          </ProtectedRouteElement>} />
+          <Route path="profile/orders"
+            element={<ProtectedRouteElement anonymous={false}>
+              <Profile />
+            </ProtectedRouteElement>}>
+          </Route>
+
+          <Route path="profile/orders/:id"
+            element={<ProtectedRouteElement anonymous={false}>
+              <PageOrderInfo />
+            </ProtectedRouteElement>}>
+          </Route>
+
+          <Route path="feed" element={<OrderFeed />} />
+
+          <Route path="/feed/:id" element={<PageOrderInfo />} />
 
           <Route path="/ingredients/:id" element={<IngredientPage />} />
 
@@ -118,7 +141,7 @@ const App: FC = () => {
       }
 
       {
-        background && (
+        modalIngredient && (
           <Routes>
             <Route path="/ingredients/:id"
               element={
@@ -129,6 +152,33 @@ const App: FC = () => {
           </Routes>
         )
       }
+
+      {
+        modalOrderInfo && (
+          <Routes>
+            <Route path="feed/:id"
+              element={
+                <Modal closePopup={closeModalOrderInfo}>
+                  <PageOrderInfo />
+                </Modal>
+              } />
+          </Routes>
+        )
+      }
+
+      {
+        modalOrderInfo && (
+          <Routes>
+            <Route path="profile/orders/:id"
+              element={
+                <Modal closePopup={closeModalOrderInfo}>
+                  <ModalOrderInfo />
+                </Modal>
+              } />
+          </Routes>
+        )
+      }
+
 
     </div>
   );
