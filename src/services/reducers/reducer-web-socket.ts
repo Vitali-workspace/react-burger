@@ -18,7 +18,7 @@ interface IStateWS {
   error?: Event;
 }
 
-const initialState: IStateWS = {
+export const initialState: IStateWS = {
   wsConnected: false,
   orders: [],
   userOrders: [],

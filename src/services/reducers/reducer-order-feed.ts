@@ -14,7 +14,7 @@ interface IStateOrderFeed {
   pending: number[],
 }
 
-const initialState: IStateOrderFeed = {
+export const initialState: IStateOrderFeed = {
   orders: [],
   selectedOrder: null,
   ready: [],
