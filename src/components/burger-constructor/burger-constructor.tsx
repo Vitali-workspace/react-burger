@@ -97,7 +97,7 @@ const BurgerConstructor: FC = () => {
   return (
     <section className={`${styleConstructor.container} mt-25`} ref={dropTargetRef}>
 
-      <ul className={`${styleConstructor.list}`}>
+      <ul className={`${styleConstructor.list}`} data-test="constructor">
         {<ConstructorBun type={TYPE_BUN.TOP} />}
         <ConstructorMenu deleteIngredients={handleDeleteClick} />
         {<ConstructorBun type={TYPE_BUN.BOTTOM} />}
