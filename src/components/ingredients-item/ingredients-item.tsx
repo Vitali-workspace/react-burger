@@ -43,7 +43,7 @@ const IngredientsItem: FC<IList> = ({ ingredient, selectItem }) => {
 
 
   return (
-    <li className={styleItem.card} ref={dragRef} data-test-id={_id} onClick={() => selectItem(ingredient)}>
+    <li className={styleItem.card} ref={dragRef} data-cy={_id} onClick={() => selectItem(ingredient)}>
 
       <div className={styleItem.link}
         onClick={() => {
