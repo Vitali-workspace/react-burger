@@ -97,19 +97,19 @@ const BurgerConstructor: FC = () => {
   return (
     <section className={`${styleConstructor.container} mt-25`} ref={dropTargetRef}>
 
-      <ul className={`${styleConstructor.list}`}>
+      <ul className={`${styleConstructor.list}`} data-cy="constructor">
         {<ConstructorBun type={TYPE_BUN.TOP} />}
         <ConstructorMenu deleteIngredients={handleDeleteClick} />
         {<ConstructorBun type={TYPE_BUN.BOTTOM} />}
       </ul>
 
-      <div className={`${styleConstructor.block} mt-10 mr-4`}>
-        <span className={`text text_type_digits-medium mr-10 ${styleConstructor.price}`}>
+      <div className={`${styleConstructor.block} mt-10 mr-4`} data-cy="block">
+        <span className={`text text_type_digits-medium mr-10 ${styleConstructor.price}`} data-cy="price">
           {totalPrice}
           <img className={styleConstructor.image} src={icon} alt="валюта" />
         </span>
 
-        <Button htmlType="button" onClick={buttonOrderClick} type="primary" disabled={!bun || isDisabled} size="large">
+        <Button htmlType="button" onClick={buttonOrderClick} type="primary" disabled={!bun || isDisabled} size="large" data-cy="order-btn">
           {buttonText}
         </Button>
       </div>

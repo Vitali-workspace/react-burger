@@ -7,7 +7,7 @@ interface IStateBurgerConstructor {
   bun: TBun;
 };
 
-const initialState: IStateBurgerConstructor = { ingredients: [], bun: null };
+export const initialState: IStateBurgerConstructor = { ingredients: [], bun: null };
 
 
 export const reducerBurgerConstructor = (state = initialState, action: TActionsBurgerConstructor): IStateBurgerConstructor => {

@@ -1,5 +1,6 @@
 {
   "name": "react-burger",
+  "homepage": "./",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -52,6 +53,9 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
-    "@types/uuid": "^9.0.4"
+    "@types/uuid": "^9.0.4",
+    "cypress": "^13.3.2",
+    "eslint-plugin-cypress": "^2.15.1",
+    "eslint-plugin-jest": "^27.6.0"
   }
 }

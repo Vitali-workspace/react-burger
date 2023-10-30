@@ -41,7 +41,7 @@ interface IStatePages {
 }
 
 
-const initialState: IStatePages = {
+export const initialState: IStatePages = {
   isAuthorized: false,
   user: { name: "", email: "", password: "" },
 

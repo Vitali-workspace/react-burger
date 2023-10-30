@@ -16,7 +16,7 @@ interface IStateOrderDetails {
 }
 
 
-const initialState: IStateOrderDetails = {
+export const initialState: IStateOrderDetails = {
   orderId: '',
   openModal: false,
   orderDetailsRequest: false,
@@ -35,7 +35,7 @@ export const reducerOrderDetails = (state = initialState, action: TActionsOrderD
         ...state,
         orderDetailsRequest: false,
         orderDetailsError: true,
-        orderId: '',
+        orderId: "",
       }
     }
     case GET_ORDER_DETAILS_SUCCESS: {

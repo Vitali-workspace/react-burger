@@ -12,7 +12,7 @@ interface IStateIngredientDetails {
   openModal: boolean,
 }
 
-const initialState: IStateIngredientDetails = { selectedIngredient: null, openModal: false };
+export const initialState: IStateIngredientDetails = { selectedIngredient: null, openModal: false };
 
 
 export const reducerIngredientDetails = (state = initialState, action: TActionsIngredientDetails): IStateIngredientDetails => {

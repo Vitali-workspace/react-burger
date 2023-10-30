@@ -36,7 +36,7 @@ const Login: FC = () => {
     <section className={styleLogin.container}>
 
       <h2 className={`text text_type_main-medium + ${styleLogin.title}`}>Вход</h2>
-      <form className={styleLogin.inputs} onSubmit={submitForm}>
+      <form className={styleLogin.inputs} onSubmit={submitForm} data-cy="form-login">
         <Input
           type="email"
           name="email"

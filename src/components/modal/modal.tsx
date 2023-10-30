@@ -30,9 +30,9 @@ const Modal: FC<IModal> = ({ children, closePopup }) => {
   return createPortal(
     <>
       <ModalOverlay overlayCloseClick={closePopup} />
-      <section className={styleModal.container}>
+      <section className={styleModal.container} data-cy="modal">
         <div className={styleModal.popup}>
-          <button className={styleModal.buttonClose} type="button" onClick={closePopup}>
+          <button className={styleModal.buttonClose} type="button" onClick={closePopup} data-cy="modal-close-btn">
             <CloseIcon type="primary" />
           </button>
           {children}

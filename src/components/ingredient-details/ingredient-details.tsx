@@ -31,25 +31,25 @@ const IngredientDetails: FC = () => {
   return (ingredient &&
     (<section className={styleDetails.container}>
       <h2 className={styleDetails.title + " text text_type_main-large mt-6 ml-10"}>Детали ингредиента</h2>
-      <img src={image_large} alt={name} />
-      <p className="text text_type_main-medium mt-5 mb-8">{name}</p>
+      <img src={image_large} alt={name} data-cy="element-image" />
+      <p className="text text_type_main-medium mt-5 mb-8" data-cy="element-name">{name}</p>
 
       <ul className={styleDetails.list + " mb-10"}>
         <li className="text text_type_main-default text_color_inactive">
           <span className={styleDetails.block}>Калории,ккал</span>
-          <p className={"text text_type_digits-default pt-2"}>{calories}</p>
+          <p className={"text text_type_digits-default pt-2"} data-cy="element-calories">{calories}</p>
         </li>
         <li className="text text_type_main-default text_color_inactive">
           <span className={styleDetails.block}>Белки, г</span>
-          <p className="text text_type_digits-default pt-2">{proteins}</p>
+          <p className="text text_type_digits-default pt-2" data-cy="element-proteins">{proteins}</p>
         </li>
         <li className="text text_type_main-default text_color_inactive">
           <span className={styleDetails.block}>Жиры, г</span>
-          <p className="text text_type_digits-default pt-2">{fat}</p>
+          <p className="text text_type_digits-default pt-2" data-cy="element-fat">{fat}</p>
         </li>
         <li className="text text_type_main-default text_color_inactive">
           <span className={styleDetails.block}>Углеводы, г</span>
-          <p className="text text_type_digits-default pt-2">{carbohydrates}</p>
+          <p className="text text_type_digits-default pt-2" data-cy="element-carbohydrates">{carbohydrates}</p>
         </li>
       </ul>
     </section>)

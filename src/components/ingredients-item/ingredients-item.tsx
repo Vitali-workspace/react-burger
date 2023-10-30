@@ -32,7 +32,7 @@ const IngredientsItem: FC<IList> = ({ ingredient, selectItem }) => {
 
   const navigate = useNavigate();
   const location = useLocation();
-  const { quantity, price, name, image } = ingredient;
+  const { quantity, price, name, image, _id } = ingredient;
   const [, dragRef] = useDrag({ type: TYPE_DND.ITEM_FROM_INGREDIENTS, item: ingredient });
 
   const showIngredientDetails = (ingredient: IIngredientInfo) => {
@@ -43,7 +43,7 @@ const IngredientsItem: FC<IList> = ({ ingredient, selectItem }) => {
 
 
   return (
-    <li className={styleItem.card} ref={dragRef} onClick={() => selectItem(ingredient)}>
+    <li className={styleItem.card} ref={dragRef} data-cy={_id} onClick={() => selectItem(ingredient)}>
 
       <div className={styleItem.link}
         onClick={() => {

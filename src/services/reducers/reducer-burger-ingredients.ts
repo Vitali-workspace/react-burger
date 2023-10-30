@@ -20,7 +20,7 @@ export interface IStateBurgerIngredients {
   tab: string,
 }
 
-const initialState: IStateBurgerIngredients = {
+export const initialState: IStateBurgerIngredients = {
   ingredients: [],
   ingredientsRequest: false,
   ingredientsError: false,
