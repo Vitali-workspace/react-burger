@@ -14,7 +14,7 @@ import { v4 as uuid } from "uuid";
 import { TYPE_BUN, TYPE_DND, TYPE_INGREDIENT } from "../../utils/constants";
 import { IIngredientConstructor } from "../../services/types/services-types";
 import { AppThunkAction } from "../../services/types/services-types";
-import icon from "../../images/gem.svg"
+import { iconGem } from "../../images/gemIcon";
 import styleConstructor from "./burger-constructor.module.css";
 
 
@@ -106,7 +106,7 @@ const BurgerConstructor: FC = () => {
       <div className={`${styleConstructor.block} mt-10 mr-4`} data-cy="block">
         <span className={`text text_type_digits-medium mr-10 ${styleConstructor.price}`} data-cy="price">
           {totalPrice}
-          <img className={styleConstructor.image} src={icon} alt="валюта" />
+          {iconGem}
         </span>
 
         <Button htmlType="button" onClick={buttonOrderClick} type="primary" disabled={!bun || isDisabled} size="large" data-cy="order-btn">

@@ -46,3 +46,10 @@
 .inactive {
   color: #8585AD;
 }
+
+
+@media screen and (max-width: 780px) {
+  .logo {
+    display: none;
+  }
+}

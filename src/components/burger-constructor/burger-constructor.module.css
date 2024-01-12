@@ -13,6 +13,7 @@
 
 .price {
   display: flex;
+  column-gap: 10px;
 }
 
 .block {

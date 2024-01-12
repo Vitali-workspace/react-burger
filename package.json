@@ -13,7 +13,6 @@
     "@types/react": "18.2.14",
     "@types/react-dom": "18.2.6",
     "@ya.praktikum/react-developer-burger-ui-components": "1.14.0",
-    "prop-types": "15.8.1",
     "react": "18.2.0",
     "react-dnd": "16.0.1",
     "react-dnd-html5-backend": "^16.0.1",
@@ -56,6 +55,7 @@
     "@types/uuid": "^9.0.4",
     "cypress": "^13.3.2",
     "eslint-plugin-cypress": "^2.15.1",
-    "eslint-plugin-jest": "^27.6.0"
+    "eslint-plugin-jest": "^27.6.0",
+    "tailwindcss": "^3.4.1"
   }
 }
