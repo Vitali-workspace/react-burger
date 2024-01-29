@@ -1,11 +1,35 @@
-# Ссылка на проект
-https://vitali-workspace.github.io/react-burger-page/
+# 🍔 Приложение React Burger
+
+🍔 Stellar Burger — это интерактивное десктопное drag-and-drop приложение, где можно сконструировать бургер и оформить заказ.
+
+> [!NOTE]
+> [Ссылка на проект в GitHub Pages](https://vitali-workspace.github.io/react-burger-page/)
 
 
-# Игра React Burger
-Игра с возможностью сборки бургера.
+<h2>&#10032; Основные функции</h2>
 
-## Available Scripts
+- Регистрация пользователя 
+- Восстановление пароля пользователя
+- DnD перенос ингредиентов в конструкторе бургеров 
+- Просмотр сведений об ингредиентах
+- Оформление заказа
+- Просмотр сведений о сделанных заказах
+
+<h2>&#10032; Используемые технологии</h2>
+
+> [!IMPORTANT]
+> - TypeScript
+> - React JS
+> - React Router
+> - React Redux
+> - React DnD
+> - Redux Thunk
+> - WebSocket
+> - Cypress
+> - Jest
+
+
+<h2>&#10032; Установка и запуск</h2>
 
 ### `npm start`
 
@@ -24,10 +48,3 @@ See the section about [running tests](https://facebook.github.io/create-react-ap
 
 Builds the app for production to the `build` folder.\
 It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-
